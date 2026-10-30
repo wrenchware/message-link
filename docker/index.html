@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Docker · Messages</title>
+<meta name="description" content="Run Messages Server with Docker Compose on any Docker host: folders, compose file, settings, the setup code and updates.">
+<link rel="icon" href="../assets/icon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="../assets/icon-192.png">
+<link rel="stylesheet" href="../assets/site.css">
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="../"><img src="../assets/icon-64.png" alt="" width="32" height="32">Messages</a>
+    <nav aria-label="Site">
+      <a href="../setup/">Choose your setup</a>
+      <a href="../privacy/">Privacy</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <p class="crumbs"><a href="../setup/">Choose your setup</a></p>
+  <h1>Messages Server with Docker</h1>
+  <p class="lead">Docker Compose on any 64-bit x86 Linux computer that runs Docker.</p>
+
+  <div class="note warn">
+    <p><strong>Not public yet.</strong> The image, <code>ghcr.io/wrenchware/messages-server</code>, can't be pulled until the first public release. The steps below are how the install goes once it can.</p>
+  </div>
+
+  <p>There are two images. <code>latest</code> has Messenger and Instagram. <code>latest-google</code> adds Google Messages and Google Voice, with Google Chrome inside the container, and needs about 4 GB of memory instead of 2.</p>
+
+  <h2>Install</h2>
+  <ol class="steps">
+    <li>
+      <p><strong>Make a folder for it</strong>, with a data folder and a backups folder owned by the server's own account, 2787. The examples use <code>/opt/messages-server</code>; any folder works.</p>
+<pre><code>sudo mkdir -p /opt/messages-server/data /opt/messages-server/backups
+sudo chown 2787:2787 /opt/messages-server/data /opt/messages-server/backups
+sudo chmod 700 /opt/messages-server/data /opt/messages-server/backups</code></pre>
+    </li>
+    <li>
+      <p><strong>Make the keys volume.</strong> It holds the keys the data is sealed with, and lives inside Docker's own storage, away from your folders.</p>
+<pre><code>docker volume create messages-server-keys
+docker run --rm --user 0:0 --network none --entrypoint /bin/sh \
+  -v messages-server-keys:/keys ghcr.io/wrenchware/messages-server:latest \
+  -c "chown -R 2787:2787 /keys &amp;&amp; chmod 700 /keys"</code></pre>
+    </li>
+    <li>
+      <p><strong>Save this as <code>compose.yaml</code></strong> in <code>/opt/messages-server</code>:</p>
+<pre><code>name: messages-server
+services:
+  messages-server:
+    image: ghcr.io/wrenchware/messages-server:latest
+    container_name: messages-server
+    user: "2787:2787"
+    init: true
+    environment:
+      MESSAGES_DATA: /data
+      MESSAGES_KEYS: /keys
+      MESSAGES_RESTORE: "1"
+      MESSAGES_ADMIN_PASSWORD: "${MESSAGES_ADMIN_PASSWORD:-}"
+      MESSAGES_TAILNET: "${MESSAGES_TAILNET:-0}"
+      MESSAGES_TAILNET_AUTHKEY: "${MESSAGES_TAILNET_AUTHKEY:-}"
+      TZ: "${TZ:-Etc/UTC}"
+    ports:
+      - "${MESSAGES_BIND_IP:-0.0.0.0}:${MESSAGES_PORT:-8787}:8787"
+    volumes:
+      - "${MESSAGES_APPDATA}:/data"
+      - "messages-server-keys:/keys"
+      - "${MESSAGES_BACKUPS_DIR}:/backups"
+    restart: unless-stopped
+    stop_grace_period: 60s
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    mem_limit: 2g
+    memswap_limit: 2g
+    pids_limit: 1024
+volumes:
+  messages-server-keys:
+    name: messages-server-keys
+    external: true</code></pre>
+    </li>
+    <li>
+      <p><strong>Save its settings as <code>.env</code></strong> beside it, with your own address and time zone:</p>
+<pre><code>MESSAGES_APPDATA=/opt/messages-server/data
+MESSAGES_BACKUPS_DIR=/opt/messages-server/backups
+MESSAGES_BIND_IP=192.168.1.20
+MESSAGES_TAILNET=1
+TZ=America/Chicago</code></pre>
+      <dl class="fields">
+        <div><dt><code>MESSAGES_BIND_IP</code></dt><dd>The computer's address on your home network. Without it the port is published on every network the computer has, a VPN's included.</dd></div>
+        <div><dt><code>MESSAGES_TAILNET</code></dt><dd>1 puts the server on your Tailscale network, so your phone reaches it from anywhere. The page signs it in.</dd></div>
+        <div><dt><code>MESSAGES_TAILNET_AUTHKEY</code></dt><dd>Optional. A Tailscale auth key, for a computer you won't open a browser for. See <a href="../tailscale/#auth-key">Tailscale</a>.</dd></div>
+        <div><dt><code>MESSAGES_ADMIN_PASSWORD</code></dt><dd>Optional. The server page's password, if you'd rather set it here than on the page.</dd></div>
+        <div><dt><code>MESSAGES_PORT</code></dt><dd>The port on this computer, 8787 by default.</dd></div>
+      </dl>
+    </li>
+    <li>
+      <p><strong>Start it and get the setup code:</strong></p>
+<pre><code>cd /opt/messages-server
+docker compose up -d
+docker compose logs messages-server | grep -i "setup code"</code></pre>
+    </li>
+    <li><p><strong>Open the page</strong>, <code>https://&lt;this computer&gt;:8787/</code>, from a browser at home, and follow the <a href="#first-run">first run</a>.</p></li>
+  </ol>
+
+  <h3 id="google">With Google Messages and Google Voice</h3>
+  <p>Use the <code>latest-google</code> image, give it 4 GB and 2048 processes, and add these to <code>environment</code>:</p>
+<pre><code>      MESSAGES_GOOGLE: "1"
+      MESSAGES_GOOGLE_CHROME: "1"
+      MESSAGES_CHROMIUM_HEADED: "1"
+      MESSAGES_NETWORK_ISOLATED: "1"
+      MESSAGES_CHROMIUM_NO_SANDBOX: "1"</code></pre>
+  <p>The last one runs Chrome without its own sandbox, because a container with every capability dropped can't give Chrome one. Chrome only ever loads Google's sign-in pages.</p>
+
+  <h2 id="first-run">On the server's page</h2>
+  <ol>
+    <li>Accept the certificate warning once: the server made its own certificate.</li>
+    <li>Enter the setup code, then choose the page's password.</li>
+    <li>Sign the server in to <a href="../tailscale/">Tailscale</a>.</li>
+    <li>Sign in to your accounts in the server's browser, on the page.</li>
+    <li>Add your phone: scan the code the page shows, from Messages on the phone.</li>
+    <li>Turn on <a href="../firebase/">notifications</a> and send a test to your phone.</li>
+    <li>Add a PC, and set the backup password.</li>
+  </ol>
+  <p>Every step can be skipped and picked up later from the page's front. <a href="../setup/#first-run">More about the first run</a>.</p>
+
+  <h2>Afterwards</h2>
+  <dl class="fields">
+    <div><dt>Update</dt><dd><code>docker compose pull &amp;&amp; docker compose up -d</code>. The server comes back with the same sign-ins and devices.</dd></div>
+    <div><dt>Stop</dt><dd><code>docker compose down</code>. It waits up to 60 seconds so pending sends finish.</dd></div>
+    <div><dt>Read the log</dt><dd><code>docker compose logs -f messages-server</code></dd></div>
+  </dl>
+
+  <h2>Where things live</h2>
+  <ul>
+    <li><strong>Keys</strong>: the <code>messages-server-keys</code> volume. Without it the data can't be read. It also holds the server's Tailscale identity.</li>
+    <li><strong>Data</strong>: your data folder. Everything secret in it is sealed with the keys.</li>
+    <li><strong>Backups</strong>: your backups folder, one encrypted file a day. A backup holds your history and the server's identity, never a service sign-in. Copy the folder elsewhere with your own backup tool.</li>
+  </ul>
+</main>
+
+<footer class="wrap">
+  <p>Messages is made by Wrenchware. No ads, no analytics, and this site sets no cookies.</p>
+  <p><a href="../">Home</a> · <a href="../setup/">Choose your setup</a> · <a href="../privacy/">Privacy policy</a></p>
+</footer>
+</body>
+</html>

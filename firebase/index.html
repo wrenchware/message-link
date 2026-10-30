@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Notifications · Messages</title>
+<meta name="description" content="How Messages Server sends notifications to your phone through a Firebase project of your own, and how to set one up.">
+<link rel="icon" href="../assets/icon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="../assets/icon-192.png">
+<link rel="stylesheet" href="../assets/site.css">
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="../"><img src="../assets/icon-64.png" alt="" width="32" height="32">Messages</a>
+    <nav aria-label="Site">
+      <a href="../setup/">Choose your setup</a>
+      <a href="../privacy/">Privacy</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <p class="crumbs"><a href="../setup/">Choose your setup</a></p>
+  <h1>Notifications on your phone</h1>
+  <p class="lead">Your server tells your phone about new messages through a Firebase project of your own. You set it up once, from a computer.</p>
+
+  <h2>What Firebase is for</h2>
+  <p>Android puts apps to sleep to save battery, so Messages can't keep its own connection open all day. Firebase Cloud Messaging is how Android apps get woken up: your server hands a notification to Google, and Google delivers it to your phone.</p>
+  <ul>
+    <li>The project is yours, made with your own Google account, and it's free. No one else's service is in between.</li>
+    <li>Each notification is sealed for the phone it goes to. Google carries it without being able to read it.</li>
+    <li>Without it, Messages still works on the phone. You just see new messages when you open the app.</li>
+  </ul>
+
+  <h2>Make the project</h2>
+  <p>Open <a href="https://console.firebase.google.com/" rel="noopener">Firebase's console</a> and sign in. Use a personal Google account: a work or school account's organisation often blocks the key file you need.</p>
+  <ol class="steps">
+    <li><p><strong>Create a project.</strong> Any name works. Google Analytics isn't needed, so you can turn it off. If Firebase asks you to accept its terms, that happens once.</p></li>
+    <li>
+      <p><strong>Add an Android app</strong> to the project with the package name:</p>
+<pre><code>com.wrenchware.messages</code></pre>
+      <p>That's Messages from Google Play. Test builds use <code>com.wrenchware.messages.dev</code>; add a second app with that name if you have one. You can skip Firebase's steps after the app is registered.</p>
+    </li>
+    <li><p><strong>Download <code>google-services.json</code></strong>: Project settings, General, under your Android app.</p></li>
+    <li><p><strong>Make a private key</strong>: Project settings, Service accounts, <strong>Generate new private key</strong>. It downloads a second file. That file is a secret: give it only to your server.</p></li>
+  </ol>
+
+  <h2>On the server's page</h2>
+  <p>The Notifications step of the server's first run, and its card on the page's front afterwards:</p>
+  <ol class="steps">
+    <li><p><strong>Drop both files</strong> on the one drop area, in any order. The page tells them apart and says plainly if something is missing. Once it has the first file, its links go straight to your project's pages.</p></li>
+    <li><p><strong>The server checks them</strong> with a trial send that goes nowhere. It proves the Cloud Messaging API is on and the key is allowed to send. If not, the page says what to fix and links to it.</p></li>
+    <li><p><strong>Send a test</strong> to one of your phones. The phone answers when it shows it, so the page says something like "Arrived on Pixel in 2 s", or what went wrong.</p></li>
+  </ol>
+  <p>Phones that are already joined sign up for notifications straight away; there's nothing to restart. The card then shows the last notification sent, any failures for each phone with the reason, and phones that haven't signed up.</p>
+
+  <h2>If it doesn't work</h2>
+  <dl class="fields">
+    <div>
+      <dt>The phone says "Your server's Firebase project has no app for this version of Messages"</dt>
+      <dd>Add an Android app with the package name <code>com.wrenchware.messages</code> to the project, download <code>google-services.json</code> again and give it to the server. The server's page names the phone too.</dd>
+    </div>
+    <div>
+      <dt>The check says Cloud Messaging is off</dt>
+      <dd>Turn on the Firebase Cloud Messaging API for the project. The page links to it.</dd>
+    </div>
+    <div>
+      <dt>You can't make a private key</dt>
+      <dd>The Google account belongs to an organisation that blocks key files. Make the project with a personal Google account instead.</dd>
+    </div>
+    <div>
+      <dt>Changing projects</dt>
+      <dd>Give the server the new project's two files. Phones sign up again by themselves.</dd>
+    </div>
+  </dl>
+</main>
+
+<footer class="wrap">
+  <p>Messages is made by Wrenchware. No ads, no analytics, and this site sets no cookies.</p>
+  <p><a href="../">Home</a> · <a href="../setup/">Choose your setup</a> · <a href="../tailscale/">Tailscale</a> · <a href="../privacy/">Privacy policy</a></p>
+</footer>
+</body>
+</html>

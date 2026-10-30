@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Linux · Messages</title>
+<meta name="description" content="Run Messages Server as a systemd service on Debian, Ubuntu or a Linux container of your own, without Docker.">
+<link rel="icon" href="../assets/icon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="../assets/icon-192.png">
+<link rel="stylesheet" href="../assets/site.css">
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="../"><img src="../assets/icon-64.png" alt="" width="32" height="32">Messages</a>
+    <nav aria-label="Site">
+      <a href="../setup/">Choose your setup</a>
+      <a href="../privacy/">Privacy</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <p class="crumbs"><a href="../setup/">Choose your setup</a></p>
+  <h1>Messages Server on Linux</h1>
+  <p class="lead">A systemd service on Debian, Ubuntu, or a Linux container you made yourself. No Docker needed.</p>
+
+  <div class="note warn">
+    <p><strong>Not public yet.</strong> The package, <code>messages-server-&lt;version&gt;-linux-x64.tar.gz</code>, comes with the first public release. The steps below are how the install goes once it's out.</p>
+  </div>
+
+  <h2>Before you start</h2>
+  <ul>
+    <li>A 64-bit x86 computer with systemd. Everything the server runs on is inside the package; the installer adds the few system libraries that are missing (ICU, OpenSSL 3, CA certificates, time zones).</li>
+    <li>For Google Messages and Google Voice: Debian or Ubuntu, and a kernel that lets ordinary accounts make user namespaces, which Google Chrome's sandbox is built from. On Ubuntu 24.04 and later that also means <code>kernel.apparmor_restrict_unprivileged_userns</code> set to 0.</li>
+  </ul>
+
+  <h2>Install</h2>
+  <ol class="steps">
+    <li>
+      <p><strong>Unpack the package and run its installer</strong> (put the version you downloaded in place of <code>&lt;version&gt;</code>):</p>
+<pre><code>tar -xzf messages-server-&lt;version&gt;-linux-x64.tar.gz
+sudo ./messages-server-&lt;version&gt;-linux-x64/install.sh --google</code></pre>
+      <p>Leave out <code>--google</code> for Messenger and Instagram only. With it, the installer adds official Google Chrome from Google's own repository and a virtual display for it to draw on.</p>
+      <p>It makes an account called <code>messages-server</code>, puts the program in <code>/opt/messages-server</code> and starts <code>messages-server.service</code>.</p>
+    </li>
+    <li>
+      <p><strong>Choose its settings</strong> in <code>/etc/messages-server/environment</code>, then restart it. Set the names first: they go into the certificate made the first time it starts.</p>
+<pre><code>MESSAGES_HOSTNAMES=server.lan,192.168.1.20
+MESSAGES_TAILNET=1</code></pre>
+<pre><code>sudo systemctl restart messages-server</code></pre>
+      <dl class="fields">
+        <div><dt><code>MESSAGES_HOSTNAMES</code></dt><dd>The names and addresses your devices reach the server by, separated by commas.</dd></div>
+        <div><dt><code>MESSAGES_TAILNET</code></dt><dd>1 puts the server on your Tailscale network, so your phone reaches it from anywhere. The page signs it in.</dd></div>
+        <div><dt><code>MESSAGES_TAILNET_AUTHKEY</code></dt><dd>Optional. A Tailscale auth key, for a computer you won't open a browser for. See <a href="../tailscale/#auth-key">Tailscale</a>.</dd></div>
+        <div><dt><code>MESSAGES_PORT</code></dt><dd>8787 by default. Allow it in your firewall for the home network only.</dd></div>
+        <div><dt><code>MESSAGES_ADMIN_PASSWORD</code></dt><dd>Optional. The page's password, if you'd rather set it here than on the page.</dd></div>
+      </dl>
+    </li>
+    <li>
+      <p><strong>Get the setup code</strong> from its log:</p>
+<pre><code>sudo journalctl -u messages-server --no-pager | grep -i "setup code"</code></pre>
+    </li>
+    <li><p><strong>Open the page</strong>, <code>https://&lt;this computer&gt;:8787/</code>, from a browser at home, and follow the <a href="#first-run">first run</a>.</p></li>
+  </ol>
+
+  <h2 id="first-run">On the server's page</h2>
+  <ol>
+    <li>Accept the certificate warning once: the server made its own certificate.</li>
+    <li>Enter the setup code, then choose the page's password.</li>
+    <li>Sign the server in to <a href="../tailscale/">Tailscale</a>.</li>
+    <li>Sign in to your accounts in the server's browser, on the page.</li>
+    <li>Add your phone: scan the code the page shows, from Messages on the phone.</li>
+    <li>Turn on <a href="../firebase/">notifications</a> and send a test to your phone.</li>
+    <li>Add a PC, and set the backup password.</li>
+  </ol>
+  <p>Every step can be skipped and picked up later from the page's front. <a href="../setup/#first-run">More about the first run</a>.</p>
+
+  <h2>Afterwards</h2>
+  <dl class="fields">
+    <div><dt>Update</dt><dd>Run a newer package's <code>install.sh</code>. The server stops (pending sends finish first), is replaced and starts again with the same sign-ins and devices. A nightly timer does this by itself once releases are published, and keeps Google Chrome up to date.</dd></div>
+    <div><dt>Read the log</dt><dd><code>sudo journalctl -u messages-server -f</code></dd></div>
+    <div><dt>Turn Google off again</dt><dd>Run <code>install.sh --no-google</code>.</dd></div>
+    <div><dt>Remove it</dt><dd><code>sudo /opt/messages-server/uninstall.sh</code> removes the program and keeps your data, keys and backups. Add <code>--all</code> to remove those too (the backups stay unless you also add <code>--backups</code>).</dd></div>
+  </dl>
+
+  <h2>Where things live</h2>
+  <ul>
+    <li><code>/var/lib/messages-server/keys</code>: the keys the data is sealed with, Google's Chrome profile and the server's Tailscale identity.</li>
+    <li><code>/var/lib/messages-server/data</code>: sign-ins, devices and history, sealed with the keys, and the server's log.</li>
+    <li><code>/var/lib/messages-server/backups</code>: the server's own backups, one encrypted file a day. A backup holds your history and the server's identity, never a service sign-in.</li>
+  </ul>
+  <p>The service runs with no privileges and can write only its own folder. It's limited to 2 GB of memory, or 4 GB with Google.</p>
+</main>
+
+<footer class="wrap">
+  <p>Messages is made by Wrenchware. No ads, no analytics, and this site sets no cookies.</p>
+  <p><a href="../">Home</a> · <a href="../setup/">Choose your setup</a> · <a href="../privacy/">Privacy policy</a></p>
+</footer>
+</body>
+</html>

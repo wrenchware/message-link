@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="referrer" content="no-referrer">
+<meta name="robots" content="noindex">
+<title>Add a phone · Messages</title>
+<meta name="description" content="A Messages Server's code for adding a phone. Scan it with Messages on your Android phone.">
+<link rel="icon" href="../assets/icon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="../assets/icon-192.png">
+<link rel="stylesheet" href="../assets/site.css">
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="../"><img src="../assets/icon-64.png" alt="" width="32" height="32">Messages</a>
+    <nav aria-label="Site">
+      <a href="../setup/">Choose your setup</a>
+      <a href="../privacy/">Privacy</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <h1>Add a phone to your server</h1>
+  <p id="for" hidden>This code adds a phone to the Messages Server <strong id="server"></strong>.</p>
+
+  <section id="android" hidden>
+    <p><a class="button" id="open" href="#">Open in Messages</a></p>
+    <p>If nothing happens, open Messages, choose <strong>I have a server</strong>, then <strong>Scan your server's code</strong>, and scan the code on your server's screen again.</p>
+  </section>
+
+  <section id="no-app" hidden>
+    <div class="note warn">
+      <p><strong>Messages isn't on this phone yet.</strong> Messages for Android is in invite-only testing on Google Play and isn't public yet. Once it's installed, scan the code from inside the app: <strong>I have a server</strong>, then <strong>Scan your server's code</strong>.</p>
+    </div>
+  </section>
+
+  <section id="elsewhere" hidden>
+    <p>This is a code for Messages on an Android phone, so there's nothing to do with it in this browser. Scan it with the phone instead: in Messages, choose <strong>I have a server</strong>, then <strong>Scan your server's code</strong>.</p>
+    <p>Adding a PC? Use <strong>Add a PC</strong> on the server's page, which gives you a line to paste into Messages for Windows. See the <a href="../windows/#server">Windows guide</a>.</p>
+  </section>
+
+  <div class="note warn" id="damaged" hidden>
+    <p>This link is missing part of the code. Show the code on your server's page again, and scan it from Messages on your phone.</p>
+  </div>
+
+  <div class="note warn" id="newer" hidden>
+    <p>This code comes from a newer Messages Server than your phone's Messages knows. Update Messages on your phone, then scan the code again.</p>
+  </div>
+
+  <section id="general">
+    <h2>What this is</h2>
+    <p>When you add a phone on your Messages Server's page, it shows a code. Scanning it from Messages on the phone joins the phone to the server with nothing to type: the code holds the server's name, the proof that it's really your server, and a one-time pairing code that works for 10 minutes.</p>
+    <p>If your phone's camera app brought you here, that's fine. Open Messages and scan the code from there: <strong>I have a server</strong>, then <strong>Scan your server's code</strong>.</p>
+    <p>Don't have Messages for Android? It's in invite-only testing on Google Play and isn't public yet. <a href="../setup/">Choose your setup</a> shows what else you can do.</p>
+  </section>
+
+  <div class="note">
+    <p><strong>Your code stays on this device.</strong> It's in the part of the address after the <code>#</code>, which browsers never send to a website. This page reads it only to show what it's for, and sends it nowhere.</p>
+  </div>
+</main>
+
+<footer class="wrap">
+  <p>Messages is made by Wrenchware. No ads, no analytics, and this site sets no cookies.</p>
+  <p><a href="../">Home</a> · <a href="../setup/">Choose your setup</a> · <a href="../privacy/">Privacy policy</a></p>
+</footer>
+
+<script>
+// Reads the code from the address's fragment (#v=1&n=…&a=…&f=…&c=…&u=…), on this device only. Nothing here sends it anywhere.
+function readCode() {
+  var parts = ['for', 'android', 'no-app', 'elsewhere', 'damaged', 'newer'];
+  parts.forEach(function (id) { document.getElementById(id).hidden = true; });
+  document.getElementById('general').hidden = false;
+  function show(id) { document.getElementById(id).hidden = false; }
+
+  var hash = location.hash.slice(1);
+  if (!hash) return;
+  if (hash === 'no-app') { show('no-app'); document.getElementById('general').hidden = true; return; }
+
+  var values = {};
+  var readable = hash.indexOf('#') < 0;
+  hash.split('&').forEach(function (pair) {
+    if (!pair) return;
+    var at = pair.indexOf('=');
+    var key = at < 0 ? pair : pair.slice(0, at);
+    var value = at < 0 ? '' : pair.slice(at + 1);
+    try { value = decodeURIComponent(value); } catch (e) { readable = false; }
+    if (!Object.prototype.hasOwnProperty.call(values, key)) values[key] = value;
+  });
+
+  if (readable && values.v && values.v !== '1') { show('newer'); return; }
+  var complete = readable && values.v === '1' && /^[0-9a-fA-F]{64}$/.test(values.f || '') && values.c && (values.n || values.a);
+  if (!complete) { show('damaged'); return; }
+
+  document.getElementById('server').textContent = values.n || values.a;
+  show('for');
+  document.getElementById('general').hidden = true;
+
+  if (/Android/i.test(navigator.userAgent)) {
+    // Android opens the app by package; with the app missing, Chrome loads the fallback, which says so.
+    var fallback = 'https://wrenchware.github.io/messages/join/#no-app';
+    document.getElementById('open').href = 'intent://wrenchware.github.io/messages/join#' + hash +
+      '#Intent;scheme=https;package=com.wrenchware.messages;S.browser_fallback_url=' + encodeURIComponent(fallback) + ';end';
+    show('android');
+  } else {
+    show('elsewhere');
+  }
+}
+readCode();
+// The fallback above changes only the fragment, which reloads nothing.
+window.addEventListener('hashchange', readCode);
+</script>
+</body>
+</html>

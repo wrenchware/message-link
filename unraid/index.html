@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Unraid · Messages</title>
+<meta name="description" content="Run Messages Server as a container on Unraid: the folders, the template's fields, the setup code, updates and backups.">
+<link rel="icon" href="../assets/icon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="../assets/icon-192.png">
+<link rel="stylesheet" href="../assets/site.css">
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="../"><img src="../assets/icon-64.png" alt="" width="32" height="32">Messages</a>
+    <nav aria-label="Site">
+      <a href="../setup/">Choose your setup</a>
+      <a href="../privacy/">Privacy</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <p class="crumbs"><a href="../setup/">Choose your setup</a></p>
+  <h1>Messages Server on Unraid</h1>
+  <p class="lead">A container on your Unraid server, installed from Community Applications.</p>
+
+  <div class="note warn">
+    <p><strong>Not public yet.</strong> The image isn't available to pull, and Messages Server isn't listed in Community Applications yet. The steps below are how the install goes once it is.</p>
+  </div>
+
+  <h2>Before you start</h2>
+  <ul>
+    <li>Unraid with Docker turned on.</li>
+    <li>A <code>backups</code> share, or another share for the server's backups. The default is <code>/mnt/user/backups/messages</code>.</li>
+    <li>About 4 GB of memory for the container. Google Messages and Google Voice run beside the server's own Google Chrome.</li>
+  </ul>
+
+  <h2>Install</h2>
+  <ol class="steps">
+    <li>
+      <p><strong>Make the two folders first.</strong> The server runs as its own account, 2787, which nothing else on Unraid uses. Docker would make missing folders owned by root, and the server would refuse to start. In Unraid's terminal:</p>
+<pre><code>mkdir -p /mnt/user/appdata/messages-server /mnt/user/backups/messages
+chown 2787:2787 /mnt/user/appdata/messages-server /mnt/user/backups/messages
+chmod 700 /mnt/user/appdata/messages-server /mnt/user/backups/messages</code></pre>
+    </li>
+    <li><p><strong>Find it in Apps.</strong> Search for <strong>Messages Server</strong> and choose <strong>Install</strong>.</p></li>
+    <li>
+      <p><strong>Check the fields.</strong> The defaults suit most servers:</p>
+      <dl class="fields">
+        <div><dt>Port</dt><dd>8787. The Messages apps and the server's page both use it.</dd></div>
+        <div><dt>Data</dt><dd><code>/mnt/user/appdata/messages-server</code>. Sign-ins, history and devices, sealed with keys kept elsewhere.</dd></div>
+        <div><dt>Backups</dt><dd><code>/mnt/user/backups/messages</code>. One encrypted file a day.</dd></div>
+        <div><dt>Reach from your tailnet</dt><dd>1, so your phone reaches the server from anywhere through Tailscale. The server's page signs it in.</dd></div>
+      </dl>
+      <p>Under <strong>Show more settings</strong> there are a few you can leave alone: a <strong>Tailscale auth key</strong> for signing in without a browser (see <a href="../tailscale/#auth-key">Tailscale</a>), the <strong>Server page password</strong> if you'd rather set it here than on the page, and <strong>Google Messages and Voice</strong>, which is on.</p>
+    </li>
+    <li><p><strong>Apply.</strong> Then set Docker's stop timeout for this container to at least 60 seconds, so messages that are being sent can finish when it stops.</p></li>
+    <li>
+      <p><strong>Get the setup code.</strong> On the Docker tab, click the container's icon and choose <strong>Logs</strong>, or in the terminal:</p>
+<pre><code>docker logs messages-server 2>&amp;1 | grep -i "setup code"</code></pre>
+    </li>
+    <li><p><strong>Open the page.</strong> The container's icon, <strong>WebUI</strong>, or <code>https://&lt;your server&gt;:8787/</code>. Then follow the <a href="#first-run">first run</a>.</p></li>
+  </ol>
+
+  <h2 id="first-run">On the server's page</h2>
+  <ol>
+    <li>Accept the certificate warning once: the server made its own certificate.</li>
+    <li>Enter the setup code, then choose the page's password.</li>
+    <li>Sign the server in to <a href="../tailscale/">Tailscale</a>.</li>
+    <li>Sign in to your accounts in the server's browser, on the page.</li>
+    <li>Add your phone: scan the code the page shows, from Messages on the phone.</li>
+    <li>Turn on <a href="../firebase/">notifications</a> and send a test to your phone.</li>
+    <li>Add a PC, and set the backup password.</li>
+  </ol>
+  <p>Every step can be skipped and picked up later from the page's front. <a href="../setup/#first-run">More about the first run</a>.</p>
+
+  <h2>Updates</h2>
+  <p>In <strong>Auto Update Applications</strong>, turn on <code>messages-server</code> in the nightly schedule and set <strong>Docker stop timeout/delay</strong> to at least 60 seconds. The plugin uses its own shorter timeout otherwise. An update restarts the server with the same sign-ins and devices.</p>
+
+  <h2>Where things live</h2>
+  <ul>
+    <li><strong>Keys</strong>: a Docker volume, <code>messages-server-keys</code>, inside Docker's own storage and outside every share. It holds the keys the data is sealed with and the server's Tailscale identity.</li>
+    <li><strong>Data</strong>: the appdata folder. Everything secret in it is sealed, so a copy of it alone is useless.</li>
+    <li><strong>Backups</strong>: the backups folder. A backup holds your history and the server's identity, never a service sign-in. After restoring one you sign in to each account again, and your devices stay joined.</li>
+  </ul>
+  <div class="note warn">
+    <p>Recreating Docker's image file (<code>docker.img</code>) deletes the keys volume, and the data can't be read without it. The server's own backups are how you come back from that: restore one on the page of a fresh server.</p>
+  </div>
+
+  <h2>Good to know</h2>
+  <ul>
+    <li>Keep the port on your home network. To reach the server away from home, use its Tailscale door rather than publishing the port on Unraid's own Tailscale.</li>
+    <li>The template runs Google Chrome without its own sandbox, because a container with every capability dropped can't give Chrome one. Chrome only ever loads Google's sign-in pages.</li>
+    <li>Stop it from the Docker tab, or with <code>docker stop -t 60 messages-server</code>, so pending sends finish.</li>
+  </ul>
+</main>
+
+<footer class="wrap">
+  <p>Messages is made by Wrenchware. No ads, no analytics, and this site sets no cookies.</p>
+  <p><a href="../">Home</a> · <a href="../setup/">Choose your setup</a> · <a href="../privacy/">Privacy policy</a></p>
+</footer>
+</body>
+</html>

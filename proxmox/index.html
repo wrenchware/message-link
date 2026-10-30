@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Proxmox · Messages</title>
+<meta name="description" content="Run Messages Server in its own container on Proxmox VE, made by one command in the host's shell.">
+<link rel="icon" href="../assets/icon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="../assets/icon-192.png">
+<link rel="stylesheet" href="../assets/site.css">
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="../"><img src="../assets/icon-64.png" alt="" width="32" height="32">Messages</a>
+    <nav aria-label="Site">
+      <a href="../setup/">Choose your setup</a>
+      <a href="../privacy/">Privacy</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <p class="crumbs"><a href="../setup/">Choose your setup</a></p>
+  <h1>Messages Server on Proxmox</h1>
+  <p class="lead">One command in the Proxmox host's shell makes a container with the server in it.</p>
+
+  <div class="note warn">
+    <p><strong>Not public yet.</strong> The install script's address and the server package aren't published yet, so the command below won't work until the first public release.</p>
+  </div>
+
+  <h2>What it makes</h2>
+  <ul>
+    <li>An unprivileged Debian 13 container, started when the host boots.</li>
+    <li>Messages Server inside it as a systemd service, with its Tailscale door.</li>
+    <li>With Google (the default), official Google Chrome from Google's own repository, so Google Messages and Google Voice can sign in on the server's page.</li>
+    <li>Optionally, a folder of the Proxmox host mounted in the container for the backups, so they live outside it.</li>
+    <li>A nightly update at about 03:00 for the server and for Chrome.</li>
+  </ul>
+
+  <h2>Install</h2>
+  <ol class="steps">
+    <li><p>In the Proxmox web interface, select the node and open <strong>Shell</strong>. It's a root shell on the host.</p></li>
+    <li>
+      <p>Run:</p>
+<pre><code>bash -c "$(curl -fsSL https://raw.githubusercontent.com/wrenchware/switchboard-messages/main/docker/messages-server/proxmox/install-proxmox.sh)"</code></pre>
+    </li>
+    <li>
+      <p>Answer its questions. Each has a default in brackets, and <kbd>Enter</kbd> takes it:</p>
+      <dl class="fields">
+        <div><dt>Container id</dt><dd>The next free one.</dd></div>
+        <div><dt>Hostname</dt><dd><code>messages-server</code></dd></div>
+        <div><dt>Google Messages and Google Voice</dt><dd>Yes. This installs Google Chrome in the container.</dd></div>
+        <div><dt>Storage, disk, memory, cores</dt><dd>Your storages for the template and the disk; 8 GB of disk; 4096 MB of memory with Google, 2048 without; 2 cores.</dd></div>
+        <div><dt>Network</dt><dd>The bridge (<code>vmbr0</code>), and <code>dhcp</code> or a fixed address such as <code>192.168.1.50/24</code>. A fixed address, or a DHCP reservation, keeps the server where your devices expect it.</dd></div>
+        <div><dt>Backups folder on this host</dt><dd>A full path such as <code>/mnt/backups/messages</code>, or empty to keep backups inside the container.</dd></div>
+        <div><dt>Reach the server through Tailscale</dt><dd>Yes, for the phone. You can paste a Tailscale auth key here, or press Enter and sign in on the page instead.</dd></div>
+        <div><dt>Page password</dt><dd>Press Enter to set it on the page's first visit, with the setup code.</dd></div>
+      </dl>
+      <p>It shows what it's about to make and asks once more before it changes anything.</p>
+    </li>
+    <li>
+      <p><strong>Note what it prints at the end</strong>: the page's address and the setup code. If you lose the code, it's in the server's log (put your container's number in place of <code>&lt;id&gt;</code>):</p>
+<pre><code>pct exec &lt;id&gt; -- journalctl -u messages-server --no-pager | grep -i "setup code"</code></pre>
+    </li>
+    <li><p><strong>Open the page</strong> it printed, <code>https://&lt;address&gt;:8787/</code>, from a browser at home, and follow the <a href="#first-run">first run</a>.</p></li>
+  </ol>
+
+  <h2 id="first-run">On the server's page</h2>
+  <ol>
+    <li>Accept the certificate warning once: the server made its own certificate.</li>
+    <li>Enter the setup code, then choose the page's password.</li>
+    <li>Sign the server in to <a href="../tailscale/">Tailscale</a>.</li>
+    <li>Sign in to your accounts in the server's browser, on the page.</li>
+    <li>Add your phone: scan the code the page shows, from Messages on the phone.</li>
+    <li>Turn on <a href="../firebase/">notifications</a> and send a test to your phone.</li>
+    <li>Add a PC, and set the backup password.</li>
+  </ol>
+  <p>Every step can be skipped and picked up later from the page's front. <a href="../setup/#first-run">More about the first run</a>.</p>
+
+  <h2>Afterwards</h2>
+  <dl class="fields">
+    <div><dt>Update</dt><dd>Run the same command again. It finds the container it made and updates the server in it; sign-ins, devices and data stay. The nightly update does the same once releases are published.</dd></div>
+    <div><dt>Watch the log</dt><dd><code>pct exec &lt;id&gt; -- journalctl -u messages-server -f</code></dd></div>
+    <div><dt>Change a setting</dt><dd><code>pct exec &lt;id&gt; -- nano /etc/messages-server/environment</code>, then <code>pct exec &lt;id&gt; -- systemctl restart messages-server</code></dd></div>
+    <div><dt>Remove it</dt><dd><code>pct stop &lt;id&gt; &amp;&amp; pct destroy &lt;id&gt;</code>. A backups folder on the host stays.</dd></div>
+  </dl>
+
+  <h2>Options</h2>
+  <p>Add them after the command with <code>_</code>, like <code>bash -c "$(curl …)" _ --yes</code>.</p>
+  <dl class="fields">
+    <div><dt><code>--yes</code></dt><dd>Take every default without asking: no page password and no auth key.</dd></div>
+    <div><dt><code>--no-google</code></dt><dd>Messenger and Instagram only, with no Chrome.</dd></div>
+    <div><dt><code>--ctid &lt;number&gt;</code></dt><dd>The container's id.</dd></div>
+    <div><dt><code>--tarball &lt;file or https address&gt;</code></dt><dd>A server package to install instead of the newest release.</dd></div>
+  </dl>
+
+  <h2>Good to know</h2>
+  <ul>
+    <li>The container has Proxmox's nesting feature on, as Proxmox does by default for new unprivileged containers. The server's own systemd isolation and Chrome's sandbox need it. The container stays unprivileged, with no device or host folder but the backups folder you choose.</li>
+    <li>Chrome always runs with its sandbox here. If the host's kernel doesn't let ordinary accounts make user namespaces, the script warns you and Google stays off; Messenger and Instagram still work.</li>
+    <li>Tailscale needs nothing special from the container: the server's door runs Tailscale in userspace, with no tun device.</li>
+  </ul>
+</main>
+
+<footer class="wrap">
+  <p>Messages is made by Wrenchware. No ads, no analytics, and this site sets no cookies.</p>
+  <p><a href="../">Home</a> · <a href="../setup/">Choose your setup</a> · <a href="../privacy/">Privacy policy</a></p>
+</footer>
+</body>
+</html>

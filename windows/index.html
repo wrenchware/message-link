@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Windows · Messages</title>
+<meta name="description" content="Install Messages for Windows, connect Google Messages, Messenger, Google Voice and Instagram, and use a Messages Server from your PC.">
+<link rel="icon" href="../assets/icon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="../assets/icon-192.png">
+<link rel="stylesheet" href="../assets/site.css">
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="../"><img src="../assets/icon-64.png" alt="" width="32" height="32">Messages</a>
+    <nav aria-label="Site">
+      <a href="../setup/">Choose your setup</a>
+      <a href="../privacy/">Privacy</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <p class="crumbs"><a href="../setup/">Choose your setup</a></p>
+  <h1>Messages for Windows</h1>
+  <p class="lead">A native Windows 11 app with all four services in one inbox. On its own it needs no server.</p>
+
+  <div class="note">
+    <p><strong>Coming soon to the Microsoft Store.</strong> It isn't available to download yet. This page will link to the Store listing once it's up.</p>
+  </div>
+
+  <h2>What you need</h2>
+  <ul>
+    <li>A Windows 11 PC (x64). Everything Messages needs ships inside it, so there's nothing to install first.</li>
+    <li>The accounts you want to connect. For Google Messages, your Android phone with Google Messages on it.</li>
+  </ul>
+
+  <h2>First run</h2>
+  <p>Messages opens on a welcome screen with three ways in:</p>
+  <ul>
+    <li><strong>Connect your accounts</strong> opens Settings, Accounts.</li>
+    <li><strong>Use a Messages Server you have</strong> joins a server that keeps your accounts connected at home.</li>
+    <li><strong>Look around with sample conversations</strong> shows Messages with made-up people. Nothing is sent, and your own data stays closed. <strong>Leave sample</strong> in the banner takes you back.</li>
+  </ul>
+
+  <h2>Connecting your accounts</h2>
+  <p>In <strong>Settings</strong> (<kbd>Ctrl</kbd>+<kbd>,</kbd>), <strong>Accounts</strong> has a card for each service.</p>
+  <dl class="fields">
+    <div>
+      <dt>Google Messages</dt>
+      <dd>Choose <strong>Pair</strong>. On your phone, open Google Messages, tap your account picture, then <strong>Device pairing</strong>. Sign in with the same Google account in the window that opens, then tap the emoji on your phone that matches the one Messages shows.</dd>
+    </div>
+    <div>
+      <dt>Messenger</dt>
+      <dd>Choose <strong>Connect</strong>, sign in to Facebook in the window that opens, then choose <strong>Done</strong>. Encrypted chats turn on by themselves.</dd>
+    </div>
+    <div>
+      <dt>Instagram</dt>
+      <dd>Choose <strong>Connect</strong> and sign in with your Instagram username and password. Log in with Facebook isn't supported.</dd>
+    </div>
+    <div>
+      <dt>Google Voice</dt>
+      <dd>Choose <strong>Add Google Voice account</strong> and sign in at voice.google.com. Add more numbers with <strong>Add another Google Voice account</strong>.</dd>
+    </div>
+  </dl>
+  <p>The sign-in windows are the services' own pages. Messages never types your password for you.</p>
+
+  <h2>Living in the tray</h2>
+  <ul>
+    <li>Closing the window leaves Messages running in the system tray, so new messages still reach you. <strong>Quit Messages</strong> in the tray icon's menu closes it.</li>
+    <li>After your first account connects, Messages asks once whether to start when you sign in to Windows.</li>
+    <li><kbd>F1</kbd> opens the full guide inside the app, and <kbd>Ctrl</kbd>+<kbd>/</kbd> lists the keyboard shortcuts.</li>
+  </ul>
+
+  <h2 id="server">Using a Messages Server from this PC</h2>
+  <p>If you run a Messages Server, the PC can use it instead of its own sign-ins. Open <strong>Settings</strong>, <strong>Accounts</strong>, <strong>Messages Server</strong>, <strong>Manage…</strong>, then one of these:</p>
+  <ul>
+    <li><strong>Paste the line from the server's page.</strong> Its <strong>Add a PC</strong> step shows one line that holds everything the PC needs.</li>
+    <li><strong>Ask to join.</strong> Enter the server's address and port, like <code>server.lan:8787</code>. The PC shows a short code; approve it on the server's page only if the code there is the same. You're then given a finish code to type on the PC.</li>
+  </ul>
+  <p>Once it's connected, <strong>Move to this server…</strong> puts the PC's accounts and choices on the server. Messenger and Instagram move as they are, with no new sign-in. Google Messages and Google Voice are signed in on the server itself.</p>
+  <p>Away from home, a PC with the Tailscale app installed can use the server's Tailscale name, <code>messages-server</code>, as its address.</p>
+
+  <h2 id="phone">A phone too <span class="tag">Coming</span></h2>
+  <p>A later version of Messages for Windows runs Messages Server on the PC itself, so your phone can use the accounts connected there:</p>
+  <ul>
+    <li>It starts when you sign in to Windows and runs as your own user, not as a Windows service. The phone gets messages while that PC is on and you're signed in.</li>
+    <li>The phone reaches it through Tailscale, as with any other server.</li>
+    <li>Its backups can go to any folder you can write to, a mapped drive, a network share or OneDrive included.</li>
+  </ul>
+  <p>Until then, the Android app needs a server on <a href="../unraid/">Unraid</a>, <a href="../proxmox/">Proxmox</a>, <a href="../docker/">Docker</a> or <a href="../linux/">Linux</a>, and this PC can use the same one.</p>
+</main>
+
+<footer class="wrap">
+  <p>Messages is made by Wrenchware. No ads, no analytics, and this site sets no cookies.</p>
+  <p><a href="../">Home</a> · <a href="../setup/">Choose your setup</a> · <a href="../privacy/">Privacy policy</a></p>
+</footer>
+</body>
+</html>

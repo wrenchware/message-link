@@ -91,11 +91,20 @@
         <li><strong>Notifications</strong>: give the server your Firebase project. After joining your phone, send it a test notification. <a href="../firebase/">Learn more</a>.</li>
         <li><strong>Add a phone</strong>: the page shows a code. In Message Link on the phone, choose <strong>I have a server</strong>, then <strong>Scan your server's code</strong>. Check the server shown, then choose <strong>Join</strong>.</li>
         <li><strong>Add a PC</strong>: the page shows one line to paste into Message Link for Windows, under Settings, Connections, Server.</li>
-        <li><strong>Backups</strong>: check the folder and set the password backups are sealed with. If you lose that password, nobody can open those backups, the server included.</li>
+        <li><strong>Backups</strong>: choose a folder or network share and set the password backups are sealed with. If you lose that password, nobody can open those backups, the server included. <a href="#backups">Learn more</a>.</li>
       </ul>
     </li>
   </ol>
   <p>Manage accounts and joined devices on the server's page. Joining a phone or PC does not give it administration rights.</p>
+
+  <h2 id="backups">Choose where backups go</h2>
+  <p>On the server's <strong>Backups</strong> page, choose a folder or <strong>Network share (SMB)</strong>. For a share, enter the file server, share name, optional subfolder and sign-in. Create the subfolder first, then choose <strong>Check and use share</strong>. No Docker folder mapping is needed.</p>
+  <p>A local folder must be outside the server's data and keys. With Docker, use a mapped folder: files inside the container are lost when it is replaced. Keep backups on separate storage if you want to recover after the server's disk fails.</p>
+  <p>The share password and backup password are separate. The server keeps the share sign-in protected; backups never include it or your services' sign-ins. A partial backup missing Messenger history is kept with a warning and does not count as a new successful backup. If a share refuses sign-in, enter its credentials again before backups can resume.</p>
+
+  <h2 id="restore">Restore a backup</h2>
+  <p>Stop the old server first. On a new server, choose <strong>Restore from a backup</strong> before connecting accounts. Choose the folder or share holding the file, enter the backup password, and review the devices and any missing-history warning. Sign in to each service again after restoring.</p>
+  <p>The server page's saved password returns to the one in the backup. Use that password after the restart. A password set in the server's installation settings stays as it is.</p>
 </main>
 
 <footer class="wrap">

@@ -34,10 +34,10 @@
   <h2>Install</h2>
   <ol class="steps">
     <li>
-      <p><strong>Make a folder for it</strong>, with a data folder and a backups folder owned by the server's own account, 2787. The examples use <code>/opt/messages-server</code>; any folder works.</p>
-<pre><code>sudo mkdir -p /opt/messages-server/data /opt/messages-server/backups
-sudo chown 2787:2787 /opt/messages-server/data /opt/messages-server/backups
-sudo chmod 700 /opt/messages-server/data /opt/messages-server/backups</code></pre>
+      <p><strong>Make its data folder</strong>, owned by the server's own account, 2787. The examples use <code>/opt/messages-server</code>; any folder works. You can choose a network share for backups on the server's page after installation.</p>
+<pre><code>sudo mkdir -p /opt/messages-server/data
+sudo chown 2787:2787 /opt/messages-server/data
+sudo chmod 700 /opt/messages-server/data</code></pre>
     </li>
     <li>
       <p><strong>Make the keys volume.</strong> It holds the keys the data is sealed with, and lives inside Docker's own storage, away from your folders.</p>
@@ -68,7 +68,6 @@ services:
     volumes:
       - "${MESSAGES_APPDATA}:/data"
       - "messages-server-keys:/keys"
-      - "${MESSAGES_BACKUPS_DIR}:/backups"
     restart: unless-stopped
     stop_grace_period: 60s
     security_opt:
@@ -86,7 +85,6 @@ volumes:
     <li>
       <p><strong>Save its settings as <code>.env</code></strong> beside it, with your own address and time zone:</p>
 <pre><code>MESSAGES_APPDATA=/opt/messages-server/data
-MESSAGES_BACKUPS_DIR=/opt/messages-server/backups
 MESSAGES_BIND_IP=192.168.1.20
 MESSAGES_TAILNET=1
 TZ=America/Chicago</code></pre>
@@ -140,7 +138,7 @@ docker compose logs messages-server | grep -i "setup code"</code></pre>
   <ul>
     <li><strong>Keys</strong>: the <code>messages-server-keys</code> volume. Without it the data can't be read. It also holds the server's Tailscale identity.</li>
     <li><strong>Data</strong>: your data folder. Everything secret in it is sealed with the keys.</li>
-    <li><strong>Backups</strong>: your backups folder, one encrypted file a day. A backup holds your history and the server's identity, never a service sign-in. Copy the folder elsewhere with your own backup tool.</li>
+    <li><strong>Backups</strong>: choose a network share on the server's page, with no Docker folder mapping. For local backups, create a separate host folder owned by 2787, map it to <code>/backups</code>, then select that path on the page. A backup holds your history and the server's identity, never a service sign-in. <a href="../setup/#backups">Learn more</a>.</li>
   </ul>
 </main>
 

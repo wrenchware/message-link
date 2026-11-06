@@ -89,7 +89,7 @@ MESSAGES_TAILNET=1</code></pre>
   <ul>
     <li><code>/var/lib/messages-server/keys</code>: the keys the data is sealed with, Google's Chrome profile and the server's Tailscale identity.</li>
     <li><code>/var/lib/messages-server/data</code>: sign-ins, devices and history, sealed with the keys, and the server's log.</li>
-    <li><code>/var/lib/messages-server/backups</code>: the server's own backups, one encrypted file a day. A backup holds your history and the server's identity, never a service sign-in.</li>
+    <li><code>/var/lib/messages-server/backups</code>: the default local backup folder. You can choose a network share directly on the server's <strong>Backups</strong> page. <a href="../setup/#backups">Learn more</a>.</li>
   </ul>
   <p>The service runs with no privileges and can write only its own folder. It's limited to 2 GB of memory, or 4 GB with Google.</p>
 </main>

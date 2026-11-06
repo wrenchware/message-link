@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Notifications · Messages</title>
-<meta name="description" content="How Messages Server sends notifications to your phone through a Firebase project of your own, and how to set one up.">
+<title>Notifications · Message Link</title>
+<meta name="description" content="How Message Link Server sends notifications to your phone through a Firebase project of your own, and how to set one up.">
 <link rel="icon" href="../assets/icon-32.png" sizes="32x32" type="image/png">
 <link rel="apple-touch-icon" href="../assets/icon-192.png">
 <link rel="stylesheet" href="../assets/site.css">
@@ -12,7 +12,7 @@
 <body>
 <header class="top">
   <div class="wrap">
-    <a class="brand" href="../"><img src="../assets/icon-64.png" alt="" width="32" height="32">Messages</a>
+    <a class="brand" href="../"><img src="../assets/icon-64.png" alt="" width="32" height="32">Message Link</a>
     <nav aria-label="Site">
       <a href="../setup/">Choose your setup</a>
       <a href="../privacy/">Privacy</a>
@@ -26,11 +26,11 @@
   <p class="lead">Your server tells your phone about new messages through a Firebase project of your own. You set it up once, from a computer.</p>
 
   <h2>What Firebase is for</h2>
-  <p>Android puts apps to sleep to save battery, so Messages can't keep its own connection open all day. Firebase Cloud Messaging is how Android apps get woken up: your server hands a notification to Google, and Google delivers it to your phone.</p>
+  <p>Android puts apps to sleep to save battery, so Message Link can't keep its own connection open all day. Firebase Cloud Messaging is how Android apps get woken up: your server hands a notification to Google, and Google delivers it to your phone.</p>
   <ul>
     <li>The project is yours, made with your own Google account, and it's free. No one else's service is in between.</li>
     <li>Each notification is sealed for the phone it goes to. Google carries it without being able to read it.</li>
-    <li>Without it, Messages still works on the phone. You just see new messages when you open the app.</li>
+    <li>Without it, Message Link still works on the phone. You just see new messages when you open the app.</li>
   </ul>
 
   <h2>Make the project</h2>
@@ -40,7 +40,7 @@
     <li>
       <p><strong>Add an Android app</strong> to the project with the package name:</p>
 <pre><code>com.wrenchware.messages</code></pre>
-      <p>That's Messages from Google Play. Test builds use <code>com.wrenchware.messages.dev</code>; add a second app with that name if you have one. You can skip Firebase's steps after the app is registered.</p>
+      <p>That's Message Link from Google Play. Test builds use <code>com.wrenchware.messages.dev</code>; add a second app with that name if you have one. You can skip Firebase's steps after the app is registered.</p>
     </li>
     <li><p><strong>Download <code>google-services.json</code></strong>: Project settings, General, under your Android app.</p></li>
     <li><p><strong>Make a private key</strong>: Project settings, Service accounts, <strong>Generate new private key</strong>. It downloads a second file. That file is a secret: give it only to your server.</p></li>
@@ -58,7 +58,7 @@
   <h2>If it doesn't work</h2>
   <dl class="fields">
     <div>
-      <dt>The phone says "Your server's Firebase project has no app for this version of Messages"</dt>
+      <dt>The phone says "Your server's Firebase project has no app for this version of Message Link"</dt>
       <dd>Add an Android app with the package name <code>com.wrenchware.messages</code> to the project, download <code>google-services.json</code> again and give it to the server. The server's page names the phone too.</dd>
     </div>
     <div>
@@ -77,7 +77,7 @@
 </main>
 
 <footer class="wrap">
-  <p>Messages is made by Wrenchware. No ads, no analytics, and this site sets no cookies.</p>
+  <p>Message Link is made by Wrenchware. No ads, no analytics, and this site sets no cookies.</p>
   <p><a href="../">Home</a> · <a href="../setup/">Choose your setup</a> · <a href="../tailscale/">Tailscale</a> · <a href="../privacy/">Privacy policy</a></p>
 </footer>
 </body>

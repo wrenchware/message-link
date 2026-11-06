@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Messages: your texts and chats in one place</title>
-<meta name="description" content="Messages puts Google Messages, Messenger, Google Voice and Instagram in one inbox, in a native Windows app and an Android app. Your accounts stay on your own PC or your own server.">
+<title>Message Link: your texts and chats in one place</title>
+<meta name="description" content="Message Link puts Google Messages, Messenger, Google Voice and Instagram in one inbox, in a native Windows app and an Android app. Your accounts stay on your own PC or your own server.">
 <link rel="icon" href="assets/icon-32.png" sizes="32x32" type="image/png">
 <link rel="apple-touch-icon" href="assets/icon-192.png">
 <link rel="stylesheet" href="assets/site.css">
@@ -12,7 +12,7 @@
 <body>
 <header class="top">
   <div class="wrap">
-    <a class="brand" href="./" aria-current="page"><img src="assets/icon-64.png" alt="" width="32" height="32">Messages</a>
+    <a class="brand" href="./" aria-current="page"><img src="assets/icon-64.png" alt="" width="32" height="32">Message Link</a>
     <nav aria-label="Site">
       <a href="setup/">Choose your setup</a>
       <a href="privacy/">Privacy</a>
@@ -21,30 +21,30 @@
 </header>
 
 <main class="wrap">
-  <h1>Messages</h1>
+  <h1>Message Link</h1>
   <p class="lead">Your texts and chats from Google Messages, Messenger, Google Voice and Instagram, in one inbox.</p>
-  <p>Messages is a native app for Windows 11, and there is an Android app too. It talks to each service directly, the same way the service's own app or website does. Nothing goes through anyone else's cloud: your accounts are signed in on your own PC, or on a Messages Server that you run at home.</p>
+  <p>Message Link is a native app for Windows 11, and there is an Android app too. It talks to each service directly, the same way the service's own app or website does. Nothing goes through anyone else's cloud: your accounts are signed in on your own PC, or on a Message Link Server that you run at home.</p>
 
   <h2>Pick how you'll use it</h2>
   <div class="cards">
     <a class="card" href="windows/">
       <h3>Just a Windows PC</h3>
-      <p>Install Messages and connect your accounts on the PC. Nothing else to set up.</p>
+      <p>Message Link starts its own server on the PC. Connect your accounts on the server's page.</p>
       <span class="more">Windows guide</span>
     </a>
     <a class="card" href="windows/#phone">
-      <h3>A Windows PC and a phone <span class="tag">Coming</span></h3>
-      <p>The PC also runs Messages Server, so your phone can use your accounts too. The PC stays on.</p>
-      <span class="more">What's planned</span>
+      <h3>A Windows PC and a phone</h3>
+      <p>The PC also runs Message Link Server, so your phone can use your accounts too. The PC stays on.</p>
+      <span class="more">Windows guide</span>
     </a>
     <a class="card" href="setup/#home-server">
       <h3>A home server and a phone</h3>
-      <p>Run Messages Server on Unraid, Proxmox, Docker or Linux. Your phone and PCs all use it, at home or away.</p>
+      <p>Run Message Link Server on Unraid, Proxmox, Docker or Linux. Your phone and PCs all use it, at home or away.</p>
       <span class="more">Choose where it runs</span>
     </a>
   </div>
 
-  <h2>What's a Messages Server?</h2>
+  <h2>What's a Message Link Server?</h2>
   <p>A small program that stays signed in to your services on a computer you own. The Android app needs one: phones put apps to sleep, so the server keeps your accounts connected all day and tells your phone when a message arrives.</p>
   <ul>
     <li>It signs in to each service in its own browser. You type into the service's real sign-in page, the same as anywhere else.</li>
@@ -55,7 +55,7 @@
 
   <h2>What each service needs</h2>
   <ul>
-    <li><strong>Google Messages</strong>: an Android phone with Google Messages. Messages pairs with it the way Messages for Web does. An iPhone can't pair.</li>
+    <li><strong>Google Messages</strong>: an Android phone with Google Messages. Message Link pairs with it the way Messages for Web does. An iPhone can't pair.</li>
     <li><strong>Messenger</strong>: your Facebook sign-in. Encrypted chats work too.</li>
     <li><strong>Google Voice</strong>: your Google sign-in at voice.google.com. Add as many Voice numbers as you have.</li>
     <li><strong>Instagram</strong>: your Instagram username and password. Log in with Facebook isn't supported.</li>
@@ -64,22 +64,22 @@
   <h2 id="downloads">Downloads</h2>
   <dl class="fields">
     <div>
-      <dt>Messages for Windows</dt>
+      <dt>Message Link for Windows</dt>
       <dd>Coming soon to the Microsoft Store. For Windows 11 on x64 PCs; nothing else needs installing first.</dd>
     </div>
     <div>
-      <dt>Messages for Android</dt>
+      <dt>Message Link for Android</dt>
       <dd>Not public yet. It's in invite-only testing on Google Play.</dd>
     </div>
     <div>
-      <dt>Messages Server</dt>
+      <dt>Message Link Server</dt>
       <dd>Not public yet. The Docker image and the Linux package come with the first public release. The <a href="setup/">guides</a> already show how each install goes.</dd>
     </div>
   </dl>
 </main>
 
 <footer class="wrap">
-  <p>Messages is made by Wrenchware. No ads, no analytics, and this site sets no cookies.</p>
+  <p>Message Link is made by Wrenchware. No ads, no analytics, and this site sets no cookies.</p>
   <p><a href="setup/">Choose your setup</a> · <a href="tailscale/">Tailscale</a> · <a href="firebase/">Notifications</a> · <a href="privacy/">Privacy policy</a></p>
 </footer>
 </body>

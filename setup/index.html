@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Choose your setup · Messages</title>
-<meta name="description" content="Three ways to use Messages: a Windows PC alone, a Windows PC and a phone, or a home server and a phone. Where Messages Server can run, and what it needs.">
+<title>Choose your setup · Message Link</title>
+<meta name="description" content="Three ways to use Message Link: a Windows PC alone, a Windows PC and a phone, or a home server and a phone. Where Message Link Server can run, and what it needs.">
 <link rel="icon" href="../assets/icon-32.png" sizes="32x32" type="image/png">
 <link rel="apple-touch-icon" href="../assets/icon-192.png">
 <link rel="stylesheet" href="../assets/site.css">
@@ -12,7 +12,7 @@
 <body>
 <header class="top">
   <div class="wrap">
-    <a class="brand" href="../"><img src="../assets/icon-64.png" alt="" width="32" height="32">Messages</a>
+    <a class="brand" href="../"><img src="../assets/icon-64.png" alt="" width="32" height="32">Message Link</a>
     <nav aria-label="Site">
       <a href="./" aria-current="page">Choose your setup</a>
       <a href="../privacy/">Privacy</a>
@@ -22,26 +22,26 @@
 
 <main class="wrap">
   <h1>Choose your setup</h1>
-  <p class="lead">Messages works three ways. Pick the one that matches what you have.</p>
+  <p class="lead">Message Link works three ways. Pick the one that matches what you have.</p>
 
   <h2>Just a Windows PC</h2>
-  <p>Messages for Windows connects your accounts on the PC itself. There's no server to run. Messages keeps working in the system tray while the PC is on, and shows notifications as messages arrive.</p>
-  <p>This is the simplest start. If you add a server later, the PC can move its accounts onto it without signing in again to Messenger or Instagram.</p>
+  <p>Message Link starts its own server on this PC. Connect your accounts on the server's page. The app keeps working in the system tray while the PC is on and shows notifications as messages arrive.</p>
+  <p>You can also connect this PC to a server you already have.</p>
   <p><a href="../windows/">Read the Windows guide</a></p>
 
-  <h2>A Windows PC and a phone <span class="tag">Coming</span></h2>
-  <p>A later version of Messages for Windows runs Messages Server on the PC as well, started when you sign in to Windows. Your phone then uses the accounts connected on that PC. The PC has to stay on and signed in for the phone to get messages.</p>
-  <p>Until that version is out, a phone needs a server on one of the hosts below, and your PC can use the same server.</p>
-  <p><a href="../windows/#phone">What's planned for Windows</a></p>
+  <h2>A Windows PC and a phone</h2>
+  <p>Message Link Server starts when you sign in to Windows. Your phone uses the accounts connected on that PC, which must stay on and signed in for the phone to get messages.</p>
+  <p>Set up Tailscale on the server's page before adding a phone or another PC.</p>
+  <p><a href="../windows/#phone">Read the Windows guide</a></p>
 
   <h2 id="home-server">A home server and a phone</h2>
-  <p>Messages Server runs on a computer that's always on. Your phone and every PC with Messages use the accounts signed in on it. Each one is set up from a computer with a web browser; the server has a page of its own that walks you through it.</p>
+  <p>Message Link Server runs on a computer that's always on. Your phone and every PC with Message Link use the accounts signed in on it. Each one is set up from a computer with a web browser; the server has a page of its own that walks you through it.</p>
 
   <h3>Where it can run</h3>
   <div class="cards">
     <a class="card" href="../windows/#phone">
-      <h3>A Windows PC with Messages <span class="tag">Coming</span></h3>
-      <p>Messages for Windows, on a PC that stays on.</p>
+      <h3>A Windows PC with Message Link</h3>
+      <p>Message Link for Windows, on a PC that stays on.</p>
       <span class="more">Windows guide</span>
     </a>
     <a class="card" href="../unraid/">
@@ -69,35 +69,37 @@
   <h3>What the server needs</h3>
   <ul>
     <li>A 64-bit x86 computer that stays on. ARM boards like the Raspberry Pi aren't supported.</li>
-    <li>2 GB of memory for Messenger and Instagram, or 4 GB with Google Messages and Google Voice, which run beside the server's own Google Chrome.</li>
+    <li>Allow about 4 GB of memory for the server and its sign-in browser. The Docker image includes Chrome for all four services.</li>
     <li>One port on your home network, 8787 by default. Nothing needs opening to the internet.</li>
     <li>A free <a href="../tailscale/">Tailscale</a> account, so your phone can reach the server away from home.</li>
     <li>A Google account for a free <a href="../firebase/">Firebase project</a>, if you want notifications on your phone.</li>
-    <li>A folder for backups. The server writes one encrypted file a day there; copying it somewhere else is up to your own backup tool.</li>
+    <li>A backup destination separate from the server's data. Configure it on the server's Backups page.</li>
   </ul>
 
   <h2 id="first-run">The server's first run</h2>
   <p>Every install ends the same way: at the server's own page, <code>https://&lt;your server&gt;:8787/</code>, opened in a browser on your home network.</p>
+  <p>Anyone with this page's password can manage the server. Phones and PCs that join can read and send messages.</p>
+  <p>Have a backup? Restore it before connecting accounts. Stop the old server first.</p>
   <ol class="steps">
     <li><strong>Accept the certificate warning once.</strong> The server made its own certificate, so your browser doesn't know it yet. To be thorough, compare the certificate's SHA-256 fingerprint in the browser with the <code>tls fingerprint</code> line in the server's log.</li>
     <li><strong>Enter the setup code.</strong> The server prints it in its log the first time it starts. Each guide shows where to find it.</li>
     <li><strong>Choose the page's password.</strong> 12 characters or more, and one you use nowhere else. The page asks for it again before anything that matters, like adding a device.</li>
     <li><strong>Follow the steps.</strong> One screen each, and you can skip any of them. A checklist on the page's front keeps whatever is left, and each card reopens its own step.
       <ul>
-        <li><strong>Tailscale</strong>: sign the server in, so your phone reaches it from anywhere. <a href="../tailscale/">How it goes</a>.</li>
-        <li><strong>Your accounts</strong>: sign in to each service in the server's own browser, shown right on the page.</li>
-        <li><strong>Add a phone</strong>: the page shows a code. In Messages on the phone, choose <strong>I have a server</strong>, then <strong>Scan your server's code</strong>. There's nothing to type.</li>
-        <li><strong>Notifications</strong>: give the server your Firebase project and send a test notification to your phone. <a href="../firebase/">How it goes</a>.</li>
-        <li><strong>Add a PC</strong>: the page shows one line to paste into Messages for Windows, under Settings, Accounts, Messages Server.</li>
+        <li><strong>Your accounts</strong>: sign in to each service from the server's page.</li>
+        <li><strong>Tailscale</strong>: sign the server in, so your phone reaches it from anywhere. <a href="../tailscale/">Learn more</a>.</li>
+        <li><strong>Notifications</strong>: give the server your Firebase project. After joining your phone, send it a test notification. <a href="../firebase/">Learn more</a>.</li>
+        <li><strong>Add a phone</strong>: the page shows a code. In Message Link on the phone, choose <strong>I have a server</strong>, then <strong>Scan your server's code</strong>. Check the server shown, then choose <strong>Join</strong>.</li>
+        <li><strong>Add a PC</strong>: the page shows one line to paste into Message Link for Windows, under Settings, Connections, Server.</li>
         <li><strong>Backups</strong>: check the folder and set the password backups are sealed with. If you lose that password, nobody can open those backups, the server included.</li>
       </ul>
     </li>
   </ol>
-  <p>The first device to join is the owner. It's the one that can sign accounts in and out, approve new devices and remove old ones. Other devices read and send as usual.</p>
+  <p>Manage accounts and joined devices on the server's page. Joining a phone or PC does not give it administration rights.</p>
 </main>
 
 <footer class="wrap">
-  <p>Messages is made by Wrenchware. No ads, no analytics, and this site sets no cookies.</p>
+  <p>Message Link is made by Wrenchware. No ads, no analytics, and this site sets no cookies.</p>
   <p><a href="../">Home</a> · <a href="../tailscale/">Tailscale</a> · <a href="../firebase/">Notifications</a> · <a href="../privacy/">Privacy policy</a></p>
 </footer>
 </body>

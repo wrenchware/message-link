@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Proxmox · Messages</title>
-<meta name="description" content="Run Messages Server in its own container on Proxmox VE, made by one command in the host's shell.">
+<title>Proxmox · Message Link</title>
+<meta name="description" content="Run Message Link Server in its own container on Proxmox VE, made by one command in the host's shell.">
 <link rel="icon" href="../assets/icon-32.png" sizes="32x32" type="image/png">
 <link rel="apple-touch-icon" href="../assets/icon-192.png">
 <link rel="stylesheet" href="../assets/site.css">
@@ -12,7 +12,7 @@
 <body>
 <header class="top">
   <div class="wrap">
-    <a class="brand" href="../"><img src="../assets/icon-64.png" alt="" width="32" height="32">Messages</a>
+    <a class="brand" href="../"><img src="../assets/icon-64.png" alt="" width="32" height="32">Message Link</a>
     <nav aria-label="Site">
       <a href="../setup/">Choose your setup</a>
       <a href="../privacy/">Privacy</a>
@@ -22,7 +22,7 @@
 
 <main class="wrap">
   <p class="crumbs"><a href="../setup/">Choose your setup</a></p>
-  <h1>Messages Server on Proxmox</h1>
+  <h1>Message Link Server on Proxmox</h1>
   <p class="lead">One command in the Proxmox host's shell makes a container with the server in it.</p>
 
   <div class="note warn">
@@ -32,8 +32,8 @@
   <h2>What it makes</h2>
   <ul>
     <li>An unprivileged Debian 13 container, started when the host boots.</li>
-    <li>Messages Server inside it as a systemd service, with its Tailscale door.</li>
-    <li>With Google (the default), official Google Chrome from Google's own repository, so Google Messages and Google Voice can sign in on the server's page.</li>
+    <li>Message Link Server inside it as a systemd service, with its Tailscale door.</li>
+    <li>With Google (the default), official Google Chrome from Google's own repository, so Google Messages, Messenger, Google Voice and Instagram can sign in on the server's page.</li>
     <li>Optionally, a folder of the Proxmox host mounted in the container for the backups, so they live outside it.</li>
     <li>A nightly update at about 03:00 for the server and for Chrome.</li>
   </ul>
@@ -70,13 +70,14 @@
   <ol>
     <li>Accept the certificate warning once: the server made its own certificate.</li>
     <li>Enter the setup code, then choose the page's password.</li>
+    <li>If you have a backup, restore it before connecting accounts. Stop the old server first.</li>
+    <li>Sign in to your accounts from the server's page.</li>
     <li>Sign the server in to <a href="../tailscale/">Tailscale</a>.</li>
-    <li>Sign in to your accounts in the server's browser, on the page.</li>
-    <li>Add your phone: scan the code the page shows, from Messages on the phone.</li>
-    <li>Turn on <a href="../firebase/">notifications</a> and send a test to your phone.</li>
+    <li>Set up <a href="../firebase/">notifications</a>.</li>
+    <li>Add your phone: scan the code from your own server's page, check the server shown, then choose <strong>Join</strong>. Send a test notification once the phone is joined.</li>
     <li>Add a PC, and set the backup password.</li>
   </ol>
-  <p>Every step can be skipped and picked up later from the page's front. <a href="../setup/#first-run">More about the first run</a>.</p>
+  <p>Anyone with the page's password can manage the server. Joined phones and PCs read and send messages. Setup steps can be picked up later from the page. <a href="../setup/#first-run">More about the first run</a>.</p>
 
   <h2>Afterwards</h2>
   <dl class="fields">
@@ -90,7 +91,7 @@
   <p>Add them after the command with <code>_</code>, like <code>bash -c "$(curl …)" _ --yes</code>.</p>
   <dl class="fields">
     <div><dt><code>--yes</code></dt><dd>Take every default without asking: no page password and no auth key.</dd></div>
-    <div><dt><code>--no-google</code></dt><dd>Messenger and Instagram only, with no Chrome.</dd></div>
+    <div><dt><code>--no-google</code></dt><dd>No browser sign-in. Leave Chrome enabled to connect new accounts, including Messenger and Instagram.</dd></div>
     <div><dt><code>--ctid &lt;number&gt;</code></dt><dd>The container's id.</dd></div>
     <div><dt><code>--tarball &lt;file or https address&gt;</code></dt><dd>A server package to install instead of the newest release.</dd></div>
   </dl>
@@ -98,13 +99,13 @@
   <h2>Good to know</h2>
   <ul>
     <li>The container has Proxmox's nesting feature on, as Proxmox does by default for new unprivileged containers. The server's own systemd isolation and Chrome's sandbox need it. The container stays unprivileged, with no device or host folder but the backups folder you choose.</li>
-    <li>Chrome always runs with its sandbox here. If the host's kernel doesn't let ordinary accounts make user namespaces, the script warns you and Google stays off; Messenger and Instagram still work.</li>
+    <li>Chrome always runs with its sandbox here. If the host's kernel doesn't let ordinary accounts make user namespaces, the script warns you and browser sign-in stays unavailable.</li>
     <li>Tailscale needs nothing special from the container: the server's door runs Tailscale in userspace, with no tun device.</li>
   </ul>
 </main>
 
 <footer class="wrap">
-  <p>Messages is made by Wrenchware. No ads, no analytics, and this site sets no cookies.</p>
+  <p>Message Link is made by Wrenchware. No ads, no analytics, and this site sets no cookies.</p>
   <p><a href="../">Home</a> · <a href="../setup/">Choose your setup</a> · <a href="../privacy/">Privacy policy</a></p>
 </footer>
 </body>

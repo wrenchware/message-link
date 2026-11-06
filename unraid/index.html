@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Unraid · Messages</title>
-<meta name="description" content="Run Messages Server as a container on Unraid: the folders, the template's fields, the setup code, updates and backups.">
+<title>Unraid · Message Link</title>
+<meta name="description" content="Run Message Link Server as a container on Unraid: the folders, the template's fields, the setup code, updates and backups.">
 <link rel="icon" href="../assets/icon-32.png" sizes="32x32" type="image/png">
 <link rel="apple-touch-icon" href="../assets/icon-192.png">
 <link rel="stylesheet" href="../assets/site.css">
@@ -12,7 +12,7 @@
 <body>
 <header class="top">
   <div class="wrap">
-    <a class="brand" href="../"><img src="../assets/icon-64.png" alt="" width="32" height="32">Messages</a>
+    <a class="brand" href="../"><img src="../assets/icon-64.png" alt="" width="32" height="32">Message Link</a>
     <nav aria-label="Site">
       <a href="../setup/">Choose your setup</a>
       <a href="../privacy/">Privacy</a>
@@ -22,18 +22,18 @@
 
 <main class="wrap">
   <p class="crumbs"><a href="../setup/">Choose your setup</a></p>
-  <h1>Messages Server on Unraid</h1>
+  <h1>Message Link Server on Unraid</h1>
   <p class="lead">A container on your Unraid server, installed from Community Applications.</p>
 
   <div class="note warn">
-    <p><strong>Not public yet.</strong> The image isn't available to pull, and Messages Server isn't listed in Community Applications yet. The steps below are how the install goes once it is.</p>
+    <p><strong>Not public yet.</strong> The image isn't available to pull, and Message Link Server isn't listed in Community Applications yet. The steps below are how the install goes once it is.</p>
   </div>
 
   <h2>Before you start</h2>
   <ul>
     <li>Unraid with Docker turned on.</li>
     <li>A <code>backups</code> share, or another share for the server's backups. The default is <code>/mnt/user/backups/messages</code>.</li>
-    <li>About 4 GB of memory for the container. Google Messages and Google Voice run beside the server's own Google Chrome.</li>
+    <li>About 4 GB of memory for the container. The server's Chrome browser handles new sign-ins for all four services.</li>
   </ul>
 
   <h2>Install</h2>
@@ -44,11 +44,11 @@
 chown 2787:2787 /mnt/user/appdata/messages-server /mnt/user/backups/messages
 chmod 700 /mnt/user/appdata/messages-server /mnt/user/backups/messages</code></pre>
     </li>
-    <li><p><strong>Find it in Apps.</strong> Search for <strong>Messages Server</strong> and choose <strong>Install</strong>.</p></li>
+    <li><p><strong>Find it in Apps.</strong> Search for <strong>Message Link Server</strong> and choose <strong>Install</strong>.</p></li>
     <li>
       <p><strong>Check the fields.</strong> The defaults suit most servers:</p>
       <dl class="fields">
-        <div><dt>Port</dt><dd>8787. The Messages apps and the server's page both use it.</dd></div>
+        <div><dt>Port</dt><dd>8787. The Message Link apps and the server's page both use it.</dd></div>
         <div><dt>Data</dt><dd><code>/mnt/user/appdata/messages-server</code>. Sign-ins, history and devices, sealed with keys kept elsewhere.</dd></div>
         <div><dt>Backups</dt><dd><code>/mnt/user/backups/messages</code>. One encrypted file a day.</dd></div>
         <div><dt>Reach from your tailnet</dt><dd>1, so your phone reaches the server from anywhere through Tailscale. The server's page signs it in.</dd></div>
@@ -67,13 +67,14 @@ chmod 700 /mnt/user/appdata/messages-server /mnt/user/backups/messages</code></p
   <ol>
     <li>Accept the certificate warning once: the server made its own certificate.</li>
     <li>Enter the setup code, then choose the page's password.</li>
+    <li>If you have a backup, restore it before connecting accounts. Stop the old server first.</li>
+    <li>Sign in to your accounts from the server's page.</li>
     <li>Sign the server in to <a href="../tailscale/">Tailscale</a>.</li>
-    <li>Sign in to your accounts in the server's browser, on the page.</li>
-    <li>Add your phone: scan the code the page shows, from Messages on the phone.</li>
-    <li>Turn on <a href="../firebase/">notifications</a> and send a test to your phone.</li>
+    <li>Set up <a href="../firebase/">notifications</a>.</li>
+    <li>Add your phone: scan the code from your own server's page, check the server shown, then choose <strong>Join</strong>. Send a test notification once the phone is joined.</li>
     <li>Add a PC, and set the backup password.</li>
   </ol>
-  <p>Every step can be skipped and picked up later from the page's front. <a href="../setup/#first-run">More about the first run</a>.</p>
+  <p>Anyone with the page's password can manage the server. Joined phones and PCs read and send messages. Setup steps can be picked up later from the page. <a href="../setup/#first-run">More about the first run</a>.</p>
 
   <h2>Updates</h2>
   <p>In <strong>Auto Update Applications</strong>, turn on <code>messages-server</code> in the nightly schedule and set <strong>Docker stop timeout/delay</strong> to at least 60 seconds. The plugin uses its own shorter timeout otherwise. An update restarts the server with the same sign-ins and devices.</p>
@@ -91,13 +92,13 @@ chmod 700 /mnt/user/appdata/messages-server /mnt/user/backups/messages</code></p
   <h2>Good to know</h2>
   <ul>
     <li>Keep the port on your home network. To reach the server away from home, use its Tailscale door rather than publishing the port on Unraid's own Tailscale.</li>
-    <li>The template runs Google Chrome without its own sandbox, because a container with every capability dropped can't give Chrome one. Chrome only ever loads Google's sign-in pages.</li>
+    <li>The template runs Google Chrome without its own sandbox, because a container with every capability dropped can't give Chrome one. The managed browser is restricted to the supported services' sign-in pages.</li>
     <li>Stop it from the Docker tab, or with <code>docker stop -t 60 messages-server</code>, so pending sends finish.</li>
   </ul>
 </main>
 
 <footer class="wrap">
-  <p>Messages is made by Wrenchware. No ads, no analytics, and this site sets no cookies.</p>
+  <p>Message Link is made by Wrenchware. No ads, no analytics, and this site sets no cookies.</p>
   <p><a href="../">Home</a> · <a href="../setup/">Choose your setup</a> · <a href="../privacy/">Privacy policy</a></p>
 </footer>
 </body>

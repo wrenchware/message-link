@@ -5,8 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="referrer" content="no-referrer">
 <meta name="robots" content="noindex">
-<title>Add a phone · Messages</title>
-<meta name="description" content="A Messages Server's code for adding a phone. Scan it with Messages on your Android phone.">
+<title>Add a phone · Message Link</title>
+<meta name="description" content="A Message Link Server's code for adding a phone. Scan it with Message Link on your Android phone.">
 <link rel="icon" href="../assets/icon-32.png" sizes="32x32" type="image/png">
 <link rel="apple-touch-icon" href="../assets/icon-192.png">
 <link rel="stylesheet" href="../assets/site.css">
@@ -14,7 +14,7 @@
 <body>
 <header class="top">
   <div class="wrap">
-    <a class="brand" href="../"><img src="../assets/icon-64.png" alt="" width="32" height="32">Messages</a>
+    <a class="brand" href="../"><img src="../assets/icon-64.png" alt="" width="32" height="32">Message Link</a>
     <nav aria-label="Site">
       <a href="../setup/">Choose your setup</a>
       <a href="../privacy/">Privacy</a>
@@ -24,37 +24,37 @@
 
 <main class="wrap">
   <h1>Add a phone to your server</h1>
-  <p id="for" hidden>This code adds a phone to the Messages Server <strong id="server"></strong>.</p>
+  <p id="for" hidden>This code adds a phone to the Message Link Server <strong id="server"></strong>.</p>
 
   <section id="android" hidden>
-    <p><a class="button" id="open" href="#">Open in Messages</a></p>
-    <p>If nothing happens, open Messages, choose <strong>I have a server</strong>, then <strong>Scan your server's code</strong>, and scan the code on your server's screen again.</p>
+    <p><a class="button" id="open" href="#">Open in Message Link</a></p>
+    <p>If nothing happens, open Message Link, choose <strong>I have a server</strong>, then <strong>Scan your server's code</strong>, and scan the code on your server's screen again.</p>
   </section>
 
   <section id="no-app" hidden>
     <div class="note warn">
-      <p><strong>Messages isn't on this phone yet.</strong> Messages for Android is in invite-only testing on Google Play and isn't public yet. Once it's installed, scan the code from inside the app: <strong>I have a server</strong>, then <strong>Scan your server's code</strong>.</p>
+      <p><strong>Message Link isn't on this phone yet.</strong> Message Link for Android is in invite-only testing on Google Play and isn't public yet. Once it's installed, scan the code from inside the app: <strong>I have a server</strong>, then <strong>Scan your server's code</strong>.</p>
     </div>
   </section>
 
   <section id="elsewhere" hidden>
-    <p>This is a code for Messages on an Android phone, so there's nothing to do with it in this browser. Scan it with the phone instead: in Messages, choose <strong>I have a server</strong>, then <strong>Scan your server's code</strong>.</p>
-    <p>Adding a PC? Use <strong>Add a PC</strong> on the server's page, which gives you a line to paste into Messages for Windows. See the <a href="../windows/#server">Windows guide</a>.</p>
+    <p>This is a code for Message Link on an Android phone, so there's nothing to do with it in this browser. Scan it with the phone instead: in Message Link, choose <strong>I have a server</strong>, then <strong>Scan your server's code</strong>.</p>
+    <p>Adding a PC? Use <strong>Add a PC</strong> on the server's page, which gives you a line to paste into Message Link for Windows. See the <a href="../windows/#server">Windows guide</a>.</p>
   </section>
 
   <div class="note warn" id="damaged" hidden>
-    <p>This link is missing part of the code. Show the code on your server's page again, and scan it from Messages on your phone.</p>
+    <p>This link is missing part of the code. Show the code on your server's page again, and scan it from Message Link on your phone.</p>
   </div>
 
   <div class="note warn" id="newer" hidden>
-    <p>This code comes from a newer Messages Server than your phone's Messages knows. Update Messages on your phone, then scan the code again.</p>
+    <p>This code comes from a newer Message Link Server than your phone's Message Link knows. If Message Link asks for an update, update it and scan a new code from your own server's page.</p>
   </div>
 
   <section id="general">
     <h2>What this is</h2>
-    <p>When you add a phone on your Messages Server's page, it shows a code. Scanning it from Messages on the phone joins the phone to the server with nothing to type: the code holds the server's name, the proof that it's really your server, and a one-time pairing code that works for 10 minutes.</p>
-    <p>If your phone's camera app brought you here, that's fine. Open Messages and scan the code from there: <strong>I have a server</strong>, then <strong>Scan your server's code</strong>.</p>
-    <p>Don't have Messages for Android? It's in invite-only testing on Google Play and isn't public yet. <a href="../setup/">Choose your setup</a> shows what else you can do.</p>
+    <p>When you add a phone on your Message Link Server's page, it shows a code. Scan it with Message Link on the phone, check the server shown, then choose <strong>Join</strong>. Opening a link alone does not join. There is nothing to type: the code holds the server's name, the proof that it's really your server, and a one-time pairing code that works for 10 minutes.</p>
+    <p>If your phone's camera app brought you here, that's fine. Open Message Link and scan the code from there: <strong>I have a server</strong>, then <strong>Scan your server's code</strong>.</p>
+    <p>Don't have Message Link for Android? It's in invite-only testing on Google Play and isn't public yet. <a href="../setup/">Choose your setup</a> shows what else you can do.</p>
   </section>
 
   <div class="note">
@@ -63,7 +63,7 @@
 </main>
 
 <footer class="wrap">
-  <p>Messages is made by Wrenchware. No ads, no analytics, and this site sets no cookies.</p>
+  <p>Message Link is made by Wrenchware. No ads, no analytics, and this site sets no cookies.</p>
   <p><a href="../">Home</a> · <a href="../setup/">Choose your setup</a> · <a href="../privacy/">Privacy policy</a></p>
 </footer>
 
@@ -90,11 +90,12 @@ function readCode() {
     if (!Object.prototype.hasOwnProperty.call(values, key)) values[key] = value;
   });
 
-  if (readable && values.v && values.v !== '1') { show('newer'); return; }
-  var complete = readable && values.v === '1' && /^[0-9a-fA-F]{64}$/.test(values.f || '') && values.c && (values.n || values.a);
+  if (readable && values.v && values.v !== '1' && values.v !== '2') { show('newer'); return; }
+  var portValid = values.v === '1' || (values.v === '2' && /^[0-9]+$/.test(values.p || '') && Number(values.p) >= 1 && Number(values.p) <= 65535);
+  var complete = readable && portValid && /^[0-9a-fA-F]{64}$/.test(values.f || '') && values.c && (values.n || values.a);
   if (!complete) { show('damaged'); return; }
 
-  document.getElementById('server').textContent = values.n || values.a;
+  document.getElementById('server').textContent = values.n ? values.n + (values.v === '2' ? ':' + values.p : '') : values.a;
   show('for');
   document.getElementById('general').hidden = true;
 

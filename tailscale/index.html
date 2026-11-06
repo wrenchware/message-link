@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Tailscale · Messages</title>
-<meta name="description" content="How Messages uses Tailscale so your phone reaches your Messages Server away from home, and the steps the server's page walks you through.">
+<title>Tailscale · Message Link</title>
+<meta name="description" content="How Message Link uses Tailscale so your phone reaches your Message Link Server away from home, and the steps the server's page walks you through.">
 <link rel="icon" href="../assets/icon-32.png" sizes="32x32" type="image/png">
 <link rel="apple-touch-icon" href="../assets/icon-192.png">
 <link rel="stylesheet" href="../assets/site.css">
@@ -12,7 +12,7 @@
 <body>
 <header class="top">
   <div class="wrap">
-    <a class="brand" href="../"><img src="../assets/icon-64.png" alt="" width="32" height="32">Messages</a>
+    <a class="brand" href="../"><img src="../assets/icon-64.png" alt="" width="32" height="32">Message Link</a>
     <nav aria-label="Site">
       <a href="../setup/">Choose your setup</a>
       <a href="../privacy/">Privacy</a>
@@ -23,13 +23,13 @@
 <main class="wrap">
   <p class="crumbs"><a href="../setup/">Choose your setup</a></p>
   <h1>Reaching your server from anywhere</h1>
-  <p class="lead">Your phone reaches your Messages Server through Tailscale, at home or away, without opening anything on your router to the internet.</p>
+  <p class="lead">Your phone reaches your Message Link Server through Tailscale, at home or away, without opening anything on your router to the internet.</p>
 
   <h2>What Tailscale is for</h2>
-  <p>Tailscale makes a private network of your own devices, wherever they are. Messages Server joins it as a machine of its own, called <code>messages-server</code>, and Messages on your phone joins it too. Only devices signed in to your Tailscale account get through, and the server still asks each one to prove it was added.</p>
+  <p>Tailscale makes a private network of your own devices, wherever they are. Message Link Server joins it as a machine of its own, called <code>messages-server</code>, and Message Link on your phone joins it too. Only devices signed in to your Tailscale account get through, and the server still asks each one to prove it was added.</p>
   <ul>
     <li>A free personal Tailscale account is enough.</li>
-    <li>Messages runs Tailscale itself on the phone. You don't need the Tailscale app there.</li>
+    <li>Message Link runs Tailscale itself on the phone. You don't need the Tailscale app there.</li>
     <li>Nothing on the computer the server runs on changes. If it already has Tailscale, that stays as it is.</li>
     <li>Tailscale's own logging is turned off in the server and the phone: nothing about your network is uploaded.</li>
   </ul>
@@ -39,7 +39,7 @@
   <ol class="steps">
     <li><p><strong>Sign in to Tailscale.</strong> Choose <strong>Sign in to Tailscale</strong> and sign in with your own account. The same link is shown as a code too, if signing in on your phone is handier. The step turns green by itself.</p></li>
     <li><p><strong>Approve it</strong>, if your Tailscale network asks for new devices to be approved. The page links to the machine.</p></li>
-    <li><p><strong>Turn off key expiry</strong> for the server. Otherwise Tailscale signs it out after 180 days. The page lists each Messages phone too, so you can do the same for them.</p></li>
+    <li><p><strong>Turn off key expiry</strong> for the server. Otherwise Tailscale signs it out after 180 days. The page lists each Message Link phone too, so you can do the same for them.</p></li>
     <li><p><strong>Only your devices can reach the server.</strong> If you're the only person on your Tailscale network, this is already done, and the page says why. If others share it, the page shows the rule that keeps them out.</p></li>
     <li><p><strong>Tailnet Lock</strong>, only if your network uses it: the server has to be signed from one of your signing devices. <strong>Show the command</strong> gives you the line to run there.</p></li>
   </ol>
@@ -49,15 +49,15 @@
   <ol>
     <li>In Tailscale's admin console, make an OAuth client under Settings. The page says which permissions to give it, with a link.</li>
     <li>Paste the client's ID and secret into the page, once.</li>
-    <li>The server turns off key expiry for itself and each Messages phone, approves them if your network needs approval, and adds the access rule. It tells you what it changed.</li>
+    <li>The server turns off key expiry for itself and each Message Link phone, approves them if your network needs approval, and adds the access rule. It tells you what it changed.</li>
   </ol>
   <p>It never touches Tailnet Lock: signing stays on your own trusted device. You can remove the OAuth client on the page at any time, and it's never put in a backup.</p>
 
   <h2>On your phone</h2>
   <ul>
-    <li>Joining a server signs the phone in to Tailscale first. The sign-in opens in a browser tab and comes back to Messages by itself.</li>
-    <li>Sign in with the same Tailscale account as the server. If the phone is signed in as someone else, Messages says so by name before it asks to join.</li>
-    <li>In Messages' Settings, the Tailscale section shows the account, the phone's name on your network, whether it reaches the server directly or through Tailscale's relays, and its key expiry. <strong>Sign out</strong> and <strong>Use another account</strong> are there too.</li>
+    <li>Joining a server signs the phone in to Tailscale first. The sign-in opens in a browser tab and comes back to Message Link by itself.</li>
+    <li>Sign in with the same Tailscale account as the server. If the phone is signed in as someone else, Message Link says so by name before it asks to join.</li>
+    <li>In Message Link' Settings, the Tailscale section shows the account, the phone's name on your network, whether it reaches the server directly or through Tailscale's relays, and its key expiry. <strong>Sign out</strong> and <strong>Use another account</strong> are there too.</li>
   </ul>
 
   <h2>When something changes</h2>
@@ -76,7 +76,7 @@
 </main>
 
 <footer class="wrap">
-  <p>Messages is made by Wrenchware. No ads, no analytics, and this site sets no cookies.</p>
+  <p>Message Link is made by Wrenchware. No ads, no analytics, and this site sets no cookies.</p>
   <p><a href="../">Home</a> · <a href="../setup/">Choose your setup</a> · <a href="../firebase/">Notifications</a> · <a href="../privacy/">Privacy policy</a></p>
 </footer>
 </body>

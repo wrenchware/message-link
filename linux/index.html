@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Linux · Messages</title>
-<meta name="description" content="Run Messages Server as a systemd service on Debian, Ubuntu or a Linux container of your own, without Docker.">
+<title>Linux · Message Link</title>
+<meta name="description" content="Run Message Link Server as a systemd service on Debian, Ubuntu or a Linux container of your own, without Docker.">
 <link rel="icon" href="../assets/icon-32.png" sizes="32x32" type="image/png">
 <link rel="apple-touch-icon" href="../assets/icon-192.png">
 <link rel="stylesheet" href="../assets/site.css">
@@ -12,7 +12,7 @@
 <body>
 <header class="top">
   <div class="wrap">
-    <a class="brand" href="../"><img src="../assets/icon-64.png" alt="" width="32" height="32">Messages</a>
+    <a class="brand" href="../"><img src="../assets/icon-64.png" alt="" width="32" height="32">Message Link</a>
     <nav aria-label="Site">
       <a href="../setup/">Choose your setup</a>
       <a href="../privacy/">Privacy</a>
@@ -22,7 +22,7 @@
 
 <main class="wrap">
   <p class="crumbs"><a href="../setup/">Choose your setup</a></p>
-  <h1>Messages Server on Linux</h1>
+  <h1>Message Link Server on Linux</h1>
   <p class="lead">A systemd service on Debian, Ubuntu, or a Linux container you made yourself. No Docker needed.</p>
 
   <div class="note warn">
@@ -32,7 +32,7 @@
   <h2>Before you start</h2>
   <ul>
     <li>A 64-bit x86 computer with systemd. Everything the server runs on is inside the package; the installer adds the few system libraries that are missing (ICU, OpenSSL 3, CA certificates, time zones).</li>
-    <li>For Google Messages and Google Voice: Debian or Ubuntu, and a kernel that lets ordinary accounts make user namespaces, which Google Chrome's sandbox is built from. On Ubuntu 24.04 and later that also means <code>kernel.apparmor_restrict_unprivileged_userns</code> set to 0.</li>
+    <li>For browser sign-in to any service: Debian or Ubuntu, and a kernel that lets ordinary accounts make user namespaces, which Google Chrome's sandbox is built from. On Ubuntu 24.04 and later that also means <code>kernel.apparmor_restrict_unprivileged_userns</code> set to 0.</li>
   </ul>
 
   <h2>Install</h2>
@@ -41,7 +41,7 @@
       <p><strong>Unpack the package and run its installer</strong> (put the version you downloaded in place of <code>&lt;version&gt;</code>):</p>
 <pre><code>tar -xzf messages-server-&lt;version&gt;-linux-x64.tar.gz
 sudo ./messages-server-&lt;version&gt;-linux-x64/install.sh --google</code></pre>
-      <p>Leave out <code>--google</code> for Messenger and Instagram only. With it, the installer adds official Google Chrome from Google's own repository and a virtual display for it to draw on.</p>
+      <p>Use <code>--google</code> to connect new accounts. It installs official Google Chrome and a virtual display; Messenger and Instagram sign-in need the browser too. On a plain Linux host, approve sign-in only if you trust its other users and programs. For an unattended install on a trusted host, use <code>--google --allow-host-sign-in</code>. Updates preserve the existing permission.</p>
       <p>It makes an account called <code>messages-server</code>, puts the program in <code>/opt/messages-server</code> and starts <code>messages-server.service</code>.</p>
     </li>
     <li>
@@ -68,13 +68,14 @@ MESSAGES_TAILNET=1</code></pre>
   <ol>
     <li>Accept the certificate warning once: the server made its own certificate.</li>
     <li>Enter the setup code, then choose the page's password.</li>
+    <li>If you have a backup, restore it before connecting accounts. Stop the old server first.</li>
+    <li>Sign in to your accounts from the server's page.</li>
     <li>Sign the server in to <a href="../tailscale/">Tailscale</a>.</li>
-    <li>Sign in to your accounts in the server's browser, on the page.</li>
-    <li>Add your phone: scan the code the page shows, from Messages on the phone.</li>
-    <li>Turn on <a href="../firebase/">notifications</a> and send a test to your phone.</li>
+    <li>Set up <a href="../firebase/">notifications</a>.</li>
+    <li>Add your phone: scan the code from your own server's page, check the server shown, then choose <strong>Join</strong>. Send a test notification once the phone is joined.</li>
     <li>Add a PC, and set the backup password.</li>
   </ol>
-  <p>Every step can be skipped and picked up later from the page's front. <a href="../setup/#first-run">More about the first run</a>.</p>
+  <p>Anyone with the page's password can manage the server. Joined phones and PCs read and send messages. Setup steps can be picked up later from the page. <a href="../setup/#first-run">More about the first run</a>.</p>
 
   <h2>Afterwards</h2>
   <dl class="fields">
@@ -94,7 +95,7 @@ MESSAGES_TAILNET=1</code></pre>
 </main>
 
 <footer class="wrap">
-  <p>Messages is made by Wrenchware. No ads, no analytics, and this site sets no cookies.</p>
+  <p>Message Link is made by Wrenchware. No ads, no analytics, and this site sets no cookies.</p>
   <p><a href="../">Home</a> · <a href="../setup/">Choose your setup</a> · <a href="../privacy/">Privacy policy</a></p>
 </footer>
 </body>

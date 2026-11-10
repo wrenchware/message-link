@@ -36,14 +36,39 @@
   <h2>Make the project</h2>
   <p>Open <a href="https://console.firebase.google.com/" rel="noopener">Firebase's console</a> and sign in. Use a personal Google account: a work or school account's organisation often blocks the key file you need.</p>
   <ol class="steps">
-    <li><p><strong>Create a project.</strong> Any name works. Google Analytics isn't needed, so you can turn it off. If Firebase asks you to accept its terms, that happens once.</p></li>
     <li>
-      <p><strong>Add an Android app</strong> to the project with the package name:</p>
-<pre><code>com.wrenchware.messages</code></pre>
-      <p>That's Message Link from Google Play. Test builds use <code>com.wrenchware.messages.dev</code>; add a second app with that name if you have one. You can skip Firebase's steps after the app is registered.</p>
+      <p><strong>Create a project.</strong> Choose <strong>Get started by setting up a Firebase project</strong>.</p>
+      <figure class="shot"><img src="01-new-project.png" width="1000" height="460" alt="Firebase's welcome page, with Get started by setting up a Firebase project."></figure>
+      <p>Name it <strong>Message Link Notifications</strong>; any name works. Accept Firebase's terms (it asks only the first time), turn off <strong>Join the Google Developer Program</strong>, and choose <strong>Continue</strong>.</p>
+      <figure class="shot"><img src="02-name-terms.png" width="740" height="590" alt="The project name, Firebase's terms accepted and the Google Developer Program turned off."></figure>
+      <p>Turn off <strong>Enable Gemini in Firebase</strong> and choose <strong>Continue</strong>. Message Link doesn't use it.</p>
+      <figure class="shot"><img src="03-gemini-off.png" width="740" height="690" alt="AI assistance for your Firebase project, with Enable Gemini in Firebase turned off."></figure>
+      <p>Turn off <strong>Enable Google Analytics for this project</strong> and choose <strong>Create project</strong>. When Firebase says the project is ready, choose <strong>Continue</strong>.</p>
+      <figure class="shot"><img src="04-analytics-off.png" width="740" height="640" alt="Google Analytics for your Firebase project, turned off, with Create project."></figure>
     </li>
-    <li><p><strong>Download <code>google-services.json</code></strong>: Project settings, General, under your Android app.</p></li>
-    <li><p><strong>Make a private key</strong>: Project settings, Service accounts, <strong>Generate new private key</strong>. It downloads a second file. That file is a secret: give it only to your server.</p></li>
+    <li>
+      <p><strong>Add the Android app.</strong> On the project's page, choose <strong>Add app</strong>, then the Android icon.</p>
+      <figure class="shot"><img src="05-add-android.png" width="480" height="130" alt="The project's platforms, with Android chosen."></figure>
+      <p>Enter this package name, leave the nickname empty, and choose <strong>Register app</strong>:</p>
+<pre><code>com.wrenchware.messages</code></pre>
+      <figure class="shot"><img src="06-register.png" width="760" height="540" alt="Register app, with the package name com.wrenchware.messages."></figure>
+    </li>
+    <li>
+      <p><strong>Download <code>google-services.json</code></strong> with the button Firebase shows next. The rest of that step is for app developers: just choose <strong>Next</strong>.</p>
+      <figure class="shot"><img src="07-download-json.png" width="760" height="520" alt="Download and then add config file, with Download google-services.json."></figure>
+      <p>Firebase then shows code for adding its SDK. Message Link already has it, so choose <strong>Next</strong>, then <strong>Continue to console</strong>.</p>
+      <figure class="shot"><img src="08-skip-sdk.png" width="720" height="620" alt="Add Firebase SDK, with code to skip and the Next button."></figure>
+      <figure class="shot"><img src="09-continue.png" width="760" height="520" alt="You're all set, with Continue to console."></figure>
+      <p>If you missed the download, it's in Project settings, General, under your Android app.</p>
+    </li>
+    <li>
+      <p><strong>Make a private key.</strong> Open <strong>Settings</strong>, then <strong>Service accounts</strong>.</p>
+      <figure class="shot"><img src="10-settings-menu.png" width="495" height="390" alt="Firebase's Settings menu, with Service accounts."></figure>
+      <p>Choose <strong>Generate new private key</strong>. You don't need to change the language above it.</p>
+      <figure class="shot"><img src="11-service-accounts.png" width="1110" height="800" alt="Project settings, Service accounts, with Generate new private key."></figure>
+      <p>Choose <strong>Generate key</strong>. It downloads a second file. That file is a secret: give it only to your server, and delete your copy once the server has it.</p>
+      <figure class="shot"><img src="12-generate-key.png" width="715" height="280" alt="Firebase's warning to keep the private key confidential, with Generate key."></figure>
+    </li>
   </ol>
 
   <h2>On the server's page</h2>

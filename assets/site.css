@@ -190,3 +190,7 @@ dl.fields dd { margin: 2px 0 0; color: var(--quiet); }
   main { padding-top: 24px; }
   .top nav { gap: 14px; }
 }
+
+/* Pictures of a step, under its text. */
+figure.shot { margin: 12px 0 16px; }
+figure.shot img { display: block; max-width: 100%; height: auto; border: 1px solid var(--line); border-radius: var(--radius); }

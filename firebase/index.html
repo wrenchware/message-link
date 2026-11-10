@@ -30,7 +30,7 @@
   <ul>
     <li>The project is yours, made with your own Google account, and it's free. No one else's service is in between.</li>
     <li>Each notification is sealed for the phone it goes to. Google carries it without being able to read it.</li>
-    <li>Without it, Message Link still works on the phone. You just see new messages when you open the app.</li>
+    <li>A phone needs it before it can join the server: the server shows no phone code until notifications are set up.</li>
   </ul>
 
   <h2>Make the project</h2>
@@ -72,13 +72,13 @@
   </ol>
 
   <h2>On the server's page</h2>
-  <p>The Notifications step of the server's first run, and its card on the page's front afterwards:</p>
+  <p>In the Notifications step of the server's setup, choose <strong>Set up notifications…</strong>. Afterwards it's the server's <strong>Notifications</strong> page.</p>
   <ol class="steps">
-    <li><p><strong>Drop both files</strong> on the one drop area, in any order. The page tells them apart and says plainly if something is missing. Once it has the first file, its links go straight to your project's pages.</p></li>
+    <li><p><strong>Drop both files here, or Choose files</strong>, in any order. The page ticks each file as it arrives and says plainly if something is missing. Once it has the first file, its links go straight to your project's pages. Enter the server password and choose <strong>Turn on notifications</strong>.</p></li>
     <li><p><strong>The server checks them</strong> with a trial send that goes nowhere. It proves the Cloud Messaging API is on and the key is allowed to send. If not, the page says what to fix and links to it.</p></li>
-    <li><p><strong>Send a test</strong> to one of your phones. The phone answers when it shows it, so the page says something like "Arrived on Pixel in 2 s", or what went wrong.</p></li>
+    <li><p><strong>Send test</strong> to one of your phones, beside it on the Notifications page. The phone answers when it shows it, so the page says something like "Arrived on Pixel in 2 s", or what went wrong.</p></li>
   </ol>
-  <p>Phones that are already joined sign up for notifications straight away; there's nothing to restart. The card then shows the last notification sent, any failures for each phone with the reason, and phones that haven't signed up.</p>
+  <p>Phones that are already joined sign up for notifications straight away; there's nothing to restart. The Notifications page then shows the last notification sent, any failures for each phone with the reason, and phones that haven't signed up.</p>
 
   <h2>If it doesn't work</h2>
   <dl class="fields">
@@ -91,12 +91,12 @@
       <dd>Turn on the Firebase Cloud Messaging API for the project. The page links to it.</dd>
     </div>
     <div>
-      <dt>You can't make a private key</dt>
+      <dt>Can't create a private key?</dt>
       <dd>The Google account belongs to an organisation that blocks key files. Make the project with a personal Google account instead.</dd>
     </div>
     <div>
       <dt>Changing projects</dt>
-      <dd>Give the server the new project's two files. Phones sign up again by themselves.</dd>
+      <dd>Choose <strong>Replace…</strong> beside the project on the Notifications page and give it the new project's two files. Phones sign up again by themselves.</dd>
     </div>
   </dl>
 </main>

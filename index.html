@@ -21,9 +21,17 @@
 </header>
 
 <main class="wrap">
-  <h1>Message Link</h1>
-  <p class="lead">Your texts and chats from Google Messages, Messenger, Google Voice and Instagram, in one inbox.</p>
+  <h1>Your texts and chats in one inbox</h1>
+  <p class="lead">Google Messages, Messenger, Google Voice and Instagram, together on your PC and your phone.</p>
+  <p class="status">Message Link isn't public yet. The guides below show how setup goes; <a href="#downloads">downloads</a> come with the first release.</p>
   <p>Message Link is a native app for Windows 11, and there is an Android app too. It talks to each service directly, the same way the service's own app or website does. Nothing goes through anyone else's cloud: your accounts are signed in on your own PC, or on a Message Link Server that you run at home.</p>
+
+  <figure class="shot"><img src="assets/windows.png" width="1224" height="827" alt="Message Link on Windows: the conversation list beside a conversation with Maya Chen."></figure>
+  <div class="phones">
+    <img src="assets/phone-inbox.png" width="540" height="1170" alt="Message Link on Android: conversations from all four services in one list.">
+    <img src="assets/phone-chat.png" width="540" height="1170" alt="One person's Instagram and Google Messages conversations shown together.">
+  </div>
+  <p class="quiet">Pictures use made-up people.</p>
 
   <h2>Pick how you'll use it</h2>
   <div class="cards">
@@ -35,7 +43,7 @@
     <a class="card" href="windows/#phone">
       <h3>A Windows PC and a phone</h3>
       <p>The PC also runs Message Link Server, so your phone can use your accounts too. The PC stays on.</p>
-      <span class="more">Windows guide</span>
+      <span class="more">Add a phone</span>
     </a>
     <a class="card" href="setup/#home-server">
       <h3>A home server and a phone</h3>
@@ -49,9 +57,10 @@
   <ul>
     <li>It signs in to each service in its own browser. You type into the service's real sign-in page, the same as anywhere else.</li>
     <li>Your phone reaches it through <a href="tailscale/">Tailscale</a>, at home or away, without opening anything to the internet.</li>
-    <li>Phone notifications go through <a href="firebase/">a Firebase project of your own</a>, sealed so Google can carry them without reading them.</li>
+    <li>Phone notifications go through <a href="firebase/">a Firebase project of your own</a>. Each notification is locked so only your phone can read it.</li>
     <li>It backs itself up to a folder you choose, once a day.</li>
   </ul>
+  <p>Message Link has no servers of its own, so your conversations and sign-ins never pass through us. Tailscale and Firebase fill that gap. Both are free, and you create your own copy of each, so they answer only to you. Only using it on a PC? You can skip both.</p>
 
   <h2>What each service needs</h2>
   <ul>

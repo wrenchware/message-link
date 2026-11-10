@@ -79,18 +79,19 @@
   <h2 id="first-run">The server's first run</h2>
   <p>Every install ends the same way: at the server's own page, <code>https://&lt;your server&gt;:8787/</code>, opened in a browser on your home network.</p>
   <p>Anyone with this page's password can manage the server. Phones and PCs that join can read and send messages.</p>
-  <p>Have a backup? Restore it before connecting accounts. Stop the old server first.</p>
+  <p>Have a backup? Restore it before connecting accounts, with <strong>Restore from a backup</strong> on the first setup screen. Stop the old server first.</p>
   <ol class="steps">
     <li><strong>Accept the certificate warning once.</strong> The server made its own certificate, so your browser doesn't know it yet. To be thorough, compare the certificate's SHA-256 fingerprint in the browser with the <code>tls fingerprint</code> line in the server's log.</li>
     <li><strong>Enter the setup code.</strong> The server prints it in its log the first time it starts. Each guide shows where to find it.</li>
-    <li><strong>Choose the page's password.</strong> 12 characters or more, and one you use nowhere else. The page asks for it again before anything that matters, like adding a device.</li>
-    <li><strong>Follow the steps.</strong> One screen each, and you can skip any of them. A checklist on the page's front keeps whatever is left, and each card reopens its own step.
+    <li><strong>Choose the page's password.</strong> 12 characters or more, and one you use nowhere else. The page asks for it again before anything that matters, like adding a device, unless you typed it a few minutes before.</li>
+    <li><strong>Follow the steps.</strong> Seven screens, and you can skip any of them. On the Overview, <strong>Continue setup</strong> goes back to the step you left, and <strong>Finish setting up</strong> lists what is left. If you hid that list, <strong>About</strong>, <strong>Setup</strong> has <strong>Open setup</strong> and <strong>Show setup steps</strong>.
       <ul>
-        <li><strong>Your accounts</strong>: sign in to each service from the server's page.</li>
-        <li><strong>Tailscale</strong>: sign the server in, so your phone reaches it from anywhere. <a href="../tailscale/">Learn more</a>.</li>
-        <li><strong>Notifications</strong>: give the server your Firebase project. After joining your phone, send it a test notification. <a href="../firebase/">Learn more</a>.</li>
+        <li><strong>Before you start</strong>: what the server does, and <strong>Restore from a backup</strong> if you're moving from another server or PC.</li>
+        <li><strong>Your accounts</strong>: choose <strong>Connect…</strong> beside each service and sign in.</li>
+        <li><strong>Tailscale</strong>: sign the server in with the same Tailscale account you'll use on your phone, then <strong>Turn off key expiry</strong>. <a href="../tailscale/">Learn more</a>.</li>
+        <li><strong>Notifications</strong>: give the server two files from your Firebase project. A phone needs this before it can join. After joining your phone, send it a test notification. <a href="../firebase/">Learn more</a>.</li>
         <li><strong>Add a phone</strong>: the page shows a code. In Message Link on the phone, choose <strong>I have a server</strong>, then <strong>Scan your server's code</strong>. Check the server shown, then choose <strong>Join</strong>.</li>
-        <li><strong>Add a PC</strong>: the page shows one line to paste into Message Link for Windows, under Settings, Connections, Server.</li>
+        <li><strong>Add a PC</strong>: the page shows one line to paste into Message Link for Windows, under Settings, Connections, Message Link Server.</li>
         <li><strong>Backups</strong>: choose a folder or network share and set the password backups are sealed with. If you lose that password, nobody can open those backups, the server included. <a href="#backups">Learn more</a>.</li>
       </ul>
     </li>

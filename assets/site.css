@@ -76,6 +76,7 @@ li { margin-bottom: 6px; }
 li > ul, li > ol { margin-top: 6px; }
 .lead { font-size: 20px; color: var(--fg); }
 .quiet { color: var(--quiet); }
+.status { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 10px 14px; font-size: 16px; }
 .crumbs { font-size: 15px; margin-bottom: 8px; }
 strong { font-weight: 600; }
 hr { border: 0; border-top: 1px solid var(--line); margin: 32px 0; }
@@ -193,4 +194,6 @@ dl.fields dd { margin: 2px 0 0; color: var(--quiet); }
 
 /* Pictures of a step, under its text. */
 figure.shot { margin: 12px 0 16px; }
+.phones { display: flex; justify-content: center; gap: 14px; margin: 0 0 8px; }
+.phones img { width: 46%; max-width: 260px; height: auto; border: 1px solid var(--line); border-radius: 18px; }
 figure.shot img { display: block; max-width: 100%; height: auto; border: 1px solid var(--line); border-radius: var(--radius); }

@@ -370,3 +370,7 @@ figure.shot img { display: block; max-width: 100%; height: auto; border: 1px sol
   .devices { gap: 8px; }
   .devices span { flex-direction: column; gap: 4px; font-size: 13px; }
 }
+/* Phone pictures: three to a row, with the phone's rounder corners. */
+.gallery.tall { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.gallery.tall a, .gallery.tall img { border-radius: 18px; }
+@media (max-width: 560px) { .gallery.tall { grid-template-columns: repeat(2, minmax(0, 1fr)); } }

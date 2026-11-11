@@ -14,7 +14,7 @@
   <a class="brand" href="./"><img src="assets/icon-64.png" alt="" width="40" height="40">Message Link</a>
   <nav aria-label="Site">
     <a href="./" class="here" aria-current="page"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.5 10.5 12 3.5l8.5 7V20a.5.5 0 0 1-.5.5h-5v-6h-6v6H4a.5.5 0 0 1-.5-.5z"/></svg><span>Overview</span></a>
-    <a href="setup/"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="m15.2 8.8-2 4.4-4.4 2 2-4.4z"/></svg><span>Choose your setup</span></a>
+    <a href="setup/"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="m15.2 8.8-2 4.4-4.4 2 2-4.4z"/></svg><span>Get started</span></a>
     <p class="grp">Where it runs</p>
     <a href="windows/"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="3.5" width="7.5" height="7.5" rx="1"/><rect x="13" y="3.5" width="7.5" height="7.5" rx="1"/><rect x="3.5" y="13" width="7.5" height="7.5" rx="1"/><rect x="13" y="13" width="7.5" height="7.5" rx="1"/></svg><span>Windows</span></a>
     <a href="unraid/"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="4" width="17" height="7" rx="1.5"/><rect x="3.5" y="13" width="17" height="7" rx="1.5"/><path d="M7.5 7.5h.01M7.5 16.5h.01"/></svg><span>Unraid</span></a>
@@ -35,7 +35,7 @@
   <h1>Your texts and chats in one inbox</h1>
   <p class="lead">Google Messages, Messenger, Google Voice and Instagram, together on your PC and your phone.</p>
   <p class="status">Message Link isn't public yet. The guides below show how setup goes; <a href="#downloads">downloads</a> come with the first release.</p>
-  <p>Message Link is a native app for Windows 11, and there is an Android app too. It talks to each service directly, the same way the service's own app or website does. Nothing goes through anyone else's cloud: your accounts are signed in on your own PC, or on a Message Link Server that you run at home.</p>
+  <p>Message Link is a native app for Windows 11, and there is an Android app too. It talks to each service directly, the same way the service's own app or website does. Nothing goes through anyone else's cloud: your accounts are signed in on a Message Link Server you run yourself, on your PC or at home.</p>
 
   <figure class="shot"><img src="assets/windows.png" width="1200" height="900" alt="Message Link on Windows: the conversation list beside Maya Chen's conversations from two services, shown as one."></figure>
   <div class="phones">
@@ -44,27 +44,8 @@
   </div>
   <p class="quiet">Pictures use made-up people.</p>
 
-  <h2>Pick how you'll use it</h2>
-  <div class="cards">
-    <a class="card" href="windows/">
-      <h3>Just a Windows PC</h3>
-      <p>Message Link starts its own server on the PC. Connect your accounts on the server's page.</p>
-      <span class="more">Windows guide</span>
-    </a>
-    <a class="card" href="windows/#phone">
-      <h3>A Windows PC and a phone</h3>
-      <p>The PC also runs Message Link Server, so your phone can use your accounts too. The PC stays on.</p>
-      <span class="more">Add a phone</span>
-    </a>
-    <a class="card" href="setup/#home-server">
-      <h3>A home server and a phone</h3>
-      <p>Run Message Link Server on Unraid, Proxmox, Docker or Linux. Your phone and PCs all use it, at home or away.</p>
-      <span class="more">Choose where it runs</span>
-    </a>
-  </div>
-
   <h2>What's a Message Link Server?</h2>
-  <p>A small program that stays signed in to your services on a computer you own. The Android app needs one: phones put apps to sleep, so the server keeps your accounts connected all day and tells your phone when a message arrives.</p>
+  <p>A small program that stays signed in to your services on a computer you own. Every PC and phone with Message Link joins one, so they all show the same conversations. Message Link for Windows has one built in.</p>
   <ul>
     <li>It signs in to each service in its own browser. You type into the service's real sign-in page, the same as anywhere else.</li>
     <li>Your phone reaches it through <a href="tailscale/">Tailscale</a>, at home or away, without opening anything to the internet.</li>
@@ -72,6 +53,22 @@
     <li>It backs itself up to a folder you choose, once a day.</li>
   </ul>
   <p>Message Link has no servers of its own, so your conversations and sign-ins never pass through us. Tailscale and Firebase fill that gap. Both are free, and you create your own copy of each, so they answer only to you. Only using it on a PC? You can skip both.</p>
+
+  <h2>Where your server runs</h2>
+  <p>Pick the computer that keeps your accounts connected. Any number of PCs and phones can join it either way.</p>
+  <div class="cards">
+    <a class="card" href="windows/">
+      <h3>On your Windows PC</h3>
+      <p>Built into Message Link for Windows. Your accounts stay connected while the PC is on.</p>
+      <span class="more">Windows guide</span>
+    </a>
+    <a class="card" href="setup/#home-server">
+      <h3>On a computer that's always on</h3>
+      <p>Unraid, Proxmox, Docker or Linux. Your phone gets messages while your PC is asleep.</p>
+      <span class="more">Choose where it runs</span>
+    </a>
+  </div>
+  <p><a href="setup/">Get started</a> shows how it fits together.</p>
 
   <h2>What each service needs</h2>
   <ul>

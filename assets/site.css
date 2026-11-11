@@ -311,3 +311,12 @@ figure.shot img { display: block; max-width: 100%; height: auto; border: 1px sol
   h1 { font-size: 23px; }
   [id] { scroll-margin-top: 12px; }
 }
+
+/* A guide's pictures, two to a row, each a link to itself at full size. */
+.gallery { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin: 12px 0 8px; }
+.gallery figure { margin: 0; }
+.gallery a { display: block; border-radius: 12px; }
+.gallery img { display: block; width: 100%; height: auto; border: 1px solid var(--line); border-radius: 12px; }
+.gallery a:hover img { border-color: var(--fieldline); }
+.gallery figcaption { margin-top: 6px; color: var(--muted); font-size: 13px; line-height: 1.45; }
+@media (max-width: 560px) { .gallery { grid-template-columns: 1fr; } }

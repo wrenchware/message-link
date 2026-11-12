@@ -47,7 +47,7 @@
     <li>Message Link Server inside it as a systemd service, with its Tailscale door.</li>
     <li>With Google (the default), official Google Chrome from Google's own repository, so Google Messages, Messenger, Google Voice and Instagram can sign in on the server's page.</li>
     <li>Backups can go directly to a network share chosen on the server's page, or to a folder of the Proxmox host mounted in the container. <a href="../setup/#backups">Learn more</a>.</li>
-    <li>A nightly update at about 03:00 for the server and for Chrome.</li>
+    <li>A nightly update at about 03:00 that takes each new stable release of the server, and the newest Chrome.</li>
   </ul>
 
   <h2>Install</h2>
@@ -55,24 +55,22 @@
     <li><p>In the Proxmox web interface, select the node and open <strong>Shell</strong>. It's a root shell on the host.</p></li>
     <li>
       <p>Run:</p>
-<pre><code>bash -c "$(curl -fsSL https://raw.githubusercontent.com/wrenchware/message-link-source/main/docker/messages-server/proxmox/install-proxmox.sh)"</code></pre>
+<pre><code>bash -c "$(curl -fsSL https://github.com/wrenchware/message-link-source/releases/latest/download/install-proxmox.sh)"</code></pre>
     </li>
     <li>
-      <p>Answer its questions. Each has a default in brackets, and <kbd>Enter</kbd> takes it:</p>
+      <p>Choose <strong>Default</strong> for the recommended settings, or <strong>Advanced</strong> to choose each one. Either way it shows what it's about to make and asks once more before it changes anything. The settings, with their defaults:</p>
       <dl class="fields">
         <div><dt>Container id</dt><dd>The next free one.</dd></div>
         <div><dt>Hostname</dt><dd><code>messages-server</code></dd></div>
-        <div><dt>Google Messages and Google Voice</dt><dd>Yes. This installs Google Chrome in the container.</dd></div>
-        <div><dt>Storage, disk, memory, cores</dt><dd>Your storages for the template and the disk; 8 GB of disk; 4096 MB of memory with Google, 2048 without; 2 cores.</dd></div>
-        <div><dt>Network</dt><dd>The bridge (<code>vmbr0</code>), and <code>dhcp</code> or a fixed address such as <code>192.168.1.50/24</code>. A fixed address, or a DHCP reservation, keeps the server where your devices expect it.</dd></div>
-        <div><dt>Backups folder on this host</dt><dd>A full path such as <code>/mnt/backups/messages</code>, or empty to keep backups inside the container.</dd></div>
-        <div><dt>Reach the server through Tailscale</dt><dd>Yes, for the phone. You can paste a Tailscale auth key here, or press Enter and sign in on the page instead.</dd></div>
-        <div><dt>Page password</dt><dd>Press Enter to set it on the page's first visit, with the setup code.</dd></div>
+        <div><dt>Storage, disk, memory, cores</dt><dd>Your storages for the template and the disk; 8 GB of disk; 4096 MB of memory, 2 cores.</dd></div>
+        <div><dt>Network</dt><dd>The bridge (<code>vmbr0</code>), and DHCP or a fixed address such as <code>192.168.1.50/24</code>. A fixed address, or a DHCP reservation, keeps the server where your devices expect it.</dd></div>
+        <div><dt>Backups folder on this host</dt><dd>None: backups stay inside the container. Or a full path such as <code>/mnt/backups/messages</code>.</dd></div>
+        <div><dt>Reach the server through Tailscale</dt><dd>Yes, for the phone. You sign it in on the page, or paste a Tailscale auth key in Advanced.</dd></div>
+        <div><dt>Page password</dt><dd>Set on the page's first visit, with the setup code. Advanced can set it here.</dd></div>
       </dl>
-      <p>It shows what it's about to make and asks once more before it changes anything.</p>
     </li>
     <li>
-      <p><strong>Note what it prints at the end</strong>: the page's address and the setup code. If you lose the code, it's in the server's log (put your container's number in place of <code>&lt;id&gt;</code>):</p>
+      <p><strong>Note what it prints at the end</strong>: the page's address and the setup code. The page's address is also in the container's notes, on its <strong>Summary</strong>. If you lose the code, it's in the server's log (put your container's number in place of <code>&lt;id&gt;</code>):</p>
 <pre><code>pct exec &lt;id&gt; -- journalctl -u messages-server --no-pager | grep -i "setup code"</code></pre>
     </li>
     <li><p><strong>Open the page</strong> it printed, <code>https://&lt;address&gt;:8787/</code>, from a browser at home, and follow the <a href="#first-run">first run</a>.</p></li>
@@ -93,7 +91,7 @@
 
   <h2>Afterwards</h2>
   <dl class="fields">
-    <div><dt>Update</dt><dd>Run the same command again. It finds the container it made and updates the server in it; sign-ins, devices and data stay. The nightly update does the same once releases are published.</dd></div>
+    <div><dt>Update</dt><dd>Each new stable release arrives by itself overnight; sign-ins, devices and data stay. To update now: <code>pct exec &lt;id&gt; -- update</code>. Running the install command again also updates the container it made.</dd></div>
     <div><dt>Watch the log</dt><dd><code>pct exec &lt;id&gt; -- journalctl -u messages-server -f</code></dd></div>
     <div><dt>Change a setting</dt><dd><code>pct exec &lt;id&gt; -- nano /etc/messages-server/environment</code>, then <code>pct exec &lt;id&gt; -- systemctl restart messages-server</code></dd></div>
     <div><dt>Remove it</dt><dd><code>pct stop &lt;id&gt; &amp;&amp; pct destroy &lt;id&gt;</code>. A backups folder on the host stays.</dd></div>
@@ -105,7 +103,7 @@
     <div><dt><code>--yes</code></dt><dd>Take every default without asking: no page password and no auth key.</dd></div>
     <div><dt><code>--no-google</code></dt><dd>No browser sign-in. Leave Chrome enabled to connect new accounts, including Messenger and Instagram.</dd></div>
     <div><dt><code>--ctid &lt;number&gt;</code></dt><dd>The container's id.</dd></div>
-    <div><dt><code>--tarball &lt;file or https address&gt;</code></dt><dd>A server package to install instead of the newest release.</dd></div>
+    <div><dt><code>--tarball &lt;file or https address&gt;</code></dt><dd>A server package to install instead of the newest release. The nightly update then keeps that package until you run the command again without it.</dd></div>
   </dl>
 
   <h2>Good to know</h2>

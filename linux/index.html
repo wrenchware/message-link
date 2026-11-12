@@ -50,9 +50,12 @@
   <h2>Install</h2>
   <ol class="steps">
     <li>
-      <p><strong>Unpack the package and run its installer</strong> (put the version you downloaded in place of <code>&lt;version&gt;</code>):</p>
-<pre><code>tar -xzf messages-server-&lt;version&gt;-linux-x64.tar.gz
-sudo ./messages-server-&lt;version&gt;-linux-x64/install.sh --google</code></pre>
+      <p><strong>Download the newest release, check it, unpack it and run its installer:</strong></p>
+<pre><code>curl -fLO https://github.com/wrenchware/message-link-source/releases/latest/download/messages-server-linux-x64.tar.gz
+curl -fLO https://github.com/wrenchware/message-link-source/releases/latest/download/messages-server-linux-x64.tar.gz.sha256
+sha256sum -c messages-server-linux-x64.tar.gz.sha256
+tar -xzf messages-server-linux-x64.tar.gz
+sudo ./messages-server-*-linux-x64/install.sh --google</code></pre>
       <p>Use <code>--google</code> to connect new accounts. It installs official Google Chrome and a virtual display; Messenger and Instagram sign-in need the browser too. On a plain Linux host, approve sign-in only if you trust its other users and programs. For an unattended install on a trusted host, use <code>--google --allow-host-sign-in</code>. Updates preserve the existing permission.</p>
       <p>It makes an account called <code>messages-server</code>, puts the program in <code>/opt/messages-server</code> and starts <code>messages-server.service</code>.</p>
     </li>
@@ -91,7 +94,7 @@ MESSAGES_TAILNET=1</code></pre>
 
   <h2>Afterwards</h2>
   <dl class="fields">
-    <div><dt>Update</dt><dd>Run a newer package's <code>install.sh</code>. The server stops (pending sends finish first), is replaced and starts again with the same sign-ins and devices. A nightly timer does this by itself once releases are published, and keeps Google Chrome up to date.</dd></div>
+    <div><dt>Update</dt><dd>Run a newer package's <code>install.sh</code>. The server stops (pending sends finish first), is replaced and starts again with the same sign-ins and devices. A nightly timer does this by itself for each new stable release, and keeps Google Chrome up to date. To run it now: <code>sudo systemctl start messages-server-update</code>.</dd></div>
     <div><dt>Read the log</dt><dd><code>sudo journalctl -u messages-server -f</code></dd></div>
     <div><dt>Turn Google off again</dt><dd>Run <code>install.sh --no-google</code>.</dd></div>
     <div><dt>Remove it</dt><dd><code>sudo /opt/messages-server/uninstall.sh</code> removes the program and keeps your data, keys and backups. Add <code>--all</code> to remove those too (the backups stay unless you also add <code>--backups</code>).</dd></div>

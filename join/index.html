@@ -114,8 +114,8 @@ function readCode() {
 
   if (/Android/i.test(navigator.userAgent)) {
     // Android opens the app by package; with the app missing, Chrome loads the fallback, which says so.
-    var fallback = 'https://wrenchware.github.io/messages/join/#no-app';
-    document.getElementById('open').href = 'intent://wrenchware.github.io/messages/join#' + hash +
+    var fallback = 'https://wrenchware.github.io/message-link/join/#no-app';
+    document.getElementById('open').href = 'intent://wrenchware.github.io/message-link/join#' + hash +
       '#Intent;scheme=https;package=com.wrenchware.messages;S.browser_fallback_url=' + encodeURIComponent(fallback) + ';end';
     show('android');
   } else {

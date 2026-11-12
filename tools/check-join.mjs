@@ -32,9 +32,9 @@ for (const [version, port, server] of [['1', '', 'sample.tail.test'], ['2', '&p=
   assert.equal(nodes.for.hidden, false);
   assert.equal(nodes.android.hidden, false);
   assert.equal(nodes.server.textContent, server);
-  assert.ok(nodes.open.href.startsWith('intent://wrenchware.github.io/messages/join#' + fragment + '#Intent;'));
+  assert.ok(nodes.open.href.startsWith('intent://wrenchware.github.io/message-link/join#' + fragment + '#Intent;'));
   assert.ok(nodes.open.href.includes('package=com.wrenchware.messages;'));
-  assert.ok(nodes.open.href.endsWith(encodeURIComponent('https://wrenchware.github.io/messages/join/#no-app') + ';end'));
+  assert.ok(nodes.open.href.endsWith(encodeURIComponent('https://wrenchware.github.io/message-link/join/#no-app') + ';end'));
   assert.equal(nodes.open.href.split('#')[0].includes('c='), false);
   const desktop = page(fragment, false);
   assert.equal(desktop.elsewhere.hidden, false);

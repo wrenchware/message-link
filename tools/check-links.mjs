@@ -1,11 +1,11 @@
-// Checks every link and image in the site's pages: each relative or /messages/ address must lead to a file here,
+// Checks every link and image in the site's pages: each relative or /message-link/ address must lead to a file here,
 // and each #fragment to an id on that page. Run from anywhere: node tools/check-links.mjs
 import { readFileSync, readdirSync, statSync, existsSync } from 'node:fs';
 import { join, relative, sep, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
-const base = '/messages/';
+const base = '/message-link/';
 
 function pages(dir) {
   const found = [];
@@ -18,7 +18,7 @@ function pages(dir) {
   return found;
 }
 
-// The address a page is served at: setup/index.html is /messages/setup/.
+// The address a page is served at: setup/index.html is /message-link/setup/.
 function addressOf(file) {
   const rel = relative(root, file).split(sep).join('/');
   return base + (rel.endsWith('index.html') ? rel.slice(0, -'index.html'.length) : rel);

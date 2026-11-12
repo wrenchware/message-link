@@ -11,24 +11,24 @@ another site, no analytics and no cookies. The only script is on the join page, 
 
 ## Published
 
-GitHub Pages publishes the `main` branch, from the root, at https://wrenchware.github.io/messages/. `.nojekyll` makes
+GitHub Pages publishes the `main` branch, from the root, at https://wrenchware.github.io/message-link/. `.nojekyll` makes
 Pages serve the files as they are.
 
-Every page is a folder with an `index.html`, so `/messages/unraid` works (Pages redirects it to `/messages/unraid/` and
+Every page is a folder with an `index.html`, so `/message-link/unraid` works (Pages redirects it to `/message-link/unraid/` and
 keeps any `#` fragment). Links between pages are relative, except in `404.html`, which Pages serves at any missing
-address and so links from `/messages/`.
+address and so links from `/message-link/`.
 
 The apps link here by these addresses, so keep them:
 
-- `/messages/setup`, and `/messages/windows`, `unraid`, `proxmox`, `docker`, `linux`
-- `/messages/join#v=1&n=…&a=…&f=…&c=…&u=…`, the code a server shows under "Add a phone"
+- `/message-link/setup`, and `/message-link/windows`, `unraid`, `proxmox`, `docker`, `linux`
+- `/message-link/join#v=1&n=…&a=…&f=…&c=…&u=…`, the code a server shows under "Add a phone"
 - Custom Tailscale ports use `v=2` with `p=<port>`. Default-port codes remain version 1 for older phones.
-- `/messages/tailscale`, `/messages/firebase` and `/messages/privacy`
+- `/message-link/tailscale`, `/message-link/firebase` and `/message-link/privacy`
 
 ## Working on it
 
 ```sh
-node tools/serve.mjs        # http://localhost:8000/messages/, served the way Pages serves it
+node tools/serve.mjs        # http://localhost:8000/message-link/, served the way Pages serves it
 node tools/check-links.mjs  # every internal link and #anchor leads somewhere
 node tools/check-join.mjs   # versioned join fragments stay local and require an explicit app open
 ```

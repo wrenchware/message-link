@@ -51,7 +51,7 @@
   <ol class="steps">
     <li><p><strong>Sign in to Tailscale.</strong> Choose <strong>Sign in to Tailscale</strong> and sign in with the same Tailscale account you'll use on your phone. If you don't have one, signing in makes a free one. The same link is shown as a code too, if signing in on your phone is handier. The page moves on by itself once you're signed in.</p></li>
     <li><p><strong>Approve it</strong>, if your Tailscale network asks for new devices to be approved. The page links to the machine.</p></li>
-    <li><p><strong>Turn off key expiry</strong> for the server. Otherwise Tailscale signs it out after 180 days. The button opens the server's machine in Tailscale: choose <strong>⋯</strong>, then <strong>Disable key expiry</strong>. Until it's done, the Overview keeps it on its list, and names the day from 30 days before. <strong>Remote access</strong> lists each Message Link phone too, so you can do the same for them.</p></li>
+    <li><p><strong>Keep the server signed in.</strong> Otherwise Tailscale signs it out after 180 days. <strong>Open in Tailscale</strong> opens the server's machine in Tailscale's admin console: choose <strong>Machine settings</strong>, then <strong>Disable key expiry</strong>. Until it's done, the Overview keeps it on its list, and names the day from 30 days before. <strong>Remote access</strong> lists each Message Link phone too, so you can do the same for them.</p></li>
     <li><p><strong>Only your devices can reach the server.</strong> If you're the only person on your Tailscale network, this is already done, and the page says why. If others share it, the page shows the rule that keeps them out.</p></li>
     <li><p><strong>Tailnet Lock</strong>, only if your network uses it: the server has to be signed from one of your signing devices. <strong>Show the command</strong> gives you the line to run there.</p></li>
   </ol>
@@ -69,7 +69,14 @@
   <ul>
     <li>Joining a server signs the phone in to Tailscale first. The sign-in opens in a browser tab and comes back to Message Link by itself.</li>
     <li>Sign in with the same Tailscale account as the server. If the phone is signed in as someone else, Message Link says so by name before it asks to join.</li>
-    <li>In Message Link's Settings, the Tailscale section shows the account, the phone's name on your network, whether it reaches the server directly or through Tailscale's relays, and its key expiry. <strong>Sign out</strong> and <strong>Use another account</strong> are there too.</li>
+    <li>In Message Link's Settings, the Tailscale section shows the account, the phone's name on your network, whether it reaches the server directly or through Tailscale's relays, and its key expiry. Tap <strong>Stay signed in</strong> to open the phone in Tailscale's admin console, then choose <strong>Machine settings</strong> and <strong>Disable key expiry</strong>. <strong>Sign out</strong> and <strong>Use another account</strong> are there too.</li>
+  </ul>
+
+  <h2 id="pc">On a PC</h2>
+  <ul>
+    <li>Message Link for Windows runs Tailscale itself, so you don't need the Tailscale app.</li>
+    <li>After a PC joins a server, the setup pages ask you to <strong>Sign in to Tailscale</strong> with the same account as the server, then to keep the PC signed in: <strong>Open this PC in Tailscale</strong>, then choose <strong>Machine settings</strong> and <strong>Disable key expiry</strong>. The step notices by itself once it's done.</li>
+    <li>Later, the same is in Settings, <strong>Connections</strong>, <strong>Message Link Server</strong>, under Tailscale.</li>
   </ul>
 
   <h2>When something changes</h2>
@@ -77,7 +84,7 @@
     <li><strong>"Session expired" when signing in.</strong> Your browser is signed in to another Tailscale account. Open <strong>Sign in to Tailscale</strong> in a private window instead.</li>
     <li><strong>Tailscale signed the server out.</strong> The page says so with a <strong>Sign in again</strong> button. No restart needed.</li>
     <li><strong>A different Tailscale account.</strong> <strong>Change…</strong> beside the Tailscale account, then <strong>Sign out of Tailscale</strong>, signs the server out and forgets its Tailscale identity, so it can join another network.</li>
-    <li><strong>A PC away from home.</strong> A PC with the Tailscale app can use the server's Tailscale name, <code>messages-server</code>, as its address.</li>
+    <li><strong>A PC that already has the Tailscale app.</strong> It can use the server's Tailscale name, <code>messages-server</code>, as its address instead, and Message Link then leaves Tailscale to the app.</li>
     <li><strong>New hardware.</strong> Remove the old machine in Tailscale's console before the new server signs in, or the new one is named <code>messages-server-1</code> and your phone won't find it by name.</li>
   </ul>
 

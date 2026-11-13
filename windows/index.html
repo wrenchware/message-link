@@ -103,7 +103,7 @@
     <li><strong>Ask to join.</strong> Enter the server's address and port, like <code>server.lan:8787</code>. The PC shows a short code; approve it on the server's page only if the code there is the same. You're then given a finish code to type on the PC.</li>
   </ul>
   <p>Connect accounts and manage devices on that server's page. Anyone with its page password can manage it; joined devices read and send messages.</p>
-  <p>For a server on another Windows PC, install Tailscale on this PC and sign in with the same Tailscale account. Use the server page's Add a PC line, which includes its Tailscale address and port. Never use <code>127.0.0.1</code> to reach a different PC.</p>
+  <p>Away from home, the PC reaches the server through Tailscale, which Message Link runs itself. After joining, the setup pages ask you to sign in to Tailscale with the same account as the server and to disable this PC's key expiry. <a href="../tailscale/#pc">Learn more</a>. Never use <code>127.0.0.1</code> to reach a different PC.</p>
 
   <h2 id="phone">Add a phone</h2>
   <p>Set up Tailscale on the server's page before adding a phone or another PC:</p>

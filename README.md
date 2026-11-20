@@ -10,6 +10,10 @@ another site, no analytics and no cookies. There are two scripts. `assets/viewer
 Android and Notifications pages full size in a viewer (without it, a gallery picture's link opens the file). The join page's
 reads the code from the address's `#` fragment on the visitor's own device and sends it nowhere.
 
+The Unraid, Proxmox, Docker, Linux and Tailscale logos in `assets/logos` are Simple Icons' drawings (CC0, simple-icons 16.38.0),
+colored with each brand's color (white where that is near black). The marks belong to their owners and only name the
+platform a guide is for.
+
 ## Published
 
 GitHub Pages publishes the `main` branch, from the root, at https://wrenchware.github.io/message-link/. `.nojekyll` makes

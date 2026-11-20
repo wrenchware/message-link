@@ -462,3 +462,22 @@ dialog.viewer::backdrop { background: transparent; }
   .viewer-prev { left: calc(50% - 52px); }
   .viewer-next { right: calc(50% - 52px); }
 }
+
+/* Logos of the places the server runs, and of Tailscale: a tile beside a guide's title, and a mark at the start of a card.
+   The drawings are Simple Icons' (CC0); the marks belong to their owners. */
+h1.with-logo { display: flex; align-items: center; gap: 14px; }
+h1.with-logo .logo {
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  background: var(--field);
+  border: 1px solid var(--fieldline);
+  border-radius: 10px;
+}
+h1.with-logo .logo img { display: block; }
+a.card.has-logo { padding-left: 52px; }
+.card-logo { position: absolute; left: 16px; top: 50%; transform: translateY(-50%); }
+@media (max-width: 760px) { h1.with-logo .logo { width: 38px; height: 38px; } h1.with-logo .logo img { width: 22px; height: 22px; } }

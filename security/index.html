@@ -40,7 +40,7 @@
 
   <p>Message Link holds the keys to your conversations: your sign-ins to Google Messages, Messenger, Google Voice and Instagram, and copies of your messages. This page explains how each part keeps them safe, and what it can't protect against. The whole stack was last reviewed on 2026-11-19, and what that review found was fixed before this page was written.</p>
 
-  <h2>The short version</h2>
+  <h2 id="summary">The short version</h2>
   <ul>
     <li><strong>Your data stays on hardware you own.</strong> Wrenchware runs no servers that receive your messages or sign-ins. Your PC, your phone and your own Message Link Server talk to the services directly.</li>
     <li><strong>Everything kept is encrypted.</strong> Sign-ins and saved state are sealed with Windows' or Android's own key storage, or a key only the server's account can read.</li>
@@ -49,7 +49,7 @@
     <li><strong>The app never acts for you without being asked.</strong> A send whose outcome is uncertain is reported, never sent again, and reads from your accounts are limited so the services see ordinary use.</li>
   </ul>
 
-  <h2>Your sign-ins and stored messages</h2>
+  <h2 id="stored">Your sign-ins and stored messages</h2>
   <ul>
     <li><strong>On Windows</strong>, sign-ins, device secrets, saved state and cached pictures are encrypted with Windows' data protection for your user account, so other accounts on the PC can't read them.</li>
     <li><strong>On Android</strong>, the server connection, your conversation list and pending sends are encrypted with a key held in Android's Keystore. The app turns off Android's cloud backup and device-to-device transfer, so none of it is copied off the phone.</li>
@@ -57,8 +57,9 @@
     <li><strong>Backups</strong> are encrypted with AES-256-GCM under a password you choose, and every part is checked before anything is restored. They leave out live sign-ins, Messenger's encryption keys and the server's Tailscale identity, which are never copied.</li>
     <li><strong>Logs</strong> hold counts, states and one-way tags. They leave out message text, names, phone numbers, passwords and keys.</li>
   </ul>
+  <p><a href="details/#at-rest">Learn more</a></p>
 
-  <h2>How your devices reach your server</h2>
+  <h2 id="transport">How your devices reach your server</h2>
   <ul>
     <li><strong>Encrypted and pinned.</strong> Every connection uses TLS 1.2 or 1.3. Each app remembers your server's certificate fingerprint when it joins and refuses any other certificate, so a look-alike server can't stand in for yours.</li>
     <li><strong>A secret per device.</strong> Each device gets its own random 256-bit token. The server keeps only a hash of it, and removing a device on the server's page cuts it off at once.</li>
@@ -69,54 +70,62 @@
     <li><strong>Away from home</strong>, your devices reach the server through your own Tailscale network. The server's door lets in only devices signed in to Tailscale as you (or, for a server you tagged, the ones your tailnet's access rules allow), and Tailscale's own logging is turned off.</li>
     <li><strong>Phone notifications</strong> are encrypted on your server with a key your phone made when it joined (the Web Push standard, RFC 8291) and travel through your own Firebase project. Google's servers carry them but can't read them.</li>
   </ul>
+  <p><a href="details/#transport">Learn more</a></p>
 
-  <h2>Inside the server</h2>
+  <h2 id="server">Inside the server</h2>
   <ul>
     <li><strong>One helper per service.</strong> Google Messages, Messenger, Google Voice and Instagram each run in their own helper program, connected to the server by private pipes that no other program can open. Sign-ins travel only through those pipes, never on a command line.</li>
     <li><strong>Downloads stay public.</strong> Pictures, files and link previews are fetched only from public internet addresses: a link can't make the server reach devices on your home network. Your sign-in goes only to the service's own sites. Sizes and image dimensions are capped before anything is decoded.</li>
     <li><strong>Chrome in its sandbox.</strong> The server signs in to some services through its own Google Chrome. Chrome runs every page in its sandbox, inside a container that runs as its own user with every Linux capability dropped and no way to gain new privileges.</li>
     <li><strong>Limits on what a device can ask.</strong> Message size, uploads, downloads running at once and connections per device are all capped, so a misbehaving device can't exhaust the server.</li>
   </ul>
+  <p><a href="details/#isolation">Learn more</a></p>
 
-  <h2>Protecting your accounts with the services</h2>
+  <h2 id="accounts">Protecting your accounts with the services</h2>
   <ul>
     <li><strong>No unexpected actions.</strong> A send, reaction, edit or removal whose outcome is uncertain (the connection broke after it went out) is reported to you and never repeated automatically, so nobody gets a message twice.</li>
     <li><strong>Ordinary use, not automation.</strong> Searches, background reads and reconnects are paced. Instagram reads are limited both for background reads and for reads your devices ask for, so the services see the pattern of a person, not a program.</li>
     <li><strong>Sign-in happens on the services' own pages</strong>, in a window that shows their address. The app reads only the sign-in cookies it needs from them, and the sign-in window can't reach the app's code.</li>
   </ul>
+  <p><a href="details/#accounts">Learn more</a></p>
 
-  <h2>On your PC and phone</h2>
+  <h2 id="devices">On your PC and phone</h2>
   <ul>
     <li><strong>Links</strong> in messages open only if they are web or email addresses. A link whose words name a different site than it really goes to is shown as plain text.</li>
     <li><strong>Files you receive</strong> are saved with cleaned names and marked as coming from the internet, so Windows checks them before they run. Nothing opens by itself.</li>
     <li><strong>Notification actions on Android</strong> act only on the conversation the notification was for, and Mark as read needs the phone unlocked. A link from another app or website can open a texting conversation but never marks it read.</li>
     <li><strong>The terminal client</strong> (<code>mlink</code>) removes control characters from message text, so a message can't take over your terminal.</li>
   </ul>
+  <p><a href="details/#clients">Learn more</a></p>
 
-  <h2>Hermes Agent</h2>
+  <h2 id="hermes">Hermes Agent</h2>
   <ul>
     <li>Hermes's API key is sealed like a sign-in and is never shown on any device. The server talks only to the address you gave it and follows no redirects.</li>
     <li>Hermes sees only what you send it: your other conversations are never passed to it, and nothing it says can send, read or delete anything on your accounts.</li>
     <li>When Hermes asks to run a command, it runs only if you approve it, and only that once. A command too long to show in full, or with characters that don't show, can only be denied in Message Link.</li>
   </ul>
+  <p><a href="details/#hermes">Learn more</a></p>
 
-  <h2>Updates and where the code comes from</h2>
+  <h2 id="updates">Updates and where the code comes from</h2>
   <ul>
     <li><strong>Windows</strong> updates come only through the Microsoft Store, which checks the package's signature. <strong>Android</strong> updates come through Google Play.</li>
     <li><strong>The server image</strong> is built from pinned base images, with every dependency locked to an exact version and checked against its recorded hash. Dependencies are reviewed weekly and checked against known vulnerabilities before release.</li>
     <li><strong>Linux and Proxmox installs</strong> update themselves only to a package signed with Wrenchware's release key. A package that isn't, or that doesn't match its checksum, is refused before the server is touched.</li>
     <li><strong>The source</strong> of the server and the service helpers is published with every release at <a href="https://github.com/wrenchware/message-link-source">github.com/wrenchware/message-link-source</a>.</li>
   </ul>
+  <p><a href="details/#supply-chain">Learn more</a></p>
 
-  <h2>What it can't protect against</h2>
+  <h2 id="limits">What it can't protect against</h2>
   <ul>
     <li><strong>Someone using your unlocked PC or phone</strong>, or a program running as your Windows user, can see what you can. Lock your devices and keep them updated.</li>
     <li><strong>The machine your server runs on.</strong> Anyone with administrator access to it can reach what the server holds. Keep it updated and limit who can sign in to it.</li>
     <li><strong>The services themselves.</strong> What Google and Meta do with your messages is up to them. Their own privacy policies apply.</li>
   </ul>
+  <p><a href="details/#limits">Learn more</a></p>
 
-  <h2>Report a security problem</h2>
+  <h2 id="report">Report a security problem</h2>
   <p>If you find a security problem, email <a href="mailto:wrenchwareapps@gmail.com">wrenchwareapps@gmail.com</a> with the details. Please don't post it publicly until it is fixed.</p>
+  <p>For the threat model, the cryptography and the numbers, see <a href="details/">Security details</a>.</p>
 </main>
 
 <footer>

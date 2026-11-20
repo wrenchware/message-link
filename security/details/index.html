@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Security details · Message Link</title>
+<meta name="description" content="The threat model, cryptography, isolation and supply chain of Message Link and Message Link Server, with the numbers.">
+<link rel="icon" href="../../assets/icon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="../../assets/icon-192.png">
+<link rel="stylesheet" href="../../assets/site.css">
+<style>figure.diagram{margin:12px 0 20px;padding:12px;background:var(--box);border:1px solid var(--line);border-radius:12px}figure.diagram svg{display:block;height:auto}dl.fields dd pre{margin:8px 0 2px}</style>
+</head>
+<body>
+<aside class="side">
+  <a class="brand" href="../../"><img src="../../assets/icon-64.png" alt="" width="40" height="40">Message Link</a>
+  <nav aria-label="Site">
+    <a href="../../"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.5 10.5 12 3.5l8.5 7V20a.5.5 0 0 1-.5.5h-5v-6h-6v6H4a.5.5 0 0 1-.5-.5z"/></svg><span>Overview</span></a>
+    <a href="../../setup/"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="m15.2 8.8-2 4.4-4.4 2 2-4.4z"/></svg><span>Get started</span></a>
+    <p class="grp">Apps</p>
+    <a href="../../windows/"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="3.5" width="7.5" height="7.5" rx="1"/><rect x="13" y="3.5" width="7.5" height="7.5" rx="1"/><rect x="3.5" y="13" width="7.5" height="7.5" rx="1"/><rect x="13" y="13" width="7.5" height="7.5" rx="1"/></svg><span>Windows</span></a>
+    <a href="../../android/"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6.5" y="3" width="11" height="18" rx="2"/><path d="M11 17.5h2"/></svg><span>Android</span></a>
+    <p class="grp">Always-on server</p>
+    <a href="../../unraid/"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="4" width="17" height="7" rx="1.5"/><rect x="3.5" y="13" width="17" height="7" rx="1.5"/><path d="M7.5 7.5h.01M7.5 16.5h.01"/></svg><span>Unraid</span></a>
+    <a href="../../proxmox/"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.5 20.5 8 12 12.5 3.5 8z"/><path d="m3.5 12 8.5 4.5 8.5-4.5"/><path d="m3.5 16 8.5 4.5 8.5-4.5"/></svg><span>Proxmox</span></a>
+    <a href="../../docker/"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="4" width="17" height="5" rx="1"/><path d="M5 9v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V9M10 13h4"/></svg><span>Docker</span></a>
+    <a href="../../linux/"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="4.5" width="17" height="15" rx="1.5"/><path d="m7.5 9.5 3 2.5-3 2.5M12.5 15h4"/></svg><span>Linux</span></a>
+    <p class="grp">Server</p>
+    <a href="../../tailscale/"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M3.5 12h17M12 3.5c2.3 2.4 3.5 5.3 3.5 8.5s-1.2 6.1-3.5 8.5c-2.3-2.4-3.5-5.3-3.5-8.5S9.7 5.9 12 3.5z"/></svg><span>Tailscale</span></a>
+    <a href="../../firebase/"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9a6 6 0 0 1 12 0c0 6 2.5 8 2.5 8h-17S6 15 6 9"/><path d="M10 20.5a2.2 2.2 0 0 0 4 0"/></svg><span>Notifications</span></a>
+    <a href="../../security/" class="end here" aria-current="page"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="10.5" width="14" height="10" rx="1.5"/><path d="M8.5 10.5V7.5a3.5 3.5 0 0 1 7 0v3"/></svg><span>Security</span></a>
+    <a href="../../privacy/"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.5 19.5 6v5.5c0 4.5-3.2 7.7-7.5 9-4.3-1.3-7.5-4.5-7.5-9V6z"/></svg><span>Privacy policy</span></a>
+  </nav>
+</aside>
+
+<div class="pane">
+<header class="top"><p><a href="../">Security</a> <span class="quiet">/</span> <span class="here">Details</span></p></header>
+
+<main>
+  <h1>Security details</h1>
+  <p class="quiet">Updated 2026-11-19, for Message Link 0.1.476 and the server image built from the same source. The plain version is <a href="../">Security</a>; this page is the mechanics, with the numbers. Every value here is read from the code, and the source of the server and helpers is <a href="https://github.com/wrenchware/message-link-source">public</a>.</p>
+
+  <h2 id="threat-model">Threat model</h2>
+  <p>Message Link is built for one household running its own server. It is designed to hold up against:</p>
+  <ul>
+    <li><strong>Other devices on the home network</strong>, including a compromised smart-home gadget: they can reach the server's port but not its accounts.</li>
+    <li><strong>The internet</strong>: the server answers only the home network and your tailnet, and refuses requests a reverse proxy forwarded.</li>
+    <li><strong>Other apps and other user accounts</strong> on the PC or phone.</li>
+    <li><strong>Hostile content</strong>: a message, link, file or web page sent by someone else.</li>
+    <li><strong>A compromised dependency or build step</strong>, as far as pinning, isolation and signatures reach.</li>
+  </ul>
+  <p>It does not try to defend against root on the server's host, malware running as your own user, or the messaging services themselves (see <a href="#limits">Limits</a>).</p>
+
+  <h2 id="architecture">How the parts fit</h2>
+  <figure class="diagram" role="img" aria-label="Your PC and phone connect to Message Link Server over pinned TLS, at home directly and away through your tailnet. The server runs one helper per service over private pipes, and a sandboxed Chrome for sign-ins. Each helper talks to its service over HTTPS. Phone notifications go from the server, encrypted, through your Firebase project.">
+    <svg viewBox="0 0 760 420" width="100%" xmlns="http://www.w3.org/2000/svg" font-family="Inter, system-ui, sans-serif" font-size="13">
+      <defs>
+        <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 10 5 0 10z" fill="#8c8c8c"/></marker>
+      </defs>
+      <!-- Your devices -->
+      <rect x="10" y="40" width="170" height="320" rx="12" fill="#080808" stroke="#2c2c2c"/>
+      <text x="24" y="64" fill="#8c8c8c" font-size="12">Your devices</text>
+      <rect x="28" y="84" width="134" height="56" rx="8" fill="#111" stroke="#2c2c2c"/>
+      <text x="95" y="108" fill="#ececec" text-anchor="middle" font-weight="600">PC</text>
+      <text x="95" y="126" fill="#8c8c8c" text-anchor="middle" font-size="11">DPAPI, pinned TLS</text>
+      <rect x="28" y="160" width="134" height="56" rx="8" fill="#111" stroke="#2c2c2c"/>
+      <text x="95" y="184" fill="#ececec" text-anchor="middle" font-weight="600">Phone</text>
+      <text x="95" y="202" fill="#8c8c8c" text-anchor="middle" font-size="11">Keystore, pinned TLS</text>
+      <rect x="28" y="236" width="134" height="56" rx="8" fill="#111" stroke="#2c2c2c"/>
+      <text x="95" y="260" fill="#ececec" text-anchor="middle" font-weight="600">Browser</text>
+      <text x="95" y="278" fill="#8c8c8c" text-anchor="middle" font-size="11">server page</text>
+      <!-- Server -->
+      <rect x="290" y="20" width="250" height="360" rx="12" fill="#080808" stroke="#2f62d8"/>
+      <text x="304" y="44" fill="#7fa6ff" font-size="12">Message Link Server (your hardware)</text>
+      <rect x="306" y="60" width="218" height="64" rx="8" fill="#111" stroke="#2c2c2c"/>
+      <text x="415" y="84" fill="#ececec" text-anchor="middle" font-weight="600">Door</text>
+      <text x="415" y="102" fill="#8c8c8c" text-anchor="middle" font-size="11">TLS 1.2/1.3 · device tokens</text>
+      <text x="415" y="116" fill="#8c8c8c" text-anchor="middle" font-size="11">home network + tailnet only</text>
+      <rect x="306" y="136" width="218" height="52" rx="8" fill="#111" stroke="#2c2c2c"/>
+      <text x="415" y="158" fill="#ececec" text-anchor="middle" font-weight="600">Host</text>
+      <text x="415" y="176" fill="#8c8c8c" text-anchor="middle" font-size="11">history (AES-256-GCM per row)</text>
+      <rect x="306" y="200" width="104" height="90" rx="8" fill="#111" stroke="#2c2c2c"/>
+      <text x="358" y="222" fill="#ececec" text-anchor="middle" font-weight="600">Chrome</text>
+      <text x="358" y="242" fill="#8c8c8c" text-anchor="middle" font-size="11">sign-ins only,</text>
+      <text x="358" y="256" fill="#8c8c8c" text-anchor="middle" font-size="11">sandboxed,</text>
+      <text x="358" y="270" fill="#8c8c8c" text-anchor="middle" font-size="11">URL allowlist</text>
+      <rect x="420" y="200" width="104" height="90" rx="8" fill="#111" stroke="#2c2c2c"/>
+      <text x="472" y="222" fill="#ececec" text-anchor="middle" font-weight="600">Helpers</text>
+      <text x="472" y="242" fill="#8c8c8c" text-anchor="middle" font-size="11">one per</text>
+      <text x="472" y="256" fill="#8c8c8c" text-anchor="middle" font-size="11">service,</text>
+      <text x="472" y="270" fill="#8c8c8c" text-anchor="middle" font-size="11">stdio pipes</text>
+      <rect x="306" y="316" width="218" height="48" rx="8" fill="#111" stroke="#2c2c2c"/>
+      <text x="415" y="336" fill="#ececec" text-anchor="middle" font-weight="600">Keys volume</text>
+      <text x="415" y="353" fill="#8c8c8c" text-anchor="middle" font-size="11">0700, separate from data</text>
+      <!-- Outside -->
+      <rect x="610" y="60" width="140" height="150" rx="12" fill="#080808" stroke="#2c2c2c"/>
+      <text x="680" y="84" fill="#ececec" text-anchor="middle" font-weight="600">Services</text>
+      <text x="680" y="106" fill="#8c8c8c" text-anchor="middle" font-size="11">Google Messages</text>
+      <text x="680" y="122" fill="#8c8c8c" text-anchor="middle" font-size="11">Messenger</text>
+      <text x="680" y="138" fill="#8c8c8c" text-anchor="middle" font-size="11">Google Voice</text>
+      <text x="680" y="154" fill="#8c8c8c" text-anchor="middle" font-size="11">Instagram</text>
+      <text x="680" y="176" fill="#8c8c8c" text-anchor="middle" font-size="11">over HTTPS</text>
+      <rect x="610" y="250" width="140" height="70" rx="12" fill="#080808" stroke="#2c2c2c"/>
+      <text x="680" y="276" fill="#ececec" text-anchor="middle" font-weight="600">Your Firebase</text>
+      <text x="680" y="296" fill="#8c8c8c" text-anchor="middle" font-size="11">carries encrypted</text>
+      <text x="680" y="310" fill="#8c8c8c" text-anchor="middle" font-size="11">pushes only</text>
+      <!-- Your devices to the door -->
+      <path d="M162 112 H300" stroke="#8c8c8c" stroke-width="1.5" fill="none" marker-end="url(#ar)" marker-start="url(#ar)"/>
+      <text x="196" y="104" fill="#8c8c8c" font-size="11">pinned TLS</text>
+      <path d="M162 188 C230 188 250 100 300 98" stroke="#8c8c8c" stroke-width="1.5" fill="none" stroke-dasharray="5 4" marker-end="url(#ar)" marker-start="url(#ar)"/>
+      <text x="170" y="150" fill="#8c8c8c" font-size="11">tailnet when away</text>
+      <path d="M162 264 C250 264 250 120 300 120" stroke="#8c8c8c" stroke-width="1.5" fill="none" marker-end="url(#ar)" marker-start="url(#ar)"/>
+      <!-- The server to the services and Firebase -->
+      <path d="M524 236 C570 236 570 150 604 150" stroke="#8c8c8c" stroke-width="1.5" fill="none" marker-end="url(#ar)"/>
+      <path d="M358 290 V302 H560 C580 302 580 192 604 192" stroke="#8c8c8c" stroke-width="1.5" fill="none" marker-end="url(#ar)"/>
+      <path d="M524 162 C580 162 580 285 604 285" stroke="#8c8c8c" stroke-width="1.5" fill="none" marker-end="url(#ar)"/>
+      <!-- Firebase to the phone, under everything -->
+      <path d="M680 320 C680 392 40 392 18 340 L18 196 L22 192" stroke="#8c8c8c" stroke-width="1.5" fill="none" stroke-dasharray="2 4" marker-end="url(#ar)"/>
+      <text x="230" y="410" fill="#8c8c8c" font-size="11">Web Push, RFC 8291: only the phone can decrypt</text>
+    </svg>
+  </figure>
+
+  <h2 id="at-rest">Stored data</h2>
+  <dl class="fields">
+    <div><dt>Windows</dt><dd>Sign-ins, device secrets, the state, media and archive databases are sealed with <code>DataProtectionProvider("LOCAL=user")</code> (DPAPI-NG, current user). Pictures in the media cache are encrypted too.</dd></div>
+    <div><dt>Linux server</dt><dd>Every sealed value is AES-256-GCM with a 12-byte random nonce and a fixed associated-data label, under a 32-byte key file. The server refuses to use the key file if any group or other permission bit is set (0600). The TLS private key is PEM, mode 0600, in a 0700 folder on the keys volume.</dd></div>
+    <div><dt>History</dt><dd><code>history.db</code> has its own random 64-byte key, sealed as above. Chat, row and message IDs are stored as HMAC-SHA256 values under one half of it; every row's payload, message text included, is AES-256-GCM under the other half, with the row's ID as associated data, so a row can't be moved to another without failing to open.</dd></div>
+    <div><dt>Android</dt><dd>The server connection (<code>messages.server.token</code>) and the conversation list and pending sends (<code>messages.inbox.cache</code>) are AES-256-GCM under AndroidKeyStore keys. <code>allowBackup="false"</code>, and the data extraction rules exclude every domain from cloud backup and device transfer.</dd></div>
+    <div><dt>Backups</dt><dd>PBKDF2-HMAC-SHA256 with 600,000 iterations and a 16-byte salt derives an AES-256-GCM key. The file is cut into 1 MiB chunks; each nonce is an 8-byte random prefix plus a 32-bit chunk index, and each chunk's associated data is the SHA-256 of the header, the 64-bit index and a final-chunk flag. Reordered, truncated or extended files fail to open. Left out: every service sign-in, Messenger's encrypted-device database, the tailnet identity, the outbox, the operation journal, caches and logs.</dd></div>
+    <div><dt>Logs</dt><dd>Fixed-format lines: counts, states, durations and one-way tags. Library error text from the helpers passes through an allowlist or a scrubber that strips URLs, tokens and digit runs.</dd></div>
+  </dl>
+
+  <h2 id="transport">How devices reach the server</h2>
+  <dl class="fields">
+    <div><dt>TLS</dt><dd>TLS 1.2 and 1.3 only, HTTP/1.1, on a self-signed ECDSA P-256 certificate valid for 10 years. A missing key never makes a new identity: the server refuses to start.</dd></div>
+    <div><dt>Pinning</dt><dd>Clients pin the SHA-256 of the whole certificate (DER) and compare it in constant time. The pin is the only trust: no CA store, no fallback. On Android this is a custom <code>X509TrustManager</code> on the one OkHttp WebSocket the app opens.</dd></div>
+    <div><dt>Device tokens</dt><dd>32 random bytes per device. The server keeps only SHA-256(token), in a sealed list, and checks a presented token against every device in constant time without stopping at the first match. Revoking closes the device's open connections.</dd></div>
+    <div><dt>Pairing codes</dt><dd>10 characters from a 31-character alphabet (no 0, 1, I, L, O), about 49.5 bits, from a CSPRNG. Single use, 10 minutes. Tries are spaced 1 s apart server-wide; per source, 3 free misses, then waits that double up to 5 minutes. IPv6 sources count per /64. On Linux the code goes to the container's output, never to <code>server.log</code>.</dd></div>
+    <div><dt>Asking to join</dt><dd>The device and server exchange 16-byte nonces, the server committing to its nonce (SHA-256) before seeing the device's. The code both screens show is SHA-256 over the certificate hash, both nonces and the request ID, rendered as 6 characters (about 30 bits), so a machine in the middle can't make the codes match. Approving asks for the page password. After approval the device proves it holds the 6-character finish code with HMAC-SHA256, and its token is kept only once it confirms it saved it. Limits: 4 waiting, one per source, 10 s between a source's requests, 5 minutes after a deny.</dd></div>
+    <div><dt>The door</dt><dd>At most 8 connections may be in TLS or upgrade at once, 2 per address; tailnet connections wait in a pool of their own. 5 s for the TLS handshake and headers, 8 KiB of headers, 32 header fields, no body. 64 upgraded connections in all, 4 per device (the oldest is closed). 4 MiB per WebSocket message, text only, no compression, 256 requests in flight per connection. A request carrying an <code>Origin</code> header is refused, so no web page can open the protocol socket.</dd></div>
+    <div><dt>The server's page</dt><dd>Password 12 characters to 128 bytes, stored as PBKDF2-HMAC-SHA256, 600,000 rounds, 16-byte salt, compared in constant time. Tries: 1 s apart server-wide, with the per-source backoff above. The session cookie is the expiry, 16 random bytes and an HMAC-SHA256 under a key that changes when you sign out everywhere; 7 days, <code>HttpOnly; Secure; SameSite=Strict</code>. Every POST needs <code>Origin</code> equal to the page, <code>Sec-Fetch-Site</code> absent or <code>same-origin</code>, and a per-session HMAC form token. Headers: <code>default-src 'none'</code> with scripts allowed by hash only, <code>frame-ancestors 'none'</code>, <code>base-uri 'none'</code>, <code>form-action 'self'</code>, <code>X-Frame-Options: DENY</code>, <code>nosniff</code>, <code>no-store</code>. Sensitive actions ask for the password again unless it was typed within the last 10 minutes.</dd></div>
+    <div><dt>Who may reach the page</dt><dd>Loopback, RFC 1918, link-local and IPv6 unique-local addresses, excluding the host's own gateways (Docker's IPv6 proxy presents outside peers as the bridge gateway), or a device that came through the tailnet relay. Any request with <code>Forwarded</code>, <code>X-Forwarded-*</code>, <code>X-Real-IP</code>, <code>Via</code>, <code>CF-Connecting-IP</code> or <code>True-Client-IP</code> is refused. Message Link Server for Windows binds 127.0.0.1 only.</dd></div>
+    <div><dt>Tailnet</dt><dd>The server's tailnet door asks Tailscale who each peer is (WhoIs) and admits only the same Tailscale user, never a tagged device. If you tag the server itself, the same-user check turns off and your tailnet's access rules decide, which the log says (<code>tailnet owner_check=off reason=tagged</code>). The door hands each connection to the server over a Unix socket in a 0700 folder, prefixed by a strictly parsed PROXY v1 line naming the peer. Tailscale's own logging is turned off.</dd></div>
+    <div><dt>Push</dt><dd>Each phone makes a P-256 key pair in AndroidKeyStore (<code>PURPOSE_AGREE_KEY</code>, so the private key never leaves it) and a 16-byte auth secret. The server encrypts each notification per RFC 8291 (aes128gcm, RFC 8188), one record padded to 1,536 bytes so its length says little, and sends it through your own Firebase project. A push that doesn't decrypt is dropped.</dd></div>
+  </dl>
+
+  <h2 id="isolation">Inside the server</h2>
+  <dl class="fields">
+    <div><dt>Helpers</dt><dd>Each service is a separate Go process driven over its own stdin and stdout (anonymous pipes): no socket and no named pipe for another process to connect to. Lines into a helper are capped at 1 MiB, lines out at 8 Mi characters. Sign-ins travel only as frames on those pipes. The Linux server removes <code>MESSAGES_ADMIN_PASSWORD</code> and <code>MESSAGES_TAILNET_AUTHKEY</code> from its environment before starting any child, and the tailnet auth key goes to the door on stdin. Helpers recover from a panic in a request handler and print no tracebacks.</dd></div>
+    <div><dt>Downloads</dt><dd>Messenger and Instagram media fetches and every link preview resolve the name themselves, check every answer and dial the checked address, so DNS rebinding can't reach the LAN. Refused: private, loopback, link-local, CGNAT (100.64.0.0/10), documentation and benchmarking ranges, 240.0.0.0/4, IPv6 outside 2000::/3, 6to4 and Teredo, the host's own networks, single-label names and <code>.local</code>, <code>.lan</code>, <code>.home</code>, <code>.internal</code>. No proxy. Meta session cookies go only to Meta's own hosts (fbcdn.net, cdninstagram.com and the like), matched on a dot boundary; anything else is fetched anonymously, with at most 5 redirects. Caps: 25 MiB per media item; link previews 1 MiB of HTML, 5 MiB per image, 16,384 px a side and 40 megapixels, checked from the header before decoding.</dd></div>
+    <div><dt>Container</dt><dd>Runs as UID 2787 under tini, with <code>--cap-drop ALL</code>, <code>no-new-privileges</code>, 4 GB of memory with no extra swap and 2,048 processes. <code>/data</code> and <code>/keys</code> are 0700. No Docker socket, no host network, not privileged.</dd></div>
+    <div><dt>Chrome</dt><dd>Chrome opens only the services' sign-in pages: its managed policy blocks every URL except an allowlist of their hosts, blocks <code>file:</code>, <code>chrome:</code>, <code>javascript:</code> and <code>view-source:</code>, and turns off developer tools, remote debugging, extensions, downloads, file dialogs, password saving, autofill, sync and printing. Its sandbox needs user namespaces, which Docker's default seccomp profile refuses without a capability; <code>install-unraid.sh</code> adds exactly <code>chroot</code>, <code>clone</code>, <code>setns</code> and <code>unshare</code> to Docker's own profile (<code>chrome-seccomp.json</code>) rather than granting <code>SYS_ADMIN</code>. The Community Applications template, which can't ship a file, uses <code>seccomp=unconfined</code> with the same user and capability limits. Once a page loads, the server reads <code>/proc</code> and logs whether every renderer carries a seccomp filter (<code>google chrome sandbox=active</code>).</dd></div>
+    <div><dt>Linux service</dt><dd>The systemd unit runs as its own user with <code>UMask=0077</code>, <code>NoNewPrivileges</code>, empty capability sets, <code>ProtectSystem=strict</code>, <code>ProtectHome</code>, <code>PrivateTmp</code>, <code>PrivateDevices</code>, <code>ProtectKernelTunables/Modules/Logs</code>, <code>ProtectControlGroups</code>, <code>ProtectClock</code>, <code>ProtectHostname</code>, <code>ProtectProc=invisible</code>, <code>RestrictSUIDSGID</code>, <code>RestrictRealtime</code>, <code>RestrictNamespaces</code>, <code>LockPersonality</code>, native system calls only and four address families. <code>MemoryDenyWriteExecute</code> is left off because .NET compiles code at run time.</dd></div>
+  </dl>
+
+  <h2 id="accounts">Your accounts with the services</h2>
+  <dl class="fields">
+    <div><dt>Uncertain mutations</dt><dd>Every send, reaction, edit and removal is recorded in an operation journal before it goes out. One that was cancelled after it started, or was running when the server stopped, becomes <code>outcome_unknown</code> and is reported, never sent again. Clients look its outcome up; they don't resubmit it.</dd></div>
+    <div><dt>Pacing</dt><dd>Contact search waits for 3 characters and 700 ms of quiet, 900 ms per provider, with a 5-minute cache, enforced on the server whoever asks, with one search waiting at a time. Instagram: at most 5 background reads per connect and 30 an hour, a count that survives restarts and starts fully spent if it can't be read; reads devices ask for are capped at 60 a minute and 600 an hour.</dd></div>
+    <div><dt>Sign-in</dt><dd>On the PC, sign-in is a WebView2 window on the service's own page, with no host object, no web-message bridge and no injected script, downloads cancelled and DevTools off. Messenger's runs InPrivate in a profile made for that attempt. Only the named sign-in cookies are read, and their values are cleared from memory afterwards.</dd></div>
+  </dl>
+
+  <h2 id="clients">PC and phone</h2>
+  <dl class="fields">
+    <div><dt>Links</dt><dd>Only <code>http</code> and <code>https</code> addresses with a valid host and no user info become links, plus <code>mailto:</code> from a strict pattern; that rules out <code>javascript:</code>, <code>file:</code>, UNC paths (which could leak NTLM hashes) and <code>ms-</code> handlers. A link whose words name a different site than its address is shown unlinked. Bidi and control characters from decoded entities are dropped.</dd></div>
+    <div><dt>Received files</dt><dd>File names are reduced to the name alone, invalid characters replaced, trailing dots and spaces trimmed, capped at 100 characters, and saved with <code>Zone.Identifier</code> <code>ZoneId=3</code> (Mark of the Web) before they're moved into place. A photo set saved without a dialog is forced to a picture extension. Nothing received opens by itself.</dd></div>
+    <div><dt>Local IPC</dt><dd>The PC's pipe to its own server allows only the current user, denies the NETWORK SID, is created with <code>FirstPipeInstance</code>, and needs a bearer token compared in constant time. The client opens it with <code>CurrentUserOnly</code>, which checks the pipe's owner. The app registers no URI handler.</dd></div>
+    <div><dt>Android</dt><dd>Notification actions carry an identifier made from the conversation and a one-way hash of the device, which a <code>PendingIntent</code> fill-in can't change; the receiver acts only when the extras agree with it. Mark as read requires authentication. Opening a texting conversation from an outside <code>sms:</code> link holds its read state until you touch it. The FileProvider shares only the app's media and camera folders, read-only.</dd></div>
+    <div><dt>Terminal</dt><dd><code>mlink</code> replaces every C0 control except tab and line endings, DEL and every C1 control with U+FFFD before printing message text.</dd></div>
+  </dl>
+
+  <h2 id="hermes">Hermes Agent</h2>
+  <dl class="fields">
+    <div><dt>Key</dt><dd>Sealed like a sign-in; devices learn only whether one is set. Only the server's page can set or change it, and the address takes <code>http</code> or <code>https</code> with no user info, query or fragment.</dd></div>
+    <div><dt>Transport</dt><dd>No automatic redirects (a 307 would carry the turn to another host). Buffered answers are capped at 8 MiB and a streamed reply at 64 MiB; an address that keeps sending ends the turn, not the server.</dd></div>
+    <div><dt>Approvals</dt><dd>Only <code>once</code> or <code>deny</code> is ever sent, never <code>session</code> or <code>always</code>, and only on your explicit answer. A command over 64,000 characters, or containing a control or format character other than a line break or tab (bidi overrides, zero-width marks, escapes), is shown with U+FFFD in their place and can only be denied in Message Link.</dd></div>
+    <div><dt>Reports</dt><dd>Scripts on your network may post short reports into Hermes's own thread with a 256-bit token, kept only as a hash: at most 6 a minute, 30 an hour and 200 a day per profile, wrapped as data, never starting a turn. Nothing from your other conversations reaches Hermes automatically.</dd></div>
+  </dl>
+
+  <h2 id="supply-chain">Updates and the supply chain</h2>
+  <dl class="fields">
+    <div><dt>Image</dt><dd>All seven base images in the Dockerfile are pinned by digest. Go builds run with <code>GOTOOLCHAIN=local</code>, <code>GOFLAGS=-mod=readonly</code> and <code>go mod verify</code>; .NET restores in locked mode from committed lock files, with NuGet's vulnerability audit failing the build. Google Chrome's apt key is accepted only if its fingerprint is <code>EB4C 1BFD 4F04 2F6D DDCC EC91 7721 F63B D38B 4796</code>.</dd></div>
+    <div><dt>Builds</dt><dd>Workflows run only on pushes to the main branch, a schedule or a manual run, never on pull requests or forks. Every action is pinned to a commit and the repository allows only GitHub's own actions and three Docker ones. The build runner reaches BuildKit through its socket alone, with no Docker socket. Dependencies are reviewed weekly; <code>govulncheck</code> finds no reachable vulnerability and <code>dotnet list package --vulnerable</code> none, as of this page's date.</dd></div>
+    <div><dt>Linux packages</dt><dd>Each release package has an SSH signature (<code>ssh-keygen -Y</code>, namespace <code>message-link-package</code>). The nightly updater and <code>install-proxmox.sh</code> check the <code>.sha256</code> and then the signature against the key they carry, before anything is stopped. To check one yourself:
+      <pre><code>printf 'message-link-release ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIASDuy6t9lRx7d8PjcN7n7aYxvFR9AJkzDQA1z1huRWg\n' &gt; allowed_signers
+ssh-keygen -Y verify -f allowed_signers -I message-link-release \
+    -n message-link-package -s messages-server-linux-x64.tar.gz.sig &lt; messages-server-linux-x64.tar.gz</code></pre></dd></div>
+    <div><dt>Apps</dt><dd>Windows updates come only through the Microsoft Store; there is no custom updater. Android updates come through Google Play.</dd></div>
+  </dl>
+
+  <h2 id="limits">Limits</h2>
+  <ul>
+    <li><strong>Root on the server's host</strong>, or anyone who can read its keys volume, can read everything the server holds. On Linux the TLS key and the state key are files protected by permissions, not by hardware.</li>
+    <li><strong>Malware running as your Windows user</strong> can unseal what DPAPI protects for that user. That is Windows' boundary, and the app doesn't pretend otherwise.</li>
+    <li><strong>The page's certificate can't be checked by a browser.</strong> Compare its fingerprint once with the line the server prints at start, or reach it through your tailnet.</li>
+    <li><strong>Backups are as strong as their password</strong>: PBKDF2 slows guessing but doesn't stop it, and a server backup holds the keys to every message. Use a long passphrase.</li>
+    <li><strong>Every paired device is equal.</strong> Any of them can read every conversation and answer a Hermes approval, so remove devices you no longer use.</li>
+    <li><strong>Link previews</strong> are fetched from your server, so a sender can learn its public address when the conversation is opened.</li>
+    <li><strong>Image signatures.</strong> Server images are pinned by digest when promoted but not signed; the Linux package is.</li>
+  </ul>
+
+  <h2 id="report">Reporting a problem</h2>
+  <p>Email <a href="mailto:wrenchwareapps@gmail.com">wrenchwareapps@gmail.com</a>. Please keep it private until a fix is out. The same policy is in the source repository's <a href="https://github.com/wrenchware/message-link-source/blob/main/.github/SECURITY.md">SECURITY.md</a>.</p>
+</main>
+
+<footer>
+  <p>Message Link is made by Wrenchware and is not affiliated with or endorsed by Google or Meta. No ads, no analytics, and this site sets no cookies. Message Link is free; you can <a href="https://ko-fi.com/wrenchware">support it on Ko-fi</a>.</p>
+</footer>
+</div>
+</body>
+</html>

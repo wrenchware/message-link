@@ -31,6 +31,7 @@ The apps link here by these addresses, so keep them:
 node tools/serve.mjs        # http://localhost:8000/message-link/, served the way Pages serves it
 node tools/check-links.mjs  # every internal link and #anchor leads somewhere
 node tools/check-join.mjs   # versioned join fragments stay local and require an explicit app open
+node tools/check-security.mjs  # each Security section's Learn more leads to its part of Security details, in order
 ```
 
 ## Still to fill in

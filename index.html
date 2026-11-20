@@ -38,7 +38,7 @@
   <h1>All your messaging apps in one place</h1>
   <p class="lead">Google Messages, Messenger, Google Voice and Instagram, together on your PC and your phone, with your Hermes Agent beside them.</p>
   <p class="status">Message Link isn't public yet. The guides below show how setup goes; <a href="#downloads">downloads</a> come with the first release.</p>
-  <p>Message Link is a native app for Windows 11, and there is an Android app too. It talks to each service directly, the same way the service's own app or website does. Nothing goes through anyone else's cloud: your accounts are signed in on a Message Link Server you run yourself, on your PC or at home.</p>
+  <p>Message Link is a native app for Windows 11, and there is an Android app too. It talks to each service directly, the same way the service's own app or website does. Your accounts are signed in on a Message Link Server you run yourself, on your PC or at home, not in anyone else's cloud.</p>
 
   <figure class="shot"><img src="assets/windows.png" width="1200" height="900" alt="Message Link on Windows: the conversation list beside Maya Chen's conversations from three services, shown as one."></figure>
   <div class="phones">
@@ -55,7 +55,7 @@
     <li>Phone notifications go through <a href="firebase/">a Firebase project of your own</a>. Each notification is locked so only your phone can read it.</li>
     <li>It backs itself up to a folder you choose, once a day.</li>
   </ul>
-  <p>Message Link has no servers of its own, so your conversations and sign-ins never pass through us. Tailscale and Firebase fill that gap. Both are free, and you create your own copy of each, so they answer only to you. Only using it on a PC? You can skip both.</p>
+  <p>Message Link has no servers of its own, so your conversations and sign-ins never pass through us. Your phone reaches the server through Tailscale, and phone notifications travel through Firebase. Both are free, and you set up your own account for each. If you use Message Link only on a PC, you need neither.</p>
 
   <h2>Where your server runs</h2>
   <p>Pick the computer that keeps your accounts connected. Any number of PCs and phones can join it either way.</p>
@@ -103,5 +103,6 @@
   <p>Message Link is made by Wrenchware and is not affiliated with or endorsed by Google or Meta. No ads, no analytics, and this site sets no cookies. Message Link is free; you can <a href="https://ko-fi.com/wrenchware">support it on Ko-fi</a>.</p>
 </footer>
 </div>
+<script src="assets/viewer.js" defer></script>
 </body>
 </html>

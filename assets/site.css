@@ -374,3 +374,75 @@ figure.shot img { display: block; max-width: 100%; height: auto; border: 1px sol
 .gallery.tall { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 .gallery.tall a, .gallery.tall img { border-radius: 18px; }
 @media (max-width: 560px) { .gallery.tall { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+
+/* The picture viewer (assets/viewer.js): a picture at full size over the dimmed page, its caption under it, Close at the
+   top right and arrows at the sides. */
+.zoom { cursor: zoom-in; }
+html:has(dialog.viewer[open]) { overflow: hidden; }
+dialog.viewer {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  max-height: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: rgba(0, 0, 0, .96);
+  color: var(--fg);
+  overflow: hidden;
+}
+dialog.viewer[open] { display: flex; align-items: center; justify-content: center; }
+dialog.viewer::backdrop { background: transparent; }
+.viewer figure {
+  margin: 0;
+  padding: 56px 72px 16px;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+.viewer img {
+  display: block;
+  min-height: 0;
+  max-width: 100%;
+  max-height: calc(100% - 48px);
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--box);
+}
+.viewer img.tall { border-radius: 18px; }
+.viewer figcaption { max-width: 640px; color: var(--soft); font-size: 13.5px; line-height: 1.45; text-align: center; }
+.viewer button {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border: 1px solid var(--fieldline);
+  border-radius: 50%;
+  background: var(--field);
+  color: var(--fg);
+  cursor: pointer;
+}
+.viewer button:hover { background: var(--fieldhover); }
+.viewer button[hidden] { display: none; }
+.viewer-close { top: 12px; right: 12px; }
+.viewer-step { top: 50%; transform: translateY(-50%); }
+.viewer-prev { left: 16px; }
+.viewer-next { right: 16px; }
+@media (max-width: 560px) {
+  .viewer figure { padding: 60px 12px 72px; }
+  .viewer-step { top: auto; bottom: 16px; transform: none; }
+  .viewer-prev { left: calc(50% - 52px); }
+  .viewer-next { right: calc(50% - 52px); }
+}

@@ -6,8 +6,9 @@ Unraid, Proxmox, Docker, Linux), the Tailscale and Firebase guides the server's 
 
 It's plain HTML with one stylesheet (`assets/site.css`), in the look of the server's own page, and its typeface, Inter
 (`assets/inter.woff2`, SIL Open Font License in `assets/inter-OFL.txt`). There's no build step, no framework, nothing loaded from
-another site, no analytics and no cookies. The only script is on the join page, which reads the code from the address's
-`#` fragment on the visitor's own device and sends it nowhere.
+another site, no analytics and no cookies. There are two scripts. `assets/viewer.js` opens the pictures on the Overview, Windows,
+Android and Notifications pages full size in a viewer (without it, a gallery picture's link opens the file). The join page's
+reads the code from the address's `#` fragment on the visitor's own device and sends it nowhere.
 
 ## Published
 

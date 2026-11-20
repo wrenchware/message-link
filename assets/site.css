@@ -237,6 +237,9 @@ a.card:focus-visible { outline-offset: -2px; border-radius: 0; }
   vertical-align: middle;
 }
 
+/* A tag beside a card's title keeps the row as tall as its neighbors. */
+.card h3 .tag { line-height: 16px; margin-left: 2px; }
+
 /* Steps */
 
 ol.steps { padding-left: 0; list-style: none; counter-reset: step; }

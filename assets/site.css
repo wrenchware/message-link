@@ -498,3 +498,26 @@ h1.with-logo .logo img { display: block; }
 a.card.has-logo { padding-left: 52px; }
 .card-logo { position: absolute; left: 16px; top: 50%; transform: translateY(-50%); }
 @media (max-width: 760px) { h1.with-logo .logo { width: 38px; height: 38px; } h1.with-logo .logo img { width: 22px; height: 22px; } }
+
+/* The Overview: a larger heading and lead, the status as a quiet line rather than a box, the picture wider than the text
+   on a wide screen, and the one choice as two large side-by-side links. */
+main.home h1 { font-size: 36px; letter-spacing: -0.022em; margin-bottom: 10px; }
+main.home .lead { font-size: 18px; line-height: 1.55; }
+main.home h2 { font-size: 20px; margin-top: 48px; letter-spacing: -0.01em; }
+.status.slim { background: none; border: 0; padding: 0 0 0 16px; position: relative; color: var(--muted); font-size: 14px; }
+.status.slim::before { content: ""; position: absolute; left: 1px; top: 8px; width: 7px; height: 7px; border-radius: 50%; background: var(--warn); }
+@media (min-width: 1240px) { main.home figure.hero { margin-left: -64px; margin-right: -64px; } }
+.picks { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin: 12px 0 16px; }
+.pick { display: flex; flex-direction: column; padding: 18px 20px; background: var(--box); border: 1px solid var(--line); border-radius: 12px; color: var(--fg); text-decoration: none; }
+.pick:hover { background: var(--rowhover); border-color: var(--fieldline); }
+.pick svg { color: var(--link); margin-bottom: 12px; }
+.pick h3 { margin: 0 0 4px; font-size: 16px; }
+.pick p { margin: 0 0 14px; color: var(--muted); font-size: 14px; line-height: 1.5; }
+.pick .more { margin-top: auto; color: var(--link); font-size: 14px; font-weight: 500; }
+.pick .more::after { content: " \203A"; }
+@media (max-width: 760px) {
+  main.home h1 { font-size: 28px; }
+  main.home .lead { font-size: 16.5px; }
+  main.home h2 { font-size: 18px; margin-top: 40px; }
+}
+@media (max-width: 560px) { .picks { grid-template-columns: 1fr; } }

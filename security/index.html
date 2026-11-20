@@ -27,6 +27,26 @@
 p.more{text-align:right;margin:-6px 0 0;font-size:14px}
 p.more a::after{content:" \2192"}
 @media (max-width:640px){.flow{grid-template-columns:1fr}.flow .link{min-width:0;flex-direction:row;gap:8px;justify-content:center}.flow .link::after{width:1.5px;height:16px;border-top:0;border-left:1.5px solid var(--muted);margin:0}}
+.kept{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:8px 0 14px}
+.kept .card,.steps .step{display:flex;flex-direction:column;gap:3px;padding:14px;background:var(--box);border:1px solid var(--line);border-radius:12px}
+.kept svg,.steps svg{color:var(--link)}
+.kept .card>svg,.steps .step>svg{margin-bottom:4px}
+.kept strong,.steps strong{font-size:14px}
+.kept span,.steps span{color:var(--muted);font-size:12.5px;line-height:1.45;flex:1}
+.kept em{display:flex;align-items:center;gap:5px;font-style:normal;font-size:12px;color:var(--soft);margin-top:6px;padding-top:8px;border-top:1px solid var(--hair)}
+.kept em svg{color:var(--soft)}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:8px 0 14px;counter-reset:none}
+.steps .step{position:relative}
+.steps .step b{position:absolute;top:12px;right:14px;width:22px;height:22px;border-radius:50%;background:var(--field);border:1px solid var(--fieldline);color:var(--soft);font-size:12px;display:flex;align-items:center;justify-content:center}
+.steps .step+.step::before{content:"";position:absolute;left:-10px;top:50%;width:10px;border-top:1.5px solid var(--muted)}
+.rooms{margin:8px 0 14px}
+.rooms .house{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;padding:34px 12px 12px;border:1px solid var(--acc);border-radius:12px;background:var(--box);position:relative}
+.rooms .label{position:absolute;top:10px;left:14px;display:flex;align-items:center;gap:6px;color:var(--link);font-size:12.5px}
+.rooms .room{padding:12px 8px;text-align:center;font-size:13px;background:var(--field);border:1px solid var(--fieldline);border-radius:8px}
+.rooms .room.sandbox{grid-column:1/-1;border-style:dashed;color:var(--soft)}
+.rooms small{color:var(--muted);font-size:12px}
+.rooms figcaption{color:var(--muted);font-size:13px;margin-top:8px;text-align:center}
+@media (max-width:760px){.kept{grid-template-columns:repeat(2,1fr)}.steps{grid-template-columns:1fr}.steps .step+.step::before{left:50%;top:-10px;width:0;height:10px;border-top:0;border-left:1.5px solid var(--muted)}.rooms .house{grid-template-columns:repeat(2,1fr)}}
 </style>
 </head>
 <body>
@@ -80,6 +100,12 @@ p.more a::after{content:" \2192"}
     </div>
 
   <h2 id="stored">Your sign-ins and stored messages</h2>
+  <figure class="kept" role="img" aria-label="Where things are kept: the PC with Windows data protection, the phone with Android's Keystore, the server with a key file only its account can read, and backups with your password. Backups leave out sign-ins and identities.">
+    <div class="card"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="4.5" width="17" height="11" rx="1.5"/><path d="M9 19.5h6M12 15.5v4"/></svg><strong>PC</strong><span>Sign-ins, settings, pictures</span><em><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="10.5" width="14" height="10" rx="1.5"/><path d="M8.5 10.5V7.5a3.5 3.5 0 0 1 7 0v3"/></svg>Windows data protection</em></div>
+    <div class="card"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6.5" y="3" width="11" height="18" rx="2"/><path d="M11 17.5h2"/></svg><strong>Phone</strong><span>Server link, conversation list, pending sends</span><em><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="10.5" width="14" height="10" rx="1.5"/><path d="M8.5 10.5V7.5a3.5 3.5 0 0 1 7 0v3"/></svg>Android Keystore</em></div>
+    <div class="card"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="4" width="17" height="7" rx="1.5"/><rect x="3.5" y="13" width="17" height="7" rx="1.5"/><path d="M7.5 7.5h.01M7.5 16.5h.01"/></svg><strong>Server</strong><span>Sign-ins, every message, settings</span><em><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="10.5" width="14" height="10" rx="1.5"/><path d="M8.5 10.5V7.5a3.5 3.5 0 0 1 7 0v3"/></svg>A key only it can read</em></div>
+    <div class="card"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="4" width="17" height="5" rx="1"/><path d="M5 9v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V9M10 13h4"/></svg><strong>Backups</strong><span>Messages and settings, never sign-ins</span><em><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="10.5" width="14" height="10" rx="1.5"/><path d="M8.5 10.5V7.5a3.5 3.5 0 0 1 7 0v3"/></svg>Your password</em></div>
+  </figure>
   <dl class="fields">
     <div><dt>Windows</dt><dd>Sign-ins, device secrets, saved state and cached pictures are encrypted with Windows' data protection for your user account, so other accounts on the PC can't read them.</dd></div>
     <div><dt>Android</dt><dd>The server connection, your conversation list and pending sends are encrypted with a key held in Android's Keystore. The app turns off Android's cloud backup and device-to-device transfer, so none of it is copied off the phone.</dd></div>
@@ -90,6 +116,11 @@ p.more a::after{content:" \2192"}
   <p class="more"><a href="details/#at-rest">Learn more</a></p>
 
   <h2 id="transport">How your devices reach your server</h2>
+  <figure class="steps" role="img" aria-label="Joining a device takes three steps: the device shows a code or the pairing code from the server, you approve it on the server's page with your password, and the device gets a secret of its own.">
+    <div class="step"><b>1</b><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="6.5" width="17" height="11" rx="1.5"/><path d="M7.5 12h.01M10.5 12h.01M13.5 12h.01M16.5 12h.01"/></svg><strong>A code</strong><span>A one-time pairing code, or the same code on both screens when a device asks to join</span></div>
+    <div class="step"><b>2</b><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.5 19.5 6v5.5c0 4.5-3.2 7.7-7.5 9-4.3-1.3-7.5-4.5-7.5-9V6z"/><path d="m9 12 2 2 4-4"/></svg><strong>You approve</strong><span>On the server's page, with its password</span></div>
+    <div class="step"><b>3</b><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="8" cy="12" r="3.5"/><path d="M11.5 12h9M17 12v3M20 12v2"/></svg><strong>Its own secret</strong><span>The device keeps a 256-bit secret; remove the device and it stops working</span></div>
+  </figure>
   <dl class="fields">
     <div><dt>Encrypted and pinned</dt><dd>Every connection uses TLS 1.2 or 1.3. Each app remembers your server's certificate fingerprint when it joins and refuses any other certificate, so a look-alike server can't stand in for yours.</dd></div>
     <div><dt>A secret per device</dt><dd>Each device gets its own random 256-bit token. The server keeps only a hash of it, and removing a device on the server's page cuts it off at once.</dd></div>
@@ -103,6 +134,13 @@ p.more a::after{content:" \2192"}
   <p class="more"><a href="details/#transport">Learn more</a></p>
 
   <h2 id="server">Inside the server</h2>
+  <figure class="rooms" role="img" aria-label="Inside the server, each service runs in its own helper, and the browser used for sign-ins runs in Chrome's sandbox. They talk to the server only through private pipes.">
+    <div class="house"><span class="label"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="4" width="17" height="7" rx="1.5"/><rect x="3.5" y="13" width="17" height="7" rx="1.5"/><path d="M7.5 7.5h.01M7.5 16.5h.01"/></svg>Message Link Server</span>
+      <div class="room">Google Messages</div><div class="room">Messenger</div><div class="room">Google Voice</div><div class="room">Instagram</div>
+      <div class="room sandbox">Chrome, sandboxed<br><small>sign-in pages only</small></div>
+    </div>
+    <figcaption>Each service is a separate program with its own private connection to the server. None can open another's, and nothing else on the machine can open theirs.</figcaption>
+  </figure>
   <dl class="fields">
     <div><dt>One helper per service</dt><dd>Google Messages, Messenger, Google Voice and Instagram each run in their own helper program, connected to the server by private pipes that no other program can open. Sign-ins travel only through those pipes, never on a command line.</dd></div>
     <div><dt>Downloads stay public</dt><dd>Pictures, files and link previews are fetched only from public internet addresses: a link can't make the server reach devices on your home network. Your sign-in goes only to the service's own sites. Sizes and image dimensions are capped before anything is decoded.</dd></div>

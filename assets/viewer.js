@@ -2,7 +2,7 @@
 // pictures. Esc, Close or a click outside the picture leaves it. Without this script, a picture that's a link still opens
 // the file itself.
 (() => {
-  const pictures = [...document.querySelectorAll('main .gallery img, main figure.shot img, main .phones img')];
+  const pictures = [...document.querySelectorAll('main .gallery img, main figure.shot img')];
   if (!pictures.length || typeof HTMLDialogElement !== 'function') return;
 
   const icon = path => `<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="${path}"/></svg>`;
@@ -32,7 +32,7 @@
     image.alt = img.alt;
     image.setAttribute('width', img.getAttribute('width') || '');
     image.setAttribute('height', img.getAttribute('height') || '');
-    image.className = img.closest('.phones, .gallery.tall') ? 'tall' : '';
+    image.className = img.matches('.phone, .gallery.tall img') ? 'tall' : '';
     const text = img.closest('figure')?.querySelector('figcaption')?.textContent.trim() || img.alt;
     caption.textContent = several ? `${text} (${at + 1} of ${pictures.length})` : text;
   }

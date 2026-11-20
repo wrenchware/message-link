@@ -295,8 +295,22 @@ ul.box.checks > li::before { left: 16px; top: 16px; width: 5px; height: 10px; bo
 
 figure.shot { margin: 12px 0 16px; }
 figure.shot img { display: block; max-width: 100%; height: auto; border: 1px solid var(--line); border-radius: 12px; }
-.phones { display: flex; justify-content: center; gap: 14px; margin: 0 0 8px; }
-.phones img { width: 46%; max-width: 260px; height: auto; border: 1px solid var(--line); border-radius: 18px; }
+/* The Overview's one picture: the Windows window, with the phone set into its lower right corner, ringed in the page's
+   black so it reads as in front. Too small to see on a narrow screen, where the window shows alone. */
+figure.hero { position: relative; margin: 20px 0 8px; padding: 0 13% 28px 0; }
+figure.hero .phone {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 23%;
+  border-color: var(--fieldline);
+  border-radius: 18px;
+  box-shadow: 0 0 0 6px var(--bg), 0 16px 40px rgba(0, 0, 0, .7);
+}
+@media (max-width: 640px) {
+  figure.hero { padding: 0; margin-bottom: 12px; }
+  figure.hero .phone { display: none; }
+}
 
 /* A narrow window: the side list becomes a strip across the top that scrolls sideways, as on the server's page. */
 

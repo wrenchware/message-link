@@ -38,17 +38,22 @@
   <h1>All your messages, linked.</h1>
   <p class="lead">Google Messages, Messenger, Google Voice and Instagram, together on your PC and your phone, with your Hermes Agent beside them.</p>
   <p class="status">Message Link isn't public yet. The guides below show what setup involves; <a href="#downloads">downloads</a> come with the first release.</p>
-  <p>Message Link is a native app for Windows 11, and there is an Android app too. It talks to each service directly, the same way the service's own app or website does. Your accounts are signed in on a Message Link Server you run yourself, on your PC or at home, not in anyone else's cloud.</p>
+  <figure class="shot hero">
+    <img src="assets/windows.png" width="1200" height="900" alt="Message Link on Windows: the conversation list beside Maya Chen's conversations from three services, shown as one.">
+    <img class="phone" src="assets/phone-inbox.png" width="540" height="1170" alt="Message Link on Android: conversations from all four services and Hermes in one list.">
+  </figure>
+  <p class="quiet">From the built-in demo. See more on the <a href="windows/">Windows</a> and <a href="android/">Android</a> pages.</p>
 
-  <figure class="shot"><img src="assets/windows.png" width="1200" height="900" alt="Message Link on Windows: the conversation list beside Maya Chen's conversations from three services, shown as one."></figure>
-  <div class="phones">
-    <img src="assets/phone-inbox.png" width="540" height="1170" alt="Message Link on Android: conversations from all four services and Hermes in one list.">
-    <img src="assets/phone-chat.png" width="540" height="1170" alt="One person's Instagram and Google Messages conversations shown together.">
+  <h2>What it does</h2>
+  <div class="tiles">
+    <div class="tile"><h3>One conversation per person</h3><p>Merge someone's conversations from several services into one timeline, each message tagged with its service.</p></div>
+    <div class="tile"><h3>The same inbox everywhere</h3><p>Every PC and phone that joins your server shows the same conversations.</p></div>
+    <div class="tile"><h3>Hermes Agent beside your chats</h3><p>Chat with your assistants and approve the commands they ask to run.</p></div>
+    <div class="tile"><h3>Made for each platform</h3><p>A native Windows app and an Android app, with voicemail transcripts, send later and labels.</p></div>
   </div>
-  <p class="quiet">Screenshots are from the built-in demo.</p>
 
   <h2>What's a Message Link Server?</h2>
-  <p>A small program that stays signed in to your services on a computer you own. Every PC and phone with Message Link joins one, so they all show the same conversations. Message Link for Windows has one built in.</p>
+  <p>Message Link talks to each service directly, the same way the service's own app or website does. Your accounts are signed in on a Message Link Server you run yourself, on your PC or at home, not in anyone else's cloud. Every PC and phone with Message Link joins one. Message Link for Windows has one built in.</p>
   <div class="tiles">
     <div class="tile"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="4.5" width="17" height="15" rx="1.5"/><path d="M3.5 8.5h17M6.5 6.5h.01M9 6.5h.01"/><rect x="7.5" y="12" width="9" height="4" rx="1"/></svg><p>It signs in to each service in its own browser. You type into the service's real sign-in page, the same as anywhere else.</p></div>
     <div class="tile"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M3.5 12h17M12 3.5c2.3 2.4 3.5 5.3 3.5 8.5s-1.2 6.1-3.5 8.5c-2.3-2.4-3.5-5.3-3.5-8.5S9.7 5.9 12 3.5z"/></svg><p>Your phone reaches it through <a href="tailscale/">Tailscale</a>, at home or away, without opening anything to the internet.</p></div>

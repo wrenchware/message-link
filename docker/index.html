@@ -124,7 +124,7 @@ docker compose logs messages-server | grep -i "setup code"</code></pre>
   <p>The last one runs Chrome without its own sandbox, because a container with every capability dropped can't give Chrome one. The managed browser is restricted to the supported services' sign-in pages.</p>
 
   <h2 id="first-run">On the server's page</h2>
-  <ol>
+  <ol class="steps">
     <li>Accept the certificate warning once: the server made its own certificate.</li>
     <li>Enter the setup code, then choose the page's password.</li>
     <li>If you have a backup, choose <strong>Restore from a backup</strong> on the first setup screen, before connecting accounts. Stop the old server first.</li>
@@ -144,11 +144,11 @@ docker compose logs messages-server | grep -i "setup code"</code></pre>
   </dl>
 
   <h2>Where things live</h2>
-  <ul>
-    <li><strong>Keys</strong>: the <code>messages-server-keys</code> volume. Without it the data can't be read. It also holds the server's Tailscale identity.</li>
-    <li><strong>Data</strong>: your data folder. Everything secret in it is sealed with the keys.</li>
-    <li><strong>Backups</strong>: choose a network share on the server's page, with no Docker folder mapping. For local backups, create a separate host folder owned by 2787, map it to <code>/backups</code>, then select that path on the page. A backup holds your history and the server's identity, never a service sign-in. <a href="../setup/#backups">Learn more</a>.</li>
-  </ul>
+  <dl class="fields">
+    <div><dt>Keys</dt><dd>The <code>messages-server-keys</code> volume. Without it the data can't be read. It also holds the server's Tailscale identity.</dd></div>
+    <div><dt>Data</dt><dd>Your data folder. Everything secret in it is sealed with the keys.</dd></div>
+    <div><dt>Backups</dt><dd>Choose a network share on the server's page, with no Docker folder mapping. For local backups, create a separate host folder owned by 2787, map it to <code>/backups</code>, then select that path on the page. A backup holds your history and the server's identity, never a service sign-in. <a href="../setup/#backups">Learn more</a>.</dd></div>
+  </dl>
 </main>
 
 <footer>

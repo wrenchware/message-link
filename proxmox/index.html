@@ -39,7 +39,7 @@
   <p class="lead">One command in the Proxmox host's shell makes a container with the server in it.</p>
 
   <h2>What it makes</h2>
-  <ul>
+  <ul class="box">
     <li>An unprivileged Debian 13 container, started when the host boots.</li>
     <li>Message Link Server inside it as a systemd service, with its Tailscale door.</li>
     <li>With Google (the default), official Google Chrome from Google's own repository, so Google Messages, Messenger, Google Voice and Instagram can sign in on the server's page.</li>
@@ -74,7 +74,7 @@
   </ol>
 
   <h2 id="first-run">On the server's page</h2>
-  <ol>
+  <ol class="steps">
     <li>Accept the certificate warning once: the server made its own certificate.</li>
     <li>Enter the setup code, then choose the page's password.</li>
     <li>If you have a backup, choose <strong>Restore from a backup</strong> on the first setup screen, before connecting accounts. Stop the old server first.</li>
@@ -104,7 +104,7 @@
   </dl>
 
   <h2>Good to know</h2>
-  <ul>
+  <ul class="box">
     <li>The container has Proxmox's nesting feature on, as Proxmox does by default for new unprivileged containers. The server's own systemd isolation and Chrome's sandbox need it. The container stays unprivileged, with no device or host folder but the backups folder you choose.</li>
     <li>Chrome always runs with its sandbox here. If the host's kernel doesn't let ordinary accounts make user namespaces, the script warns you and browser sign-in stays unavailable.</li>
     <li>Tailscale needs nothing special from the container: the server's door runs Tailscale in userspace, with no tun device.</li>

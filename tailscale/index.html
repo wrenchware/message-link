@@ -40,7 +40,7 @@
 
   <h2>What Tailscale is for</h2>
   <p>Tailscale makes a private network of your own devices, wherever they are. Message Link Server joins it as a machine of its own, called <code>messages-server</code>, and Message Link on your phone joins it too. Only devices signed in to your Tailscale account get through, and the server still asks each one to prove it was added.</p>
-  <ul>
+  <ul class="box">
     <li>A free personal Tailscale account is enough.</li>
     <li>Message Link runs Tailscale itself on the phone. You don't need the Tailscale app there.</li>
     <li>Nothing on the computer the server runs on changes. If it already has Tailscale, that stays as it is.</li>
@@ -59,7 +59,7 @@
 
   <h2 id="fix-it">Fix it for me</h2>
   <p>Rather not click through Tailscale's console? <strong>Fix it for me</strong> lets the server do the steps above itself. It's on the <strong>Remote access</strong> page, and under a phone's code as <strong>Let the server keep your devices signed in</strong>.</p>
-  <ol>
+  <ol class="steps">
     <li>In Tailscale's admin console, make an OAuth client under Settings. The page links to it and says which scopes to give it.</li>
     <li>Paste the client's ID and secret into the page, once.</li>
     <li>The server turns off key expiry for itself and each Message Link phone, approves them if your network needs approval, and adds the access rule. It tells you what it changed.</li>
@@ -67,27 +67,27 @@
   <p>It never touches Tailnet Lock: signing stays on your own trusted device. You can remove the OAuth client on the page at any time, and it's never put in a backup.</p>
 
   <h2>On your phone</h2>
-  <ul>
+  <ul class="box">
     <li>Joining a server signs the phone in to Tailscale first. The sign-in opens in a browser tab and comes back to Message Link by itself.</li>
     <li>Sign in with the same Tailscale account as the server. If the phone is signed in as someone else, Message Link says so by name before it asks to join.</li>
     <li>In Message Link's Settings, the Tailscale section shows the account, the phone's name on your network, whether it reaches the server directly or through Tailscale's relays, and its key expiry. Tap <strong>Stay signed in</strong> to open the phone in Tailscale's admin console, then choose <strong>Machine settings</strong> and <strong>Disable key expiry</strong>. <strong>Sign out</strong> and <strong>Use another account</strong> are there too.</li>
   </ul>
 
   <h2 id="pc">On a PC</h2>
-  <ul>
+  <ul class="box">
     <li>Message Link for Windows runs Tailscale itself, so you don't need the Tailscale app.</li>
     <li>After a PC joins a server, the setup pages ask you to <strong>Sign in to Tailscale</strong> with the same account as the server, then to keep the PC signed in: <strong>Open this PC in Tailscale</strong>, then choose <strong>Machine settings</strong> and <strong>Disable key expiry</strong>. The step notices by itself once it's done.</li>
     <li>Later, the same is in Settings, <strong>Connections</strong>, <strong>Message Link Server</strong>, under Tailscale.</li>
   </ul>
 
   <h2>When something changes</h2>
-  <ul>
-    <li><strong>"Session expired" when signing in.</strong> Your browser is signed in to another Tailscale account. Open <strong>Sign in to Tailscale</strong> in a private window instead.</li>
-    <li><strong>Tailscale signed the server out.</strong> The page says so with a <strong>Sign in again</strong> button. No restart needed.</li>
-    <li><strong>A different Tailscale account.</strong> <strong>Change…</strong> beside the Tailscale account, then <strong>Sign out of Tailscale</strong>, signs the server out and forgets its Tailscale identity, so it can join another network.</li>
-    <li><strong>A PC that already has the Tailscale app.</strong> It can use the server's Tailscale name, <code>messages-server</code>, as its address instead, and Message Link then leaves Tailscale to the app.</li>
-    <li><strong>New hardware.</strong> Remove the old machine in Tailscale's console before the new server signs in, or the new one is named <code>messages-server-1</code> and your phone won't find it by name.</li>
-  </ul>
+  <dl class="fields">
+    <div><dt>"Session expired" when signing in</dt><dd>Your browser is signed in to another Tailscale account. Open <strong>Sign in to Tailscale</strong> in a private window instead.</dd></div>
+    <div><dt>Tailscale signed the server out</dt><dd>The page says so with a <strong>Sign in again</strong> button. No restart needed.</dd></div>
+    <div><dt>A different Tailscale account</dt><dd><strong>Change…</strong> beside the Tailscale account, then <strong>Sign out of Tailscale</strong>, signs the server out and forgets its Tailscale identity, so it can join another network.</dd></div>
+    <div><dt>A PC that already has the Tailscale app</dt><dd>It can use the server's Tailscale name, <code>messages-server</code>, as its address instead, and Message Link then leaves Tailscale to the app.</dd></div>
+    <div><dt>New hardware</dt><dd>Remove the old machine in Tailscale's console before the new server signs in, or the new one is named <code>messages-server-1</code> and your phone won't find it by name.</dd></div>
+  </dl>
 
   <h2 id="auth-key">Without a browser at hand</h2>
   <p>For a server you set up from a script and won't open a page for, give it a Tailscale auth key instead of the sign-in link. Make one in Tailscale's admin console under Settings, Keys, <strong>Generate auth key</strong>, and put it in the server's settings (<code>MESSAGES_TAILNET_AUTHKEY</code>, or the auth key field or question in your host's guide). The server uses it only to sign in the first time; clear it afterwards.</p>

@@ -43,7 +43,7 @@
   </div>
 
   <h2>Before you start</h2>
-  <ul>
+  <ul class="box checks">
     <li>Unraid with Docker turned on.</li>
     <li>A network share for the server's daily backups, chosen later on its page. A share on this Unraid server works.</li>
     <li>About 4 GB of memory for the container. The server's Chrome browser handles new sign-ins for all four services.</li>
@@ -70,7 +70,7 @@
   </ol>
 
   <h2 id="first-run">On the server's page</h2>
-  <ol>
+  <ol class="steps">
     <li>Accept the certificate warning once: the server made its own certificate.</li>
     <li>Enter the setup code, then choose the page's password.</li>
     <li>If you have a backup, choose <strong>Restore from a backup</strong> on the first setup screen, before connecting accounts. Stop the old server first.</li>
@@ -86,17 +86,17 @@
   <p>In <strong>Auto Update Applications</strong>, turn on <code>messages-server</code> in the nightly schedule and set its <strong>Docker stop timeout/delay</strong> to at least 60 seconds as well. The plugin uses its own shorter timeout otherwise. An update restarts the server with the same sign-ins and devices.</p>
 
   <h2>Where things live</h2>
-  <ul>
-    <li><strong>Keys</strong>: a Docker volume, <code>messages-server-keys</code>, inside Docker's own storage and outside every share. It holds the keys the data is sealed with and the server's Tailscale identity.</li>
-    <li><strong>Data</strong>: a Docker volume, <code>messages-server-data</code>, beside the keys in Docker's own storage: sign-ins, history and devices. Everything secret in it is sealed, so a copy of it alone is useless. Leave room in Docker's storage for your history.</li>
-    <li><strong>Backups</strong>: the network share you choose on the server's page. A backup holds your history and the server's identity, never a service sign-in. After restoring one you sign in to each account again, and your devices stay joined.</li>
-  </ul>
+  <dl class="fields">
+    <div><dt>Keys</dt><dd>A Docker volume, <code>messages-server-keys</code>, inside Docker's own storage and outside every share. It holds the keys the data is sealed with and the server's Tailscale identity.</dd></div>
+    <div><dt>Data</dt><dd>A Docker volume, <code>messages-server-data</code>, beside the keys in Docker's own storage: sign-ins, history and devices. Everything secret in it is sealed, so a copy of it alone is useless. Leave room in Docker's storage for your history.</dd></div>
+    <div><dt>Backups</dt><dd>The network share you choose on the server's page. A backup holds your history and the server's identity, never a service sign-in. After restoring one you sign in to each account again, and your devices stay joined.</dd></div>
+  </dl>
   <div class="note warn">
     <p>Recreating Docker's image file (<code>docker.img</code>) deletes both volumes: the data and the keys it is sealed with. The server's own backups are how you come back from that: restore one on the page of a fresh server.</p>
   </div>
 
   <h2>Good to know</h2>
-  <ul>
+  <ul class="box">
     <li>Keep the port on your home network. To reach the server away from home, use its Tailscale door rather than publishing the port on Unraid's own Tailscale.</li>
     <li>The server's Google Chrome runs every page in Chrome's sandbox. For that, the container runs without Docker's default system call filter (<code>seccomp=unconfined</code>). It still runs as its own user, with every capability dropped.</li>
     <li>Stop it from the Docker tab, or with <code>docker stop -t 60 messages-server</code>, so pending sends finish.</li>

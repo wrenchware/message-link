@@ -259,6 +259,22 @@ ol.steps > li::before {
   justify-content: center;
 }
 
+/* Lists in a box, as the Security page lays them out: a plain list, a checklist of what's needed, and tiles */
+
+ul.box { list-style: none; padding: 0; margin: 8px 0 16px; background: var(--box); border: 1px solid var(--line); border-radius: 12px; }
+ul.box > li { position: relative; margin: 0; padding: 11px 16px 11px 38px; border-top: 1px solid var(--hair); line-height: 1.55; }
+ul.box > li:first-child { border-top: 0; }
+ul.box > li::before { content: ""; position: absolute; left: 17px; top: 20px; width: 6px; height: 6px; border-radius: 50%; background: var(--muted); }
+ul.box.checks > li::before { left: 16px; top: 16px; width: 5px; height: 10px; border-radius: 0; background: none; border: solid var(--link); border-width: 0 2px 2px 0; transform: rotate(45deg); }
+.tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; margin: 12px 0 16px; }
+.tile { background: var(--box); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; }
+.tile svg { color: var(--link); display: block; margin-bottom: 8px; }
+.tile h3 { margin: 0 0 4px; font-size: 14px; }
+.tile p { margin: 0; color: var(--soft); font-size: 14px; line-height: 1.5; }
+.tile h3 + p { color: var(--muted); font-size: 13.5px; }
+/* Four tiles sit two by two rather than three and one. */
+.tiles:has(> .tile:nth-child(4):last-child) { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+
 /* Buttons (the join page) */
 
 .button {

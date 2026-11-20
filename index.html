@@ -49,12 +49,12 @@
 
   <h2>What's a Message Link Server?</h2>
   <p>A small program that stays signed in to your services on a computer you own. Every PC and phone with Message Link joins one, so they all show the same conversations. Message Link for Windows has one built in.</p>
-  <ul>
-    <li>It signs in to each service in its own browser. You type into the service's real sign-in page, the same as anywhere else.</li>
-    <li>Your phone reaches it through <a href="tailscale/">Tailscale</a>, at home or away, without opening anything to the internet.</li>
-    <li>Phone notifications go through <a href="firebase/">a Firebase project of your own</a>. Each notification is locked so only your phone can read it.</li>
-    <li>It backs itself up to a folder you choose, once a day.</li>
-  </ul>
+  <div class="tiles">
+    <div class="tile"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="4.5" width="17" height="15" rx="1.5"/><path d="M3.5 8.5h17M6.5 6.5h.01M9 6.5h.01"/><rect x="7.5" y="12" width="9" height="4" rx="1"/></svg><p>It signs in to each service in its own browser. You type into the service's real sign-in page, the same as anywhere else.</p></div>
+    <div class="tile"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M3.5 12h17M12 3.5c2.3 2.4 3.5 5.3 3.5 8.5s-1.2 6.1-3.5 8.5c-2.3-2.4-3.5-5.3-3.5-8.5S9.7 5.9 12 3.5z"/></svg><p>Your phone reaches it through <a href="tailscale/">Tailscale</a>, at home or away, without opening anything to the internet.</p></div>
+    <div class="tile"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9a6 6 0 0 1 12 0c0 6 2.5 8 2.5 8h-17S6 15 6 9"/><path d="M10 20.5a2.2 2.2 0 0 0 4 0"/></svg><p>Phone notifications go through <a href="firebase/">a Firebase project of your own</a>. Each notification is locked so only your phone can read it.</p></div>
+    <div class="tile"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="4" width="17" height="5" rx="1"/><path d="M5 9v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V9M10 13h4"/></svg><p>It backs itself up to a folder you choose, once a day.</p></div>
+  </div>
   <p>Message Link has no servers of its own, so your conversations and sign-ins never pass through us. Your phone reaches the server through Tailscale, and phone notifications travel through Firebase. Both are free, and you set up your own account for each. If you use Message Link only on a PC, you need neither.</p>
 
   <h2>Where your server runs</h2>
@@ -74,13 +74,13 @@
   <p><a href="setup/">Get started</a> shows how it fits together.</p>
 
   <h2>What each service needs</h2>
-  <ul>
-    <li><strong>Google Messages</strong>: an Android phone with Google Messages. Message Link pairs with it the way Messages for Web does. An iPhone can't pair.</li>
-    <li><strong>Messenger</strong>: your Facebook sign-in. Encrypted chats work too.</li>
-    <li><strong>Google Voice</strong>: your Google sign-in at voice.google.com. Add as many Voice numbers as you have.</li>
-    <li><strong>Instagram</strong>: your Instagram username and password. Log in with Facebook isn't supported.</li>
-    <li><strong>Hermes</strong>: a Hermes Agent your server can reach on your network. Each Hermes profile is an assistant with a conversation of its own; there's no sign-in.</li>
-  </ul>
+  <dl class="fields">
+    <div><dt>Google Messages</dt><dd>An Android phone with Google Messages. Message Link pairs with it the way Messages for Web does. An iPhone can't pair.</dd></div>
+    <div><dt>Messenger</dt><dd>Your Facebook sign-in. Encrypted chats work too.</dd></div>
+    <div><dt>Google Voice</dt><dd>Your Google sign-in at voice.google.com. Add as many Voice numbers as you have.</dd></div>
+    <div><dt>Instagram</dt><dd>Your Instagram username and password. Log in with Facebook isn't supported.</dd></div>
+    <div><dt>Hermes</dt><dd>A Hermes Agent your server can reach on your network. Each Hermes profile is an assistant with a conversation of its own; there's no sign-in.</dd></div>
+  </dl>
 
   <h2 id="downloads">Downloads</h2>
   <dl class="fields">

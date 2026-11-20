@@ -53,14 +53,14 @@
   <p class="quiet">Pictures use made-up people.</p>
 
   <h2>What you need</h2>
-  <ul>
+  <ul class="box checks">
     <li>A Windows 11 PC (x64). Everything Message Link needs ships inside it, so there's nothing to install first.</li>
     <li>The accounts you want to connect. For Google Messages, your Android phone with Google Messages on it.</li>
   </ul>
 
   <h2>First run</h2>
   <p>Message Link opens on a welcome screen with three ways in:</p>
-  <ul>
+  <ul class="box">
     <li><strong>Sign in on this PC</strong> opens the server's page, where you connect your accounts.</li>
     <li><strong>Connect to a Message Link Server</strong> joins a server that keeps your accounts connected at home.</li>
     <li><strong>Try sample conversations</strong> shows Message Link with made-up people. Nothing is sent, and your own data stays closed. <strong>Leave sample</strong> in the banner takes you back.</li>
@@ -94,7 +94,7 @@
   <p>To add another account, start from the <strong>Accounts</strong> section of the server's Overview. On a Windows server, authentication opens in a separate native window on that PC. Update every phone and PC before adding another account; older versions cannot reconnect after it is added.</p>
 
   <h2>Living in the tray</h2>
-  <ul>
+  <ul class="box">
     <li>Closing the window leaves Message Link running in the system tray, so new messages still reach you. <strong>Quit Message Link</strong> in the tray icon's menu closes it.</li>
     <li>After your first account connects, Message Link asks once whether to start when you sign in to Windows.</li>
     <li><kbd>F1</kbd> opens the full guide inside the app, and <kbd>Ctrl</kbd>+<kbd>/</kbd> lists the keyboard shortcuts.</li>
@@ -102,16 +102,16 @@
 
   <h2 id="server">Using a Message Link Server from this PC</h2>
   <p>To use another server, open <strong>Settings</strong>, <strong>Connections</strong>, <strong>Message Link Server</strong> and choose how to join:</p>
-  <ul>
-    <li><strong>Paste the line from the server's page.</strong> Its <strong>Add a PC</strong> step shows one line that holds everything the PC needs.</li>
-    <li><strong>Ask to join.</strong> Enter the server's address and port, like <code>server.lan:8787</code>. The PC shows a short code; approve it on the server's page only if the code there is the same. You're then given a finish code to type on the PC.</li>
-  </ul>
+  <dl class="fields">
+    <div><dt>Paste the line from the server's page</dt><dd>Its <strong>Add a PC</strong> step shows one line that holds everything the PC needs.</dd></div>
+    <div><dt>Ask to join</dt><dd>Enter the server's address and port, like <code>server.lan:8787</code>. The PC shows a short code; approve it on the server's page only if the code there is the same. You're then given a finish code to type on the PC.</dd></div>
+  </dl>
   <p>Connect accounts and manage devices on that server's page. Anyone with its page password can manage it; joined devices read and send messages.</p>
   <p>Away from home, the PC reaches the server through Tailscale, which Message Link runs itself. After joining, the setup pages ask you to sign in to Tailscale with the same account as the server and to disable this PC's key expiry. <a href="../tailscale/#pc">Learn more</a>. Never use <code>127.0.0.1</code> to reach a different PC.</p>
 
   <h2 id="phone">Add a phone</h2>
   <p>Set up Tailscale on the server's page before adding a phone or another PC:</p>
-  <ul>
+  <ul class="box">
     <li>It starts when you sign in to Windows and runs as your own user, not as a Windows service. The phone gets messages while that PC is on and you're signed in.</li>
     <li>The phone reaches it through Tailscale, as with any other server.</li>
     <li>Choose a backup folder, mapped drive or network share on the server's <strong>Backups</strong> page. <a href="../setup/#backups">Learn more</a>.</li>

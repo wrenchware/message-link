@@ -39,7 +39,7 @@
   <p class="lead">A systemd service on Debian, Ubuntu, or a Linux container you made yourself. No Docker needed.</p>
 
   <h2>Before you start</h2>
-  <ul>
+  <ul class="box checks">
     <li>A 64-bit x86 computer with systemd. Everything the server runs on is inside the package; the installer adds the few system libraries that are missing (ICU, OpenSSL 3, CA certificates, time zones).</li>
     <li>For browser sign-in to any service: Debian or Ubuntu, and a kernel that lets ordinary accounts make user namespaces, which Google Chrome's sandbox is built from. On Ubuntu 24.04 and later that also means <code>kernel.apparmor_restrict_unprivileged_userns</code> set to 0.</li>
   </ul>
@@ -77,7 +77,7 @@ MESSAGES_TAILNET=1</code></pre>
   </ol>
 
   <h2 id="first-run">On the server's page</h2>
-  <ol>
+  <ol class="steps">
     <li>Accept the certificate warning once: the server made its own certificate.</li>
     <li>Enter the setup code, then choose the page's password.</li>
     <li>If you have a backup, choose <strong>Restore from a backup</strong> on the first setup screen, before connecting accounts. Stop the old server first.</li>
@@ -98,11 +98,11 @@ MESSAGES_TAILNET=1</code></pre>
   </dl>
 
   <h2>Where things live</h2>
-  <ul>
-    <li><code>/var/lib/messages-server/keys</code>: the keys the data is sealed with, Google's Chrome profile and the server's Tailscale identity.</li>
-    <li><code>/var/lib/messages-server/data</code>: sign-ins, devices and history, sealed with the keys, and the server's log.</li>
-    <li><code>/var/lib/messages-server/backups</code>: the default local backup folder. You can choose a network share directly on the server's <strong>Backups</strong> page. <a href="../setup/#backups">Learn more</a>.</li>
-  </ul>
+  <dl class="fields">
+    <div><dt><code>/var/lib/messages-server/keys</code></dt><dd>The keys the data is sealed with, Google's Chrome profile and the server's Tailscale identity.</dd></div>
+    <div><dt><code>/var/lib/messages-server/data</code></dt><dd>Sign-ins, devices and history, sealed with the keys, and the server's log.</dd></div>
+    <div><dt><code>/var/lib/messages-server/backups</code></dt><dd>The default local backup folder. You can choose a network share directly on the server's <strong>Backups</strong> page. <a href="../setup/#backups">Learn more</a>.</dd></div>
+  </dl>
   <p>The service runs with no privileges and can write only its own folder. It's limited to 2 GB of memory, or 4 GB with Google.</p>
 </main>
 

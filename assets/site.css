@@ -298,6 +298,9 @@ ul.box.checks > li::before { left: 16px; top: 16px; width: 5px; height: 10px; bo
 
 figure.shot { margin: 12px 0 16px; }
 figure.shot img { display: block; max-width: 100%; height: auto; border: 1px solid var(--line); border-radius: 12px; }
+/* A video plays where it sits, framed like the pictures. */
+figure.video { margin: 12px 0 20px; }
+figure.video video { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; border: 1px solid var(--line); border-radius: 12px; background: var(--box); }
 /* The Overview's one picture: the Windows window, with the phone set into its lower right corner, ringed in the page's
    black so it reads as in front. Too small to see on a narrow screen, where the window shows alone. */
 figure.hero { position: relative; margin: 20px 0 8px; padding: 0 13% 28px 0; }
